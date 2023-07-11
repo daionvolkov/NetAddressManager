@@ -1,4 +1,5 @@
 ﻿using NetAddressManager.Api.Models.Enums;
+using NetAddressManager.Models;
 
 namespace NetAddressManager.Api.Models
 {
@@ -19,8 +20,22 @@ namespace NetAddressManager.Api.Models
         public int? SwitchPortId { get; set; }
         public List<SwitchPort> SwitchPorts { get; set; } = new List<SwitchPort>();
 
+        public CommonObject()
+        {
+            CreateDate = DateTime.Now;
+        }
 
-
-
+        public CommonObject(CommonModel commonModel)
+        {
+            Id= commonModel.Id;
+            IPAddress= commonModel.IPAddress;
+            IPMask= commonModel.IPMask;
+            MACAddress= commonModel.MACAddress;
+            Description= commonModel.Description;
+            ManufacturerId= commonModel.ManufacturerId;
+            PostalAddressId = commonModel.PostalAddressId;
+            SwitchPortId = commonModel.SwitchPortId;
+        }       
+    
     }
 }
