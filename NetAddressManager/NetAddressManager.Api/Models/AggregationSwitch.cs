@@ -31,8 +31,10 @@ namespace NetAddressManager.Api.Models
         {
             return new AggregationSwitch
             {
-                Id=this.Id, IPAddress=this.IPAddress,
-                IPMask = this.IPMask, MACAddress=this.MACAddress,
+                Id=this.Id, 
+                IPAddress=this.IPAddress,
+                IPMask = this.IPMask, 
+                MACAddress=this.MACAddress,
                 Description =this.Description,
                 CreateDate = this.CreateDate,
                 Status = this.Status,
