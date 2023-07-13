@@ -13,6 +13,13 @@ namespace NetAddressManager.Api.Models
         {
         }
 
+        public PostalAddress(string city, string street, string building)
+        {
+            City = city;
+            Street = street;
+            Building = building;
+        }
+
         public PostalAddress(PostalAddressModel postalModel)
         {
             Id = postalModel.Id;
@@ -21,13 +28,15 @@ namespace NetAddressManager.Api.Models
             Building = postalModel.Building;
         }
         
-        public PostalAddress GetModel()
+        public PostalAddressModel GetModel()
         {
-            return new PostalAddress() { 
+            return new PostalAddressModel 
+            { 
                 Id = this.Id, 
                 City = this.City, 
                 Street = this.Street, 
-                Building = this.Building };
+                Building = this.Building 
+            };
         }
     }
 

@@ -15,16 +15,18 @@ namespace NetAddressManager.Models
         public CoreSwitchModel() { }
 
         public CoreSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,
-           SwitchStatus status,  string iPGateway, List<int> switchPortIds=null, List<int> aggregationSwitchIds = null)
+           SwitchStatus status, string iPGateway, int postalAddressId = 0, int equipmentManufacturerId = 0, List<int> switchPortIds=null, List<int> aggregationSwitchIds = null)
         {
             IPAddress = iPAddress;
             IPMask = iPMask;
             MACAddress = mACAddress;
             Description = description;
             Status = status;
+            IPGateway = iPGateway;
+            PostalAddressId = postalAddressId;
+            EquipmentManufacturerId = equipmentManufacturerId;
             CreateDate = DateTime.Now;
             SwitchPortIds = switchPortIds;
-            IPGateway = iPGateway;
             AggregationSwitchIds = aggregationSwitchIds;
         }
     }

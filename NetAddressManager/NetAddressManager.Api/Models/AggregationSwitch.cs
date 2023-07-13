@@ -19,17 +19,17 @@ namespace NetAddressManager.Api.Models
             IPMask= aggregationSwitchModel.IPMask;
             MACAddress= aggregationSwitchModel.MACAddress;
             Description = aggregationSwitchModel.Description;
-            CreateDate = aggregationSwitchModel.CreateDate;
+            CreateDate = DateTime.Now;
             Status = aggregationSwitchModel.Status;
-            ManufacturerId = aggregationSwitchModel.ManufacturerId;
+            EquipmentManufacturerId = aggregationSwitchModel.EquipmentManufacturerId;
             PostalAddressId = aggregationSwitchModel.PostalAddressId;
             SwitchPortId = aggregationSwitchModel.SwitchPortId;
             CoreSwitchId = aggregationSwitchModel.CoreSwitchId;
         }
 
-        public AggregationSwitch GetModel()
+        public AggregationSwitchModel GetModel()
         {
-            return new AggregationSwitch
+            return new AggregationSwitchModel
             {
                 Id=this.Id, 
                 IPAddress=this.IPAddress,
@@ -38,7 +38,7 @@ namespace NetAddressManager.Api.Models
                 Description =this.Description,
                 CreateDate = this.CreateDate,
                 Status = this.Status,
-                ManufacturerId = this.ManufacturerId,
+                EquipmentManufacturerId = this.EquipmentManufacturerId,
                 PostalAddressId = this.PostalAddressId,
                 SwitchPortId = this.SwitchPortId,
                 CoreSwitchId = this.CoreSwitchId,

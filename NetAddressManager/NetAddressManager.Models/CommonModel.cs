@@ -1,6 +1,7 @@
 ﻿using NetAddressManager.Api.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,9 @@ namespace NetAddressManager.Models
         public string? Description { get; set; }
         public DateTime CreateDate { get; set; }
         public SwitchStatus Status { get; set; }
-        public int? ManufacturerId { get; set; }
-
-        public int? PostalAddressId;
+        public int? EquipmentManufacturerId { get; set; }
+        
+        public int? PostalAddressId { get; set; }
         public int? SwitchPortId { get; set; }
         public List<int>? SwitchPortIds { get; set; } = new List<int>();
 

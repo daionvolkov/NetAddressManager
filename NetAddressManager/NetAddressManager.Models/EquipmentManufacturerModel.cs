@@ -12,6 +12,10 @@ namespace NetAddressManager.Models
         public string Manufacturer { get; set; }
         public string Model { get; set; }
 
+        public EquipmentManufacturerModel()
+        {
+        }
+
         public EquipmentManufacturerModel(string manufacturer, string model)
         {
             Manufacturer = manufacturer;

@@ -18,17 +18,17 @@ namespace NetAddressManager.Api.Models
             IPMask = coreSwitchModel.IPMask;
             MACAddress = coreSwitchModel.MACAddress;
             Description = coreSwitchModel.Description;
-            CreateDate = coreSwitchModel.CreateDate;
+            CreateDate = DateTime.Now;
             Status = coreSwitchModel.Status;
-            ManufacturerId = coreSwitchModel.ManufacturerId;
+            EquipmentManufacturerId = coreSwitchModel.EquipmentManufacturerId;
             PostalAddressId = coreSwitchModel.PostalAddressId;
             SwitchPortId = coreSwitchModel.SwitchPortId;
             IPGateway = coreSwitchModel.IPGateway;
         }
 
-        public CoreSwitch GetModel()
+        public CoreSwitchModel GetModel()
         {
-            return new CoreSwitch
+            return new CoreSwitchModel
             {
                 Id = this.Id,
                 IPAddress = this.IPAddress,
@@ -37,7 +37,7 @@ namespace NetAddressManager.Api.Models
                 Description = this.Description,
                 CreateDate = this.CreateDate,
                 Status = this.Status,
-                ManufacturerId = this.ManufacturerId,
+                EquipmentManufacturerId = this.EquipmentManufacturerId,
                 PostalAddressId = this.PostalAddressId,
                 SwitchPortId = this.SwitchPortId,
                 IPGateway = this.IPGateway

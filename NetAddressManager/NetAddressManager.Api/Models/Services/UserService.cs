@@ -73,7 +73,7 @@ namespace NetAddressManager.Api.Models.Services
             return DoAction(delegate ()
             {
                 User user = new User(model.FirstName, model.LastName,  model.Password, model.Email, model.Phone, model.Status);
-                _db.User.Add(user);
+                _db.User.Add(user); 
                 _db.SaveChanges();
             });
 

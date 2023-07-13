@@ -17,7 +17,15 @@ namespace NetAddressManager.Api.Models
 
 
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CoreSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
+            modelBuilder.Entity<AggregationSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
+            modelBuilder.Entity<AccessSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
 
+
+            base.OnModelCreating(modelBuilder);
+        }
 
 
 

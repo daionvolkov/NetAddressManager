@@ -32,5 +32,8 @@ namespace NetAddressManager.Models
             RegistrationDate = DateTime.Now;
             Status = status;
         }
+
+   
+
     }
 }

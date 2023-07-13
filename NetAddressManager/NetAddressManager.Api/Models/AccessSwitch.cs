@@ -18,16 +18,16 @@ namespace NetAddressManager.Api.Models
             IPMask = accessSwitchModel.IPMask;
             MACAddress = accessSwitchModel.MACAddress;
             Description = accessSwitchModel.Description;
-            CreateDate = accessSwitchModel.CreateDate;
+            CreateDate = DateTime.Now;
             Status = accessSwitchModel.Status;
-            ManufacturerId = accessSwitchModel.ManufacturerId;
+            EquipmentManufacturerId = accessSwitchModel.EquipmentManufacturerId;
             PostalAddressId = accessSwitchModel.PostalAddressId;
             SwitchPortId = accessSwitchModel.SwitchPortId;
         }
 
-        public AccessSwitch GetModel()
+        public AccessSwitchModel GetModel()
         {
-            return new AccessSwitch
+            return new AccessSwitchModel
             {
                 Id = this.Id,
                 IPAddress = this.IPAddress,
@@ -36,9 +36,10 @@ namespace NetAddressManager.Api.Models
                 Description = this.Description,
                 CreateDate = this.CreateDate,
                 Status = this.Status,
-                ManufacturerId = this.ManufacturerId,
+                EquipmentManufacturerId = this.EquipmentManufacturerId,
                 PostalAddressId = this.PostalAddressId,
                 SwitchPortId = this.SwitchPortId,
+                AggregationSwitchId = this.AggregationSwitchId
             };
         }
     }

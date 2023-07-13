@@ -1,5 +1,6 @@
 ﻿using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetAddressManager.Api.Models
 {
@@ -12,9 +13,9 @@ namespace NetAddressManager.Api.Models
         public string? Description { get; set; }
         public DateTime CreateDate { get; set; }
         public SwitchStatus Status { get; set; }
-        public int? ManufacturerId { get; set; }
+        public int? EquipmentManufacturerId { get; set; }
         public EquipmentManufacturer? EquipmentManufacturer { get; set; }
-
+        
         public int? PostalAddressId;
         public PostalAddress? PostalAddress { get; set; }
         public int? SwitchPortId { get; set; }
@@ -32,7 +33,8 @@ namespace NetAddressManager.Api.Models
             IPMask= commonModel.IPMask;
             MACAddress= commonModel.MACAddress;
             Description= commonModel.Description;
-            ManufacturerId= commonModel.ManufacturerId;
+            CreateDate = DateTime.Now;
+            EquipmentManufacturerId = commonModel.EquipmentManufacturerId;
             PostalAddressId = commonModel.PostalAddressId;
             SwitchPortId = commonModel.SwitchPortId;
         }       

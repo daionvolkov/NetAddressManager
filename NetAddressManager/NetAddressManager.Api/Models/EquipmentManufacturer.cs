@@ -12,15 +12,22 @@ namespace NetAddressManager.Api.Models
         {
         }
 
+        public EquipmentManufacturer(int id, string manufacturer, string model)
+        {
+            Id = id;
+            Manufacturer = manufacturer;
+            Model = model;
+        }
+
         public EquipmentManufacturer(EquipmentManufacturerModel equipmentManufacturerModel)
         {
             Manufacturer = equipmentManufacturerModel.Manufacturer;
             Model = equipmentManufacturerModel.Model;
         }
 
-        public EquipmentManufacturer GetModel()
+        public EquipmentManufacturerModel GetModel()
         {
-            return new EquipmentManufacturer()
+            return new EquipmentManufacturerModel
             {
                 Id = this.Id,
                 Manufacturer = this.Manufacturer,
