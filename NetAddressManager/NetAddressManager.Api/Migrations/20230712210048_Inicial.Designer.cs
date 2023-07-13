@@ -12,7 +12,7 @@ using NetAddressManager.Api.Models;
 namespace NetAddressManager.Api.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230711073714_Inicial")]
+    [Migration("20230712210048_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -55,9 +55,6 @@ namespace NetAddressManager.Api.Migrations
 
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");
@@ -110,9 +107,6 @@ namespace NetAddressManager.Api.Migrations
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");
 
@@ -164,9 +158,6 @@ namespace NetAddressManager.Api.Migrations
 
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");

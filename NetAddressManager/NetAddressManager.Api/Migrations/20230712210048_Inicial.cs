@@ -73,7 +73,6 @@ namespace NetAddressManager.Api.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
                     EquipmentManufacturerId = table.Column<int>(type: "int", nullable: true),
                     PostalAddressId1 = table.Column<int>(type: "int", nullable: true),
                     SwitchPortId = table.Column<int>(type: "int", nullable: true)
@@ -106,7 +105,6 @@ namespace NetAddressManager.Api.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
                     EquipmentManufacturerId = table.Column<int>(type: "int", nullable: true),
                     PostalAddressId1 = table.Column<int>(type: "int", nullable: true),
                     SwitchPortId = table.Column<int>(type: "int", nullable: true)
@@ -144,7 +142,6 @@ namespace NetAddressManager.Api.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
                     EquipmentManufacturerId = table.Column<int>(type: "int", nullable: true),
                     PostalAddressId1 = table.Column<int>(type: "int", nullable: true),
                     SwitchPortId = table.Column<int>(type: "int", nullable: true)

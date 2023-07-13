@@ -10,7 +10,7 @@ namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+  
     public class UserController : ControllerBase
     {
         private readonly ApplicationContext _db;
@@ -19,13 +19,6 @@ namespace NetAddressManager.Api.Controllers
         {
             _db = db;
             _userService = new UserService(db);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("connect")]
-        public IActionResult Test()
-        {
-            return Ok("Connect to server at " + DateTime.Now);
         }
 
         [HttpGet]

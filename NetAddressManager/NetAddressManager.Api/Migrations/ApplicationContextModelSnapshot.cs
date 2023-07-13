@@ -53,9 +53,6 @@ namespace NetAddressManager.Api.Migrations
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");
 
@@ -106,9 +103,6 @@ namespace NetAddressManager.Api.Migrations
 
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");
@@ -161,9 +155,6 @@ namespace NetAddressManager.Api.Migrations
 
                     b.Property<string>("MACAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ManufacturerId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("PostalAddressId1")
                         .HasColumnType("int");
