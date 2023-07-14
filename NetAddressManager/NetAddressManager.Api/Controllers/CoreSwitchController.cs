@@ -16,11 +16,13 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly CoreSwitchService _coreSwitchService;
-        private readonly UserService _userService;
+        private readonly CheckDataService _checkDataService;
+
         public CoreSwitchController(ApplicationContext db)
         {
             _db = db;
             _coreSwitchService = new CoreSwitchService(db);
+            _checkDataService = new CheckDataService(db);
         }
 
         [HttpGet]
@@ -39,10 +41,16 @@ namespace NetAddressManager.Api.Controllers
         [HttpPost]
         public IActionResult CreateCoreSwitch([FromBody] CoreSwitchModel coreSwitchModel)
         {
+            
             if (coreSwitchModel != null)
             {
-                bool result = _coreSwitchService.Create(coreSwitchModel);
-                return result ? Ok() : NotFound();
+                bool isIPAddressExists = _checkDataService.CheckIpAddress(coreSwitchModel.IPAddress);
+                if (!isIPAddressExists)
+                {
+                    bool result = _coreSwitchService.Create(coreSwitchModel);
+                    return result ? Ok() : NotFound();
+                }
+                return BadRequest("Устройство с такисм IP-адресом уже существует");
             }
             return BadRequest();
         }

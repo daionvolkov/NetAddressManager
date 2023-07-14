@@ -48,8 +48,6 @@ namespace NetAddressManager.Api.Models.Services
             bool result = DoAction(delegate ()
             {
                 AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AccessSwitch();
-
-                accessSwitch.IPAddress = model.IPAddress;
                 accessSwitch.IPMask = model.IPMask;
                 accessSwitch.MACAddress = model.MACAddress;
                 accessSwitch.Description = model.Description;

@@ -15,11 +15,13 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly EquipmentManufacturerService _equipmentManufacturerService;
+        private readonly CheckDataService _checkDataService;
         
         public EquipmentController(ApplicationContext db)
         {
             _db = db;
             _equipmentManufacturerService = new EquipmentManufacturerService(db);
+            _checkDataService = new CheckDataService(db);
         }
         
         [HttpGet]
@@ -40,8 +42,13 @@ namespace NetAddressManager.Api.Controllers
         {
             if (equipmentManufacturerModel != null)
             {
-                bool result = _equipmentManufacturerService.Create(equipmentManufacturerModel);
-                return result ? Ok() : NotFound();
+                bool isEquipmentExists = _checkDataService.CheckEquipment(equipmentManufacturerModel.Manufacturer, equipmentManufacturerModel.Model);
+                if (!isEquipmentExists)
+                {
+                    bool result = _equipmentManufacturerService.Create(equipmentManufacturerModel);
+                    return result ? Ok() : NotFound();
+                }
+                return BadRequest("Такое оборудование уже существует");
             }
             return BadRequest();
         }

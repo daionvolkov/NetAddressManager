@@ -15,11 +15,13 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly PostalAddressService _postalAddressService;
+        private readonly CheckDataService _checkDataService;
 
         public PostalAddressController(ApplicationContext db)
         {
             _db = db;
             _postalAddressService = new PostalAddressService(db);
+            _checkDataService = new CheckDataService(db);
         }
 
 
@@ -41,8 +43,13 @@ namespace NetAddressManager.Api.Controllers
         {
             if (postalAddressModel != null)
             {
-                bool result = _postalAddressService.Create(postalAddressModel);
-                return result ? Ok() : NotFound();
+                bool isPostalAdressExists = _checkDataService.CheckPostalAddress(postalAddressModel.City, postalAddressModel.Street, postalAddressModel.Building);
+                if (!isPostalAdressExists)
+                {
+                    bool result = _postalAddressService.Create(postalAddressModel);
+                    return result ? Ok() : NotFound();
+                }
+                return BadRequest("Такой почтовый адрес уже существует");
             }
             return BadRequest();
         }
@@ -52,6 +59,7 @@ namespace NetAddressManager.Api.Controllers
         {
             if (postalAddressModel != null)
             {
+
                 bool result = _postalAddressService.Update(id, postalAddressModel);
                 return result ? Ok() : NotFound();
             }

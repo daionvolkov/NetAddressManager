@@ -7,7 +7,7 @@ namespace NetAddressManager.Api.Models.Services
     public class CoreSwitchService : AbstractionService, ICommonService<CoreSwitchModel>
     {
         private readonly ApplicationContext _db;
-
+        
         public CoreSwitchService(ApplicationContext db)
         {
             _db = db;
@@ -21,11 +21,13 @@ namespace NetAddressManager.Api.Models.Services
 
         public bool Create(CoreSwitchModel model)
         {
+
             bool result = DoAction(delegate ()
             {
                 CoreSwitch coreSwitch = new CoreSwitch(model);
                 _db.CoreSwitch.Add(coreSwitch);
                 _db.SaveChanges();
+
             });
             return result;
         }
@@ -35,7 +37,10 @@ namespace NetAddressManager.Api.Models.Services
             bool result = DoAction(delegate ()
             {
                 CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+
+
                 _db.CoreSwitch.Remove(coreSwitch);
+
                 _db.SaveChanges();
             });
             return result;
@@ -49,7 +54,6 @@ namespace NetAddressManager.Api.Models.Services
             {
                 CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
 
-                coreSwitch.IPAddress = model.IPAddress;
                 coreSwitch.IPMask = model.IPMask;
                 coreSwitch.MACAddress = model.MACAddress;
                 coreSwitch.Description= model.Description;

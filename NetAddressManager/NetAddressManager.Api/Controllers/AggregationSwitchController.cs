@@ -15,11 +15,13 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly AggregationSwitchService _aggregationSwitchService;
+        private readonly CheckDataService _checkDataService;
 
         public AggregationSwitchController(ApplicationContext db)
         {
             _db = db;
             _aggregationSwitchService = new AggregationSwitchService(db);
+            _checkDataService = new CheckDataService(db);
         }
 
         [HttpGet]
@@ -40,8 +42,13 @@ namespace NetAddressManager.Api.Controllers
         {
             if (aggregationSwitchModel != null)
             {
-                bool result = _aggregationSwitchService.Create(aggregationSwitchModel);
-                return result ? Ok() : NotFound();
+                bool isIPAddressExists = _checkDataService.CheckIpAddress(aggregationSwitchModel.IPAddress);
+                if (!isIPAddressExists)
+                {
+                    bool result = _aggregationSwitchService.Create(aggregationSwitchModel);
+                    return result ? Ok() : NotFound();
+                }
+                return BadRequest("Устройство с такисм IP-адресом уже существует");
             }
             return BadRequest();
         }

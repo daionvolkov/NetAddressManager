@@ -50,7 +50,6 @@ namespace NetAddressManager.Api.Models.Services
             {
                 AggregationSwitch aggregationSwitch = _db.AggregationSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AggregationSwitch();
 
-                aggregationSwitch.IPAddress = model.IPAddress;
                 aggregationSwitch.IPMask = model.IPMask;
                 aggregationSwitch.MACAddress = model.MACAddress;
                 aggregationSwitch.Description = model.Description;

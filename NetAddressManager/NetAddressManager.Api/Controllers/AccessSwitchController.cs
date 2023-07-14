@@ -13,11 +13,13 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly AccessSwitchService _accessSwitchService;
+        private readonly CheckDataService _checkDataService;
 
         public AccessSwitchController(ApplicationContext db)
         {
             _db = db;
             _accessSwitchService = new AccessSwitchService(db);
+            _checkDataService = new CheckDataService(db);
         }
 
         [HttpGet]
@@ -38,8 +40,13 @@ namespace NetAddressManager.Api.Controllers
         {
             if (accessSwitchModel != null)
             {
-                bool result = _accessSwitchService.Create(accessSwitchModel);
-                return result ? Ok() : NotFound();
+                bool isIPAddressExists = _checkDataService.CheckIpAddress(accessSwitchModel.IPAddress);
+                if (!isIPAddressExists)
+                {
+                    bool result = _accessSwitchService.Create(accessSwitchModel);
+                    return result ? Ok() : NotFound();
+                }
+                return BadRequest("Устройство с такисм IP-адресом уже существует");
             }
             return BadRequest();
         }
