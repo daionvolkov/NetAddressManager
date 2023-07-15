@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace NetAddressManager.Api.Models.Services
+﻿namespace NetAddressManager.Api.Models.Services
 {
     public class CheckDataService
     {
@@ -13,7 +11,6 @@ namespace NetAddressManager.Api.Models.Services
 
         public bool CheckIpAddress(string ipAddress)
         {
-
             bool ipAddressExists = false;
 
             ipAddressExists = _db.CoreSwitch.Any(s => s.IPAddress == ipAddress)
@@ -28,7 +25,6 @@ namespace NetAddressManager.Api.Models.Services
             bool isPostalAddressExists = false;
             isPostalAddressExists = _db.PostalAddress.Any(pa => (pa.City == city) && (pa.Street == street) && (pa.Building == building));
             return isPostalAddressExists;
-
         }
 
         public bool CheckEquipment(string manufacturer, string model) 

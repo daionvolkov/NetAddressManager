@@ -42,8 +42,6 @@ namespace NetAddressManager.Api.Models.Services
             return result;
         }
 
-    
-
         public bool Update(int id, SwitchPortModel model)
         {
             bool result = DoAction(delegate ()

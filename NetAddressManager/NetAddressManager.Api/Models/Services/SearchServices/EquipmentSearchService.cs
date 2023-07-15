@@ -5,7 +5,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
     public class EquipmentSearchService
     {
         private readonly ApplicationContext _db;
-
         public EquipmentSearchService(ApplicationContext db)
         {
             _db = db;
@@ -15,7 +14,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
         public async Task<SwitchData> GetEquipmentDataAsync(string equipment)
         {
             var manufacturereEquipment = await GetEquipmentAsync(equipment);
-
             if (manufacturereEquipment == null)
             {
                 return null;
@@ -26,7 +24,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
             var coreSwitchData = await GetCoreSwitchDataAsync(equipmentId);
             var aggregationSwitchData = await GetAggregationSwitchDataAsync(equipmentId);
             var accessSwitchData = await GetAccessSwitchDataAsync(equipmentId);
-
             var postalAddressIds = GetPostalAddressIds(coreSwitchData, aggregationSwitchData, accessSwitchData);
             var postalAddresses = await GetPostalAddressAsync(postalAddressIds);
 
@@ -38,8 +35,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
                 PostalAddresses = postalAddresses
             };
         }
-
-
 
 
         private async Task<EquipmentManufacturer> GetEquipmentAsync(string equipment)
@@ -57,7 +52,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
         {
             return await _db.AggregationSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).ToListAsync();
         }
-
 
 
         private async Task<List<AccessSwitch>> GetAccessSwitchDataAsync(int equipmentId)

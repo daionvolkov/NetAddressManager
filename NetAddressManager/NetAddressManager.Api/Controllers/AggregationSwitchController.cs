@@ -24,11 +24,13 @@ namespace NetAddressManager.Api.Controllers
             _checkDataService = new CheckDataService(db);
         }
 
+
         [HttpGet]
         public async Task<IEnumerable<AggregationSwitchModel>> GetAggregationSwitches()
         {
             return await _db.AggregationSwitch.Select(cs => cs.GetModel()).ToListAsync();
         }
+
 
         [HttpGet("{id}")]
         public ActionResult<AccessSwitchModel> GetAggregationSwitchById(int id)
@@ -36,6 +38,7 @@ namespace NetAddressManager.Api.Controllers
             var address = _aggregationSwitchService.Get(id);
             return address == null ? NotFound() : Ok(address);
         }
+
 
         [HttpPost]
         public IActionResult CreateAggregationSwitch([FromBody] AggregationSwitchModel aggregationSwitchModel)
@@ -53,6 +56,7 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
         [HttpPatch("{id}")]
         public IActionResult UpdateAggregationSwitch(int id, [FromBody] AggregationSwitchModel aggregationSwitchModel)
         {
@@ -61,9 +65,9 @@ namespace NetAddressManager.Api.Controllers
                 bool result = _aggregationSwitchService.Update(id, aggregationSwitchModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteAggregationSwitch(int id)
@@ -78,10 +82,8 @@ namespace NetAddressManager.Api.Controllers
         {
             if (addressId != 0)
             {
-      
-                _aggregationSwitchService.AddPostalAddressToAggregation(id, addressId);
-                return Ok(addressId);
-        
+                bool result = _aggregationSwitchService.AddPostalAddressToAggregation(id, addressId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
@@ -92,10 +94,8 @@ namespace NetAddressManager.Api.Controllers
         {
             if (equipmentId != 0)
             {
-
-                _aggregationSwitchService.AddEquipmentToAggregation(id, equipmentId);
-                return Ok();
-
+                bool result = _aggregationSwitchService.AddEquipmentToAggregation(id, equipmentId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
@@ -105,7 +105,6 @@ namespace NetAddressManager.Api.Controllers
         {
             if (gatewayId != 0)
             {
-
                 _aggregationSwitchService.AddGatewayToAggregation(id, gatewayId);
                 return Ok();
 
@@ -114,12 +113,12 @@ namespace NetAddressManager.Api.Controllers
         }
 
         [HttpPatch("{id}/accessswitch")]
-        public IActionResult AddAggregationSwitchToCoreSwitch(int id, [FromBody] List<int> accessSwitchId)
+        public IActionResult AddAccessSwitchToAggregationSwitch(int id, [FromBody] List<int> accessSwitchId)
         {
             if (accessSwitchId != null)
             {
-                _aggregationSwitchService.AddAccessSwitchToAggregation(id, accessSwitchId);
-                return Ok(accessSwitchId);
+                bool result = _aggregationSwitchService.AddAccessSwitchToAggregation(id, accessSwitchId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }

@@ -31,12 +31,14 @@ namespace NetAddressManager.Api.Controllers
             return await _db.PostalAddress.Select(pa => pa.GetModel()).ToListAsync();
         }
 
+
         [HttpGet("{id}")]
         public ActionResult<PostalAddressModel> GetPostalAddressById(int id)
         {
             var address = _postalAddressService.Get(id);
             return address == null ? NotFound() : Ok(address);
         }
+
 
         [HttpPost]
         public IActionResult CreatePostalAddress([FromBody] PostalAddressModel postalAddressModel)
@@ -59,13 +61,12 @@ namespace NetAddressManager.Api.Controllers
         {
             if (postalAddressModel != null)
             {
-
                 bool result = _postalAddressService.Update(id, postalAddressModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeletePostalAddreess(int id)

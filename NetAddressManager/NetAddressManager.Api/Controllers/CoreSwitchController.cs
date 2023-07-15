@@ -41,7 +41,6 @@ namespace NetAddressManager.Api.Controllers
         [HttpPost]
         public IActionResult CreateCoreSwitch([FromBody] CoreSwitchModel coreSwitchModel)
         {
-            
             if (coreSwitchModel != null)
             {
                 bool isIPAddressExists = _checkDataService.CheckIpAddress(coreSwitchModel.IPAddress);
@@ -63,7 +62,6 @@ namespace NetAddressManager.Api.Controllers
                 bool result = _coreSwitchService.Update(id, coreSwitchModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
 
@@ -79,8 +77,8 @@ namespace NetAddressManager.Api.Controllers
         {
             if (aggrSwitchId != null)
             {
-                _coreSwitchService.AddAggrSwitchToCore(id,  aggrSwitchId);
-                return Ok(aggrSwitchId);
+                bool result = _coreSwitchService.AddAggrSwitchToCore(id,  aggrSwitchId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
@@ -91,17 +89,20 @@ namespace NetAddressManager.Api.Controllers
         {
             if (addressId != 0)
             {
-                _coreSwitchService.AddPostalAddressToCore(id, addressId);
-                return Ok(addressId);
+                bool result =  _coreSwitchService.AddPostalAddressToCore(id, addressId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
+
+
         [HttpPatch("{id}/equipment")]
         public IActionResult AddEquipmentToCoreSwitch(int id, [FromBody] int equipmentId)
         {
             if (equipmentId != 0)
             {
-                _coreSwitchService.AddEquipmentToCore(id, equipmentId);
+                bool result =  _coreSwitchService.AddEquipmentToCore(id, equipmentId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
@@ -118,7 +119,5 @@ namespace NetAddressManager.Api.Controllers
             }
             return BadRequest();
         }
-
-
     }
 }

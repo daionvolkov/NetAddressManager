@@ -7,9 +7,7 @@ namespace NetAddressManager.Api.Models
         public int? AggregationSwitchId { get; set; }
         public AggregationSwitch? AggregationSwitch { get; set; }
 
-        public AccessSwitch()
-        {
-        }
+        public AccessSwitch() { }
 
         public AccessSwitch(AccessSwitchModel accessSwitchModel) : base(accessSwitchModel)
         {

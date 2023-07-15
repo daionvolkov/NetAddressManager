@@ -9,9 +9,7 @@ namespace NetAddressManager.Api.Models
         public string Street { get; set; }
         public string Building { get; set; }
 
-        public PostalAddress()
-        {
-        }
+        public PostalAddress() { }
 
         public PostalAddress(string city, string street, string building)
         {
@@ -39,6 +37,4 @@ namespace NetAddressManager.Api.Models
             };
         }
     }
-
-  
 }

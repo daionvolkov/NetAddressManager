@@ -50,7 +50,6 @@ namespace NetAddressManager.Api.Models.Services
 
                 equipment.Manufacturer = model.Manufacturer;
                 equipment.Model = model.Model;
-                
 
                 _db.EquipmentManufacturer.Update(equipment);
                 _db.SaveChanges();

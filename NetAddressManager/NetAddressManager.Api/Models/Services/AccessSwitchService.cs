@@ -8,7 +8,6 @@ namespace NetAddressManager.Api.Models.Services
     public class AccessSwitchService : AbstractionService, ICommonService<AccessSwitchModel>
     {
         private readonly ApplicationContext _db;
-
         public AccessSwitchService(ApplicationContext db)
         {
             _db = db;
@@ -19,11 +18,11 @@ namespace NetAddressManager.Api.Models.Services
             AccessSwitch accessSwitch = _db.AccessSwitch
                  .Include(cs => cs.SwitchPorts)
                  .FirstOrDefault(cs => cs.Id == id) ?? new AccessSwitch();
+
             var accessSwitchModel = accessSwitch?.GetModel();
             if (accessSwitchModel != null)
             {
                 accessSwitchModel.SwitchPortIds = accessSwitch.SwitchPorts.Select(cs => cs.Id).ToList();
-
             }
             return accessSwitchModel;
         }
@@ -52,7 +51,6 @@ namespace NetAddressManager.Api.Models.Services
         }
 
 
-
         public bool Update(int id, AccessSwitchModel model)
         {
             bool result = DoAction(delegate ()
@@ -69,40 +67,52 @@ namespace NetAddressManager.Api.Models.Services
             return result;
         }
 
-        public void AddPostalAddressToAccess(int id, int addressId)
+        public bool AddPostalAddressToAccess(int id, int addressId)
         {
             AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AccessSwitch();
-            var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
-            if (accessSwitch.PostalAddressId != address.Id)
+            bool result = DoAction(delegate ()
             {
-                accessSwitch.PostalAddressId = address.Id;
-                _db.AccessSwitch.Update(accessSwitch);
-            }
-            _db.SaveChanges();
+                var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
+                if (accessSwitch.PostalAddressId != address.Id)
+                {
+                    accessSwitch.PostalAddressId = address.Id;
+                    _db.AccessSwitch.Update(accessSwitch);
+                    _db.SaveChanges();
+                }
+            });
+            return result;
         }
 
-        public void AddEquipmentToAccess(int id, int equipmentId)
+        public bool AddEquipmentToAccess(int id, int equipmentId)
         {
             AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AccessSwitch();
-            var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
-            if (accessSwitch.EquipmentManufacturerId != equipment.Id)
+            bool result = DoAction(delegate ()
             {
-                accessSwitch.EquipmentManufacturerId = equipment.Id;
-                _db.AccessSwitch.Update(accessSwitch);
-            }
-            _db.SaveChanges();
+                var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
+                if (accessSwitch.EquipmentManufacturerId != equipment.Id)
+                {
+                    accessSwitch.EquipmentManufacturerId = equipment.Id;
+                    _db.AccessSwitch.Update(accessSwitch);
+                    _db.SaveChanges();
+                }
+            });
+            return result;
         }
 
-        public void AddGatewayToAccess(int id, int gatewayId)
+        public bool AddGatewayToAccess(int id, int gatewayId)
         {
             AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AccessSwitch();
-            var gateway = _db.AggregationSwitch.FirstOrDefault(g => g.Id == gatewayId) ?? new AggregationSwitch();
-            if (accessSwitch.AggregationSwitchId != gateway.Id)
+            bool result = DoAction(delegate ()
             {
-                accessSwitch.AggregationSwitchId = gateway.Id;
-                _db.AccessSwitch.Update(accessSwitch);
-            }
-            _db.SaveChanges();
+                var gateway = _db.AggregationSwitch.FirstOrDefault(g => g.Id == gatewayId) ?? new AggregationSwitch();
+                if (accessSwitch.AggregationSwitchId != gateway.Id)
+                {
+                    accessSwitch.AggregationSwitchId = gateway.Id;
+                    _db.AccessSwitch.Update(accessSwitch);
+                    _db.SaveChanges();
+                }
+            });
+            return result;
         }
 
         public bool AddPortToAccess(int id, List<int> portIds)

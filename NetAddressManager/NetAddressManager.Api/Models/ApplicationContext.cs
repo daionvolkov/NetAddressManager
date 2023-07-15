@@ -12,22 +12,14 @@ namespace NetAddressManager.Api.Models
         public DbSet<PostalAddress> PostalAddress { get; set; }
         public DbSet<EquipmentManufacturer> EquipmentManufacturer { get; set; }
         public DbSet<SwitchPort> SwitchPort { get; set; }
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
-        {
-
-
-        }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CoreSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
             modelBuilder.Entity<AggregationSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
             modelBuilder.Entity<AccessSwitch>().Property(e => e.PostalAddressId).HasColumnName("PostalAddressId1");
 
-
             base.OnModelCreating(modelBuilder);
         }
-
-
-
     }
 }

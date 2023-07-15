@@ -5,8 +5,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
     public class AddressSearchService
     {
         private readonly ApplicationContext _db;
-
-
         public AddressSearchService(ApplicationContext db)
         {
             _db = db;
@@ -15,18 +13,15 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
         public async Task<SwitchData> GetAddressDataAsync(string address)
         {
             var postalAddress = await GetPostalAddressAsync(address);
-
             if (postalAddress == null)
             {
                 return null;
             }
-
             var postalAddressId = postalAddress.Id;
 
             var coreSwitchData = await GetCoreSwitchDataAsync(postalAddressId);
             var aggregationSwitchData = await GetAggregationSwitchDataAsync(postalAddressId);
             var accessSwitchData = await GetAccessSwitchDataAsync(postalAddressId);
-
             var equipmentManufacturerIds = GetEquipmentManufacturerIds(coreSwitchData, aggregationSwitchData, accessSwitchData);
             var equipmentManufacturers = await GetEquipmentManufacturersAsync(equipmentManufacturerIds);
 
@@ -57,7 +52,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
         }
 
 
-
         private async Task<List<AccessSwitch>> GetAccessSwitchDataAsync(int postalAddressId)
         {
             return await _db.AccessSwitch.Where(s => s.PostalAddressId == postalAddressId).ToListAsync();
@@ -73,9 +67,10 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
                 .Select(id => id.Value)
                 .Distinct()
                 .ToList();
-
             return equipmentManufacturerIds;
         }
+
+
         private async Task<List<EquipmentManufacturer>> GetEquipmentManufacturersAsync(List<int> equipmentManufacturerIds)
         {
             return await _db.EquipmentManufacturer.Where(m => equipmentManufacturerIds.Contains(m.Id)).ToListAsync();

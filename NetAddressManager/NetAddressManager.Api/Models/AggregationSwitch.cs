@@ -8,9 +8,7 @@ namespace NetAddressManager.Api.Models
         public CoreSwitch? CoreSwitch { get; set; }
         public List<AccessSwitch> AccessSwitches { get; set; } = new List<AccessSwitch>();
 
-        public AggregationSwitch()
-        {
-        }
+        public AggregationSwitch() { }
 
         public AggregationSwitch(AggregationSwitchModel aggregationSwitchModel) : base(aggregationSwitchModel)
         {
@@ -44,7 +42,5 @@ namespace NetAddressManager.Api.Models
                 CoreSwitchId = this.CoreSwitchId,
             };
         }
-
     }
-
 }

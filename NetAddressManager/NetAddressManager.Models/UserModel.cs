@@ -19,9 +19,7 @@ namespace NetAddressManager.Models
         public DateTime LastLoginDate { get; set; }
         public UserStatus Status { get; set; }
 
-        public UserModel()
-        {
-        }
+        public UserModel() { }
         public UserModel(string firstName, string lastName, string password, string email, string phone=null,  UserStatus status = UserStatus.User)
         {
             FirstName = firstName;
@@ -32,8 +30,5 @@ namespace NetAddressManager.Models
             RegistrationDate = DateTime.Now;
             Status = status;
         }
-
-   
-
     }
 }

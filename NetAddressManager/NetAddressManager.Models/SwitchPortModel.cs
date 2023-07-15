@@ -16,9 +16,7 @@ namespace NetAddressManager.Models
         public PortStatus Status { get; set; }
         public SwitchType Type { get; set; }
 
-        public SwitchPortModel()
-        {
-        }
+        public SwitchPortModel() { }
 
         public SwitchPortModel(int portNumber, string? description, PortStatus status=PortStatus.Free, SwitchType type=SwitchType.Indeterminate)
         {

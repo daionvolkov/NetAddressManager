@@ -26,7 +26,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
                     PostalAddresses = new List<PostalAddress> { postalAddress } 
                 };
             }
-
             var aggregationSwitch = await SearchAggregationSwitchByIpAddressAsync(ipAddress);
             if (aggregationSwitch != null)
             {
@@ -46,7 +45,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
                 var equipmentManufacturer = await GetEquipmentManufacturerByIdAsync((int)accessSwitch.EquipmentManufacturerId);
                 var postalAddress = await GetPostalAddressByIdAsync((int)accessSwitch.PostalAddressId);
 
-
                 return new SwitchData
                 {
                     AccessSwitchData = new List<AccessSwitch> { accessSwitch },
@@ -54,7 +52,6 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
                     PostalAddresses = new List<PostalAddress> { postalAddress }
                 };
             }
-
             return null; 
         }
 

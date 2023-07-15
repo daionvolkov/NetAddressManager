@@ -34,13 +34,11 @@ namespace NetAddressManager.Api.Models.Services
 
         public bool Create(CoreSwitchModel model)
         {
-
             bool result = DoAction(delegate ()
             {
                 CoreSwitch coreSwitch = new CoreSwitch(model);
                 _db.CoreSwitch.Add(coreSwitch);
                 _db.SaveChanges();
-
             });
             return result;
         }
@@ -78,43 +76,57 @@ namespace NetAddressManager.Api.Models.Services
             return result;
         }
 
-        public void AddPostalAddressToCore(int id, int addressId)
+        public bool AddPostalAddressToCore(int id, int addressId)
         {
             CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
-            var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
-            if (coreSwitch.PostalAddressId != address.Id)
+            bool result = DoAction(delegate ()
             {
-                coreSwitch.PostalAddressId = address.Id;
-                _db.CoreSwitch.Update(coreSwitch);
-            }
-            _db.SaveChanges();
-        }
 
-        public void AddEquipmentToCore(int id, int equipmentId)
-        {
-            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
-            var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
-            if (coreSwitch.EquipmentManufacturerId != equipment.Id )
-            {
-                coreSwitch.EquipmentManufacturerId = equipment.Id;
-                _db.CoreSwitch.Update(coreSwitch);
-            }
-            _db.SaveChanges();
-        }
-
-        public void AddAggrSwitchToCore(int id, List<int> aggregationSwitchIds) {
-            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
-
-            foreach (int aggregationSwitchId in aggregationSwitchIds) {
-                AggregationSwitch aggr = _db.AggregationSwitch.FirstOrDefault(s => s.Id == aggregationSwitchId) ?? new AggregationSwitch();
-                if (coreSwitch.AggregationSwitches.Contains(aggr) == false)
+                var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
+                if (coreSwitch.PostalAddressId != address.Id)
                 {
-                    coreSwitch.AggregationSwitches.Add(aggr);
+                    coreSwitch.PostalAddressId = address.Id;
                     _db.CoreSwitch.Update(coreSwitch);
+                    _db.SaveChanges();
                 }
-            }
-            
-            _db.SaveChanges();
+                
+            });
+            return result;
+        }
+
+        public bool AddEquipmentToCore(int id, int equipmentId)
+        {
+            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+            bool result = DoAction(delegate ()
+            {
+                var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
+                if (coreSwitch.EquipmentManufacturerId != equipment.Id)
+                {
+                    coreSwitch.EquipmentManufacturerId = equipment.Id;
+                    _db.CoreSwitch.Update(coreSwitch);
+                    _db.SaveChanges();
+                }
+            });
+            return result;
+        }
+
+
+        public bool AddAggrSwitchToCore(int id, List<int> aggregationSwitchIds) {
+            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+            bool result = DoAction(delegate ()
+            {
+                foreach (int aggregationSwitchId in aggregationSwitchIds)
+                {
+                    AggregationSwitch aggr = _db.AggregationSwitch.FirstOrDefault(s => s.Id == aggregationSwitchId) ?? new AggregationSwitch();
+                    if (coreSwitch.AggregationSwitches.Contains(aggr) == false)
+                    {
+                        coreSwitch.AggregationSwitches.Add(aggr);
+                        _db.CoreSwitch.Update(coreSwitch);
+                        _db.SaveChanges();
+                    }
+                }
+            });
+            return result;
         }
 
         public bool AddPortToCore(int id, List<int> portIds)
@@ -132,7 +144,6 @@ namespace NetAddressManager.Api.Models.Services
                         _db.CoreSwitch.Update(coreSwitch);
                         _db.SwitchPort.Update(switchPort);
                     }
-
                 }
                 _db.SaveChanges();
             });

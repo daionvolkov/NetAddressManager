@@ -8,9 +8,7 @@ namespace NetAddressManager.Api.Models
         public string Manufacturer { get; set; }
         public string Model { get; set; }
 
-        public EquipmentManufacturer()
-        {
-        }
+        public EquipmentManufacturer() { }
 
         public EquipmentManufacturer(int id, string manufacturer, string model)
         {
@@ -34,6 +32,5 @@ namespace NetAddressManager.Api.Models
                 Model = this.Model
             };
         }
-
     }
 }

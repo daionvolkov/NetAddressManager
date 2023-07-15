@@ -12,7 +12,6 @@ namespace NetAddressManager.Api.Models.Services
         public AggregationSwitchService(ApplicationContext db)
         {
             _db = db;
-
         }
 
         public AggregationSwitchModel Get(int id)
@@ -55,7 +54,6 @@ namespace NetAddressManager.Api.Models.Services
         }
 
     
-
         public bool Update(int id, AggregationSwitchModel model)
         {
             bool result = DoAction(delegate ()
@@ -73,28 +71,38 @@ namespace NetAddressManager.Api.Models.Services
             return result;
         }
 
-        public void AddPostalAddressToAggregation(int id, int addressId)
+        public bool AddPostalAddressToAggregation(int id, int addressId)
         {
+
             AggregationSwitch aggregationSwitch = _db.AggregationSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AggregationSwitch();
-            var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
-            if (aggregationSwitch.PostalAddressId != address.Id)
+            bool result = DoAction(delegate ()
             {
-                aggregationSwitch.PostalAddressId = address.Id;
-                _db.AggregationSwitch.Update(aggregationSwitch);
-            }
-            _db.SaveChanges();
+                var address = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == addressId) ?? new EquipmentManufacturer();
+                if (aggregationSwitch.PostalAddressId != address.Id)
+                {
+                    aggregationSwitch.PostalAddressId = address.Id;
+                    _db.AggregationSwitch.Update(aggregationSwitch);
+                    _db.SaveChanges();
+                }
+            });
+            return result;
         }
 
-        public void AddEquipmentToAggregation(int id, int equipmentId)
+        public bool AddEquipmentToAggregation(int id, int equipmentId)
         {
             AggregationSwitch aggregationSwitch = _db.AggregationSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AggregationSwitch();
-            var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
-            if (aggregationSwitch.EquipmentManufacturerId != equipment.Id)
+            bool result = DoAction(delegate ()
             {
-                aggregationSwitch.EquipmentManufacturerId = equipment.Id;
-                _db.AggregationSwitch.Update(aggregationSwitch);
-            }
-            _db.SaveChanges();
+                var equipment = _db.EquipmentManufacturer.FirstOrDefault(e => e.Id == equipmentId) ?? new EquipmentManufacturer();
+                if (aggregationSwitch.EquipmentManufacturerId != equipment.Id)
+                {
+                    aggregationSwitch.EquipmentManufacturerId = equipment.Id;
+                    _db.AggregationSwitch.Update(aggregationSwitch);
+                    _db.SaveChanges();
+                }
+
+            });
+            return result;
         }
 
         public void AddGatewayToAggregation(int id, int gatewayId)
@@ -109,22 +117,27 @@ namespace NetAddressManager.Api.Models.Services
             _db.SaveChanges();
         }
 
-        public void AddAccessSwitchToAggregation(int id, List<int> accessSwitchIds)
+        public bool AddAccessSwitchToAggregation(int id, List<int> accessSwitchIds)
         {
             AggregationSwitch aggregationSwitch = _db.AggregationSwitch.FirstOrDefault(cs => cs.Id == id) ?? new AggregationSwitch();
 
-            foreach (int accessSwitchId in accessSwitchIds)
+            bool result = DoAction(delegate ()
             {
-                AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(s => s.Id == accessSwitchId) ?? new AccessSwitch();
-                if (aggregationSwitch.AccessSwitches.Contains(accessSwitch) == false)
+                foreach (int accessSwitchId in accessSwitchIds)
                 {
-                    aggregationSwitch.AccessSwitches.Add(accessSwitch);
-                    _db.AggregationSwitch.Update(aggregationSwitch);
+                    AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(s => s.Id == accessSwitchId) ?? new AccessSwitch();
+                    if (aggregationSwitch.AccessSwitches.Contains(accessSwitch) == false)
+                    {
+                        aggregationSwitch.AccessSwitches.Add(accessSwitch);
+                        _db.AggregationSwitch.Update(aggregationSwitch);
+                        _db.SaveChanges();
+                    }
                 }
-            }
-
-            _db.SaveChanges();
+            });
+            return result;
         }
+
+
 
         public bool AddPortToAggregation(int id, List<int> portIds)
         {
@@ -142,10 +155,8 @@ namespace NetAddressManager.Api.Models.Services
                         _db.AggregationSwitch.Update(aggregationSwitch);
                         _db.SwitchPort.Update(switchPort);
                         _db.SaveChanges();
-
                     }
                 }
-
             });
             return result;
         }

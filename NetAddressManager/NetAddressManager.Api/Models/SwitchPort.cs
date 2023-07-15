@@ -11,7 +11,6 @@ namespace NetAddressManager.Api.Models
         public string? Description { get; set; }
         public PortStatus Status { get; set; }
         public SwitchType Type { get; set; }
-
         public SwitchPort() { }
 
         public SwitchPort(SwitchPortModel switchPortModel)

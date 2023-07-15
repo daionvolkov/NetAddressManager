@@ -6,6 +6,5 @@
         Reserved,
         Active,
         Broken
-
     }
 }

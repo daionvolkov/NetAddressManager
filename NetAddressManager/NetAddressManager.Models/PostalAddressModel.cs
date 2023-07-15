@@ -13,9 +13,7 @@ namespace NetAddressManager.Models
         public string Street { get; set; }
         public string Building { get; set; }
 
-        public PostalAddressModel()
-        {
-        }
+        public PostalAddressModel() { }
 
         public PostalAddressModel(string city, string street, string building)
         {

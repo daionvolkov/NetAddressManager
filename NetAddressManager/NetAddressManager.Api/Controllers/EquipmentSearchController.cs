@@ -20,6 +20,7 @@ namespace NetAddressManager.Api.Controllers
             _equipmentSearchService = new EquipmentSearchService(db);
         }
 
+
         [HttpGet("{equipment}")]
         public async Task<IActionResult> GetAddressData(string equipment)
         {

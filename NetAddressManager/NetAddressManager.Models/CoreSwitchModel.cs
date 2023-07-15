@@ -13,7 +13,6 @@ namespace NetAddressManager.Models
         public List<int>? AggregationSwitchIds { get; set; } = new List<int>();
 
         public CoreSwitchModel() { }
-
         public CoreSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,
            SwitchStatus status, string iPGateway, int postalAddressId = 0, int equipmentManufacturerId = 0, List<int> switchPortIds=null, List<int> aggregationSwitchIds = null)
         {

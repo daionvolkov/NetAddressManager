@@ -6,9 +6,6 @@ namespace NetAddressManager.Api.Models
     {
         public string IPGateway { get; set; }
         public List<AggregationSwitch> AggregationSwitches { get; set; } = new List<AggregationSwitch>();
-
-
-
         public CoreSwitch() { }
 
         public CoreSwitch(CoreSwitchModel coreSwitchModel) : base(coreSwitchModel) 
@@ -41,9 +38,7 @@ namespace NetAddressManager.Api.Models
                 PostalAddressId = this.PostalAddressId,
                 SwitchPortId = this.SwitchPortId,
                 IPGateway = this.IPGateway,
-               
             };
         }
     }
-
 }

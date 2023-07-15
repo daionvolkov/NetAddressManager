@@ -20,16 +20,15 @@ namespace NetAddressManager.Api.Controllers
             _netAddressSearchService = new NetAddressSearchService(db);
         }
 
+
         [HttpGet("{ipaddress}")]
         public async Task<IActionResult> GetNetAddrressData(string ipaddress)
         {
             var switchData = await _netAddressSearchService.SearchSwitchByIpAddressAsync(ipaddress);
-
             if (switchData == null)
             {
                 return NotFound("Device not found");
             }
-
             return Ok(switchData);
         }
     }

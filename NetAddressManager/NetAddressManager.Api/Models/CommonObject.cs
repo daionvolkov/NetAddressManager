@@ -38,6 +38,5 @@ namespace NetAddressManager.Api.Models
             PostalAddressId = commonModel.PostalAddressId;
             SwitchPortId = commonModel.SwitchPortId;
         }       
-    
     }
 }

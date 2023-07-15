@@ -37,6 +37,8 @@ namespace NetAddressManager.Api.Models.Services
             var user = _db.User.FirstOrDefault(u => u.Email == login && u.Password == password);
             return user;
         }
+
+
         public User GetUser(string login)
         {
             var user = _db.User.FirstOrDefault(u => u.Email == login) ?? new User();
@@ -63,10 +65,7 @@ namespace NetAddressManager.Api.Models.Services
                 return claimsIdentity;
             }
             return null;
-            
         }
-
-
 
         public bool Create(UserModel model)
         {
@@ -76,7 +75,6 @@ namespace NetAddressManager.Api.Models.Services
                 _db.User.Add(user); 
                 _db.SaveChanges();
             });
-
         }
 
         public bool Delete(int id)
@@ -91,14 +89,12 @@ namespace NetAddressManager.Api.Models.Services
                 });
             }
             return false;
-
         }
 
         public UserModel Get(int id)
         {
             User user = _db.User.FirstOrDefault(u => u.Id == id) ?? new User();
             return user.GetModel();
-
         }
 
         public bool Update(int id, UserModel model)
@@ -118,7 +114,6 @@ namespace NetAddressManager.Api.Models.Services
                     _db.SaveChanges();
                 });
             }
-
         }
     }
 }

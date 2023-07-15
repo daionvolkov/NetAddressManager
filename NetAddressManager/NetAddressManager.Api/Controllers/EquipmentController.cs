@@ -24,6 +24,7 @@ namespace NetAddressManager.Api.Controllers
             _checkDataService = new CheckDataService(db);
         }
         
+
         [HttpGet]
         public async Task<IEnumerable<EquipmentManufacturerModel>> GetEquipment()
         {
@@ -36,6 +37,7 @@ namespace NetAddressManager.Api.Controllers
             var equipment = _equipmentManufacturerService.Get(id);
             return equipment == null ? NotFound() : Ok(equipment);
         }
+
 
         [HttpPost]
         public IActionResult CreateEquipmentManufacturer([FromBody] EquipmentManufacturerModel equipmentManufacturerModel)
@@ -53,6 +55,7 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
         [HttpPatch("{id}")]
         public IActionResult UpdateEquipmentManufacturer(int id, [FromBody] EquipmentManufacturerModel equipmentManufacturerModel)
         {
@@ -61,9 +64,9 @@ namespace NetAddressManager.Api.Controllers
                 bool result = _equipmentManufacturerService.Update(id, equipmentManufacturerModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteEquipmentManufacturer(int id)

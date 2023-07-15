@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetAddressManager.Api.Models;
@@ -24,6 +23,7 @@ namespace NetAddressManager.Api.Controllers
             _checkDataService = new CheckDataService(db);
         }
 
+
         [HttpGet]
         public async Task<IEnumerable<AccessSwitchModel>> GetAccessSwitches()
         {
@@ -36,6 +36,7 @@ namespace NetAddressManager.Api.Controllers
             var address = _accessSwitchService.Get(id);
             return address == null ? NotFound() : Ok(address);
         }
+
 
         [HttpPost]
         public IActionResult CreateAccessSwitch([FromBody] AccessSwitchModel accessSwitchModel)
@@ -53,6 +54,7 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
         [HttpPatch("{id}")]
         public IActionResult UpdateAccessSwitch(int id, [FromBody] AccessSwitchModel accessSwitchModel)
         {
@@ -61,9 +63,9 @@ namespace NetAddressManager.Api.Controllers
                 bool result = _accessSwitchService.Update(id, accessSwitchModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteAccessSwitch(int id)
@@ -72,15 +74,14 @@ namespace NetAddressManager.Api.Controllers
             return result ? Ok() : NotFound();
         }
 
+
         [HttpPatch("{id}/address")]
         public IActionResult AddPostalAddressToAccessSwitch(int id, [FromBody] int addressId)
         {
             if (addressId != 0)
             {
-
-                _accessSwitchService.AddPostalAddressToAccess(id, addressId);
-                return Ok(addressId);
-
+                bool result = _accessSwitchService.AddPostalAddressToAccess(id, addressId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
@@ -91,23 +92,20 @@ namespace NetAddressManager.Api.Controllers
         {
             if (equipmentId != 0)
             {
-
-                _accessSwitchService.AddEquipmentToAccess(id, equipmentId);
-                return Ok();
-
+                bool result = _accessSwitchService.AddEquipmentToAccess(id, equipmentId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }
+
 
         [HttpPatch("{id}/gateway")]
         public IActionResult AddGatemayToAcceessSwitch(int id, [FromBody] int gatewayId)
         {
             if (gatewayId != 0)
             {
-
-                _accessSwitchService.AddGatewayToAccess(id, gatewayId);
-                return Ok();
-
+                bool result = _accessSwitchService.AddGatewayToAccess(id, gatewayId);
+                return result ? Ok() : BadRequest("Невозможно добавить");
             }
             return BadRequest();
         }

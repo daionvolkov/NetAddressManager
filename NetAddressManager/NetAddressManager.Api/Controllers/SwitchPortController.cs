@@ -28,12 +28,14 @@ namespace NetAddressManager.Api.Controllers
             return await _db.SwitchPort.Select(pa => pa.GetModel()).ToListAsync();
         }
 
+
         [HttpGet("{id}")]
         public ActionResult<SwitchPortModel> GetSwitchPortById(int id)
         {
             var address = _switchPortService.Get(id);
             return address == null ? NotFound() : Ok(address);
         }
+
 
         [HttpPost]
         public IActionResult CreateSwitchPort([FromBody] SwitchPortModel switchPortModel)
@@ -51,13 +53,12 @@ namespace NetAddressManager.Api.Controllers
         {
             if (switchPortModel != null)
             {
-
                 bool result = _switchPortService.Update(id, switchPortModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteSwitchPort(int id)

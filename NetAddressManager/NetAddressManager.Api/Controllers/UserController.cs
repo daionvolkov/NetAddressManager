@@ -15,14 +15,15 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly UserService _userService;
+
         public UserController(ApplicationContext db)
         {
             _db = db;
             _userService = new UserService(db);
         }
 
+
         [HttpGet]
-        
         public async Task<IEnumerable<UserModel>> GetUsers()
         {
             return await _db.User.Select(u => u.GetModel()).ToListAsync();
@@ -36,7 +37,6 @@ namespace NetAddressManager.Api.Controllers
         }
 
 
-
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserModel userModel)
         {
@@ -48,6 +48,7 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
         [HttpPatch("{id}")]
         public IActionResult UpdateUser(int id, [FromBody] UserModel userModel)
         {
@@ -56,9 +57,9 @@ namespace NetAddressManager.Api.Controllers
                 bool result = _userService.Update(id, userModel);
                 return result ? Ok() : NotFound();
             }
-
             return BadRequest();
         }
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)

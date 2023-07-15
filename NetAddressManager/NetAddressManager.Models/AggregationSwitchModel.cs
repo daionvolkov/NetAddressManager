@@ -11,7 +11,6 @@ namespace NetAddressManager.Models
     {
         public int? CoreSwitchId { get; set; }
         public List<int> AccessSwitchIds { get; set; } = new List<int>();
-
         public AggregationSwitchModel() { }
 
         public AggregationSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,

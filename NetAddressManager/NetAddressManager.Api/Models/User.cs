@@ -16,7 +16,6 @@ namespace NetAddressManager.Api.Models
         public UserStatus Status { get; set; }
 
         public User() { }
-
         public User(string firstName, string lastName, string password, string email, string? phone = null, UserStatus status = UserStatus.User)
         {
             FirstName = firstName;
@@ -38,7 +37,6 @@ namespace NetAddressManager.Api.Models
             Phone = userModel.Phone;
             RegistrationDate = userModel.RegistrationDate;
             Status = userModel.Status;
-
         }
 
         public UserModel GetModel()
