@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NetAddressManager.Api.Models.Services
+namespace NetAddressManager.Api.Models.Services.SearchServices
 {
     public class EquipmentSearchService
     {
@@ -44,7 +44,7 @@ namespace NetAddressManager.Api.Models.Services
 
         private async Task<EquipmentManufacturer> GetEquipmentAsync(string equipment)
         {
-            return await _db.EquipmentManufacturer.FirstOrDefaultAsync(a => (a.Manufacturer.Contains(equipment)) || (a.Model.Contains(equipment)));
+            return await _db.EquipmentManufacturer.FirstOrDefaultAsync(a => a.Manufacturer.Contains(equipment) || a.Model.Contains(equipment));
         }
 
         private async Task<List<CoreSwitch>> GetCoreSwitchDataAsync(int equipmentId)

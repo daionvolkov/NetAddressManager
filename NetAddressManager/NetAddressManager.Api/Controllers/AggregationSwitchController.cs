@@ -113,5 +113,26 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+        [HttpPatch("{id}/accessswitch")]
+        public IActionResult AddAggregationSwitchToCoreSwitch(int id, [FromBody] List<int> accessSwitchId)
+        {
+            if (accessSwitchId != null)
+            {
+                _aggregationSwitchService.AddAccessSwitchToAggregation(id, accessSwitchId);
+                return Ok(accessSwitchId);
+            }
+            return BadRequest();
+        }
+
+        [HttpPatch("{id}/port")]
+        public IActionResult AddSwitchPortAggresgationSwitch(int id, [FromBody] List<int> portIds)
+        {
+            if (portIds != null)
+            {
+                bool result = _aggregationSwitchService.AddPortToAggregation(id, portIds);
+                return result ? Ok() : BadRequest("Невозможно добавить, порт занят");
+            }
+            return BadRequest();
+        }
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum SwitchType
     {
+        Indeterminate,
         Core,
         Aggregation,
         Access

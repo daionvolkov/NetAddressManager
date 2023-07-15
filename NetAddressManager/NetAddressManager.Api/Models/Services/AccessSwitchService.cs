@@ -1,4 +1,6 @@
-﻿using NetAddressManager.Api.Models.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using NetAddressManager.Api.Models.Abstractions;
+using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Models;
 
 namespace NetAddressManager.Api.Models.Services
@@ -14,8 +16,16 @@ namespace NetAddressManager.Api.Models.Services
 
         public AccessSwitchModel Get(int id)
         {
-            AccessSwitch accessSwitch=_db.AccessSwitch.FirstOrDefault(asw=>asw.Id == id) ?? new AccessSwitch();
-            return accessSwitch.GetModel();
+            AccessSwitch accessSwitch = _db.AccessSwitch
+                 .Include(cs => cs.SwitchPorts)
+                 .FirstOrDefault(cs => cs.Id == id) ?? new AccessSwitch();
+            var accessSwitchModel = accessSwitch?.GetModel();
+            if (accessSwitchModel != null)
+            {
+                accessSwitchModel.SwitchPortIds = accessSwitch.SwitchPorts.Select(cs => cs.Id).ToList();
+
+            }
+            return accessSwitchModel;
         }
 
         public bool Create(AccessSwitchModel model)
@@ -93,6 +103,28 @@ namespace NetAddressManager.Api.Models.Services
                 _db.AccessSwitch.Update(accessSwitch);
             }
             _db.SaveChanges();
+        }
+
+        public bool AddPortToAccess(int id, List<int> portIds)
+        {
+            AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(asw => asw.Id == id) ?? new AccessSwitch();
+            bool result = DoAction(delegate ()
+            {
+                foreach (int portId in portIds)
+                {
+                    SwitchPort switchPort = _db.SwitchPort.FirstOrDefault(p => p.Id == portId) ?? new SwitchPort();
+
+                    if (accessSwitch.SwitchPorts.Contains(switchPort) == false && switchPort.Type == SwitchType.Indeterminate)
+                    {
+                        accessSwitch.SwitchPorts.Add(switchPort);
+                        switchPort.Type = SwitchType.Aggregation;
+                        _db.AccessSwitch.Update(accessSwitch);
+                        _db.SwitchPort.Update(switchPort);
+                        _db.SaveChanges();
+                    }
+                }
+            });
+            return result;
         }
     }
 }

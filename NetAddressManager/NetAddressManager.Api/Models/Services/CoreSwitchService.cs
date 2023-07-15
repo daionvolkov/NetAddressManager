@@ -1,4 +1,7 @@
-﻿using NetAddressManager.Api.Models.Abstractions;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NetAddressManager.Api.Models.Abstractions;
+using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Models;
 using System.Net;
 
@@ -15,8 +18,18 @@ namespace NetAddressManager.Api.Models.Services
 
         public CoreSwitchModel Get(int id)
         {
-            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
-            return coreSwitch.GetModel();
+            CoreSwitch coreSwitch = _db.CoreSwitch
+                .Include(cs=>cs.AggregationSwitches)
+                .Include(cs=>cs.SwitchPorts)
+                .FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+            var coreSwitchModel = coreSwitch?.GetModel();
+            if (coreSwitchModel != null) 
+            {
+                coreSwitchModel.AggregationSwitchIds = coreSwitch.AggregationSwitches.Select(cs => cs.Id).ToList();
+                coreSwitchModel.SwitchPortIds = coreSwitch.SwitchPorts.Select(cs => cs.Id).ToList();
+
+            }
+            return coreSwitchModel;
         }
 
         public bool Create(CoreSwitchModel model)
@@ -87,6 +100,43 @@ namespace NetAddressManager.Api.Models.Services
                 _db.CoreSwitch.Update(coreSwitch);
             }
             _db.SaveChanges();
+        }
+
+        public void AddAggrSwitchToCore(int id, List<int> aggregationSwitchIds) {
+            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+
+            foreach (int aggregationSwitchId in aggregationSwitchIds) {
+                AggregationSwitch aggr = _db.AggregationSwitch.FirstOrDefault(s => s.Id == aggregationSwitchId) ?? new AggregationSwitch();
+                if (coreSwitch.AggregationSwitches.Contains(aggr) == false)
+                {
+                    coreSwitch.AggregationSwitches.Add(aggr);
+                    _db.CoreSwitch.Update(coreSwitch);
+                }
+            }
+            
+            _db.SaveChanges();
+        }
+
+        public bool AddPortToCore(int id, List<int> portIds)
+        {
+            CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+            bool result = DoAction(delegate ()
+            {
+                foreach (int portId in portIds)
+                {
+                    SwitchPort switchPort = _db.SwitchPort.FirstOrDefault(p => p.Id == portId) ?? new SwitchPort();
+                    if (coreSwitch.SwitchPorts.Contains(switchPort) == false && switchPort.Type == SwitchType.Indeterminate)
+                    {
+                        coreSwitch.SwitchPorts.Add(switchPort);
+                        switchPort.Type = SwitchType.Core;
+                        _db.CoreSwitch.Update(coreSwitch);
+                        _db.SwitchPort.Update(switchPort);
+                    }
+
+                }
+                _db.SaveChanges();
+            });
+            return result;
         }
     }
 }

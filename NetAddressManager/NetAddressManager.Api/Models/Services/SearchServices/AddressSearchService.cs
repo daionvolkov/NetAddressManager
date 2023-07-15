@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NetAddressManager.Api.Models.Services
+namespace NetAddressManager.Api.Models.Services.SearchServices
 {
     public class AddressSearchService
     {
@@ -41,7 +41,7 @@ namespace NetAddressManager.Api.Models.Services
 
         private async Task<PostalAddress> GetPostalAddressAsync(string address)
         {
-            return await _db.PostalAddress.FirstOrDefaultAsync(a => (a.City == address) || (a.Street == address) || (a.Building == address));
+            return await _db.PostalAddress.FirstOrDefaultAsync(a => a.City == address || a.Street == address || a.Building == address);
         }
 
 

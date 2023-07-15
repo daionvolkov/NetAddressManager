@@ -40,7 +40,8 @@ namespace NetAddressManager.Api.Models
                 EquipmentManufacturerId = this.EquipmentManufacturerId,
                 PostalAddressId = this.PostalAddressId,
                 SwitchPortId = this.SwitchPortId,
-                IPGateway = this.IPGateway
+                IPGateway = this.IPGateway,
+               
             };
         }
     }

@@ -74,6 +74,18 @@ namespace NetAddressManager.Api.Controllers
             return result ? Ok() : NotFound();
         }
 
+        [HttpPatch("{id}/aggrswitch")]
+        public IActionResult AddAggregationSwitchToCoreSwitch(int id, [FromBody] List<int> aggrSwitchId)
+        {
+            if (aggrSwitchId != null)
+            {
+                _coreSwitchService.AddAggrSwitchToCore(id,  aggrSwitchId);
+                return Ok(aggrSwitchId);
+            }
+            return BadRequest();
+        }
+
+
         [HttpPatch("{id}/address")]
         public IActionResult AddPostalAddressToCoreSwitch(int id, [FromBody]  int addressId)
         {
@@ -90,6 +102,19 @@ namespace NetAddressManager.Api.Controllers
             if (equipmentId != 0)
             {
                 _coreSwitchService.AddEquipmentToCore(id, equipmentId);
+            }
+            return BadRequest();
+        }
+
+
+
+        [HttpPatch("{id}/port")]
+        public IActionResult AddSwitchPortCoreSwitch(int id, [FromBody] List<int>  portIds)
+        {
+            if (portIds != null)
+            {
+                bool result = _coreSwitchService.AddPortToCore(id, portIds);
+                return result ? Ok() : NotFound("Невозможно добавить, порт уже занят");
             }
             return BadRequest();
         }

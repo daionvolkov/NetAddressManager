@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetAddressManager.Api.Models;
-using NetAddressManager.Api.Models.Services;
+using NetAddressManager.Api.Models.Services.SearchServices;
 using NetAddressManager.Models;
 
 namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class AddressSearchController : ControllerBase
     {
         private readonly ApplicationContext _db;

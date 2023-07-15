@@ -23,5 +23,6 @@ namespace NetAddressManager.Models
         public int? SwitchPortId { get; set; }
         public List<int>? SwitchPortIds { get; set; } = new List<int>();
 
+
     }
 }

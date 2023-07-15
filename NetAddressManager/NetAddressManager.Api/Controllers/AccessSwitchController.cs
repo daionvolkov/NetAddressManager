@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetAddressManager.Api.Models;
@@ -9,6 +10,7 @@ namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AccessSwitchController : ControllerBase
     {
         private readonly ApplicationContext _db;
@@ -109,6 +111,19 @@ namespace NetAddressManager.Api.Controllers
             }
             return BadRequest();
         }
+
+
+        [HttpPatch("{id}/port")]
+        public IActionResult AddSwitchPortAccessSwitch(int id, [FromBody] List<int> portIds)
+        {
+            if (portIds != null)
+            {
+                bool result = _accessSwitchService.AddPortToAccess(id, portIds);
+                return result ? Ok() : NotFound("Невозможно добавить, порт уже занят");
+            }
+            return BadRequest();
+        }
+
 
     }
 }

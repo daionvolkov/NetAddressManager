@@ -12,6 +12,7 @@ namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class AccountController : ControllerBase
     {
         private readonly ApplicationContext _db;

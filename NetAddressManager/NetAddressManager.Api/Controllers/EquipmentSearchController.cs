@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetAddressManager.Api.Models;
-using NetAddressManager.Api.Models.Services;
+using NetAddressManager.Api.Models.Services.SearchServices;
 
 namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EquipmentSearchController : ControllerBase
     {
         private readonly ApplicationContext _db;
