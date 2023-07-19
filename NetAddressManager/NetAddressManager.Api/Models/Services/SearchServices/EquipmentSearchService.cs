@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetAddressManager.Models;
 
 namespace NetAddressManager.Api.Models.Services.SearchServices
 {
@@ -11,7 +12,7 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
         }
 
 
-        public async Task<SwitchData> GetEquipmentDataAsync(string equipment)
+        public async Task<SwitchDataModel> GetEquipmentDataAsync(string equipment)
         {
             var manufacturereEquipment = await GetEquipmentAsync(equipment);
             if (manufacturereEquipment == null)
@@ -27,7 +28,7 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
             var postalAddressIds = GetPostalAddressIds(coreSwitchData, aggregationSwitchData, accessSwitchData);
             var postalAddresses = await GetPostalAddressAsync(postalAddressIds);
 
-            return new SwitchData
+            return new SwitchDataModel
             {
                 CoreSwitchData = coreSwitchData,
                 AggregationSwitchData = aggregationSwitchData,
@@ -42,24 +43,24 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
             return await _db.EquipmentManufacturer.FirstOrDefaultAsync(a => a.Manufacturer.Contains(equipment) || a.Model.Contains(equipment));
         }
 
-        private async Task<List<CoreSwitch>> GetCoreSwitchDataAsync(int equipmentId)
+        private async Task<List<CoreSwitchModel>> GetCoreSwitchDataAsync(int equipmentId)
         {
-            return await _db.CoreSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).ToListAsync();
+            return await _db.CoreSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).Select(s=>s.GetModel()).ToListAsync();
         }
 
 
-        private async Task<List<AggregationSwitch>> GetAggregationSwitchDataAsync(int equipmentId)
+        private async Task<List<AggregationSwitchModel>> GetAggregationSwitchDataAsync(int equipmentId)
         {
-            return await _db.AggregationSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).ToListAsync();
+            return await _db.AggregationSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).Select(s => s.GetModel()).ToListAsync();
         }
 
 
-        private async Task<List<AccessSwitch>> GetAccessSwitchDataAsync(int equipmentId)
+        private async Task<List<AccessSwitchModel>> GetAccessSwitchDataAsync(int equipmentId)
         {
-            return await _db.AccessSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).ToListAsync();
+            return await _db.AccessSwitch.Where(s => s.EquipmentManufacturerId == equipmentId).Select(s => s.GetModel()).ToListAsync();
         }
 
-        private List<int> GetPostalAddressIds(List<CoreSwitch> coreSwitchData, List<AggregationSwitch> aggregationSwitchData, List<AccessSwitch> accessSwitchData)
+        private List<int> GetPostalAddressIds(List<CoreSwitchModel> coreSwitchData, List<AggregationSwitchModel> aggregationSwitchData, List<AccessSwitchModel> accessSwitchData)
         {
             var postalAddressIds = coreSwitchData
                 .Select(s => s.PostalAddressId)
@@ -73,9 +74,9 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
             return postalAddressIds;
         }
 
-        private async Task<List<PostalAddress>> GetPostalAddressAsync(List<int> postalAddressIds)
+        private async Task<List<PostalAddressModel>> GetPostalAddressAsync(List<int> postalAddressIds)
         {
-            return await _db.PostalAddress.Where(m => postalAddressIds.Contains(m.Id)).ToListAsync();
+            return await _db.PostalAddress.Where(m => postalAddressIds.Contains(m.Id)).Select(s => s.GetModel()).ToListAsync();
         }
     }
 }

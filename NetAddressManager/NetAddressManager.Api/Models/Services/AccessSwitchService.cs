@@ -124,10 +124,10 @@ namespace NetAddressManager.Api.Models.Services
                 {
                     SwitchPort switchPort = _db.SwitchPort.FirstOrDefault(p => p.Id == portId) ?? new SwitchPort();
 
-                    if (accessSwitch.SwitchPorts.Contains(switchPort) == false && switchPort.Type == SwitchType.Indeterminate)
+                    if (accessSwitch.SwitchPorts.Contains(switchPort) == false && (switchPort.Type == SwitchType.Indeterminate || switchPort.Type == SwitchType.Access))
                     {
                         accessSwitch.SwitchPorts.Add(switchPort);
-                        switchPort.Type = SwitchType.Aggregation;
+                        switchPort.Type = SwitchType.Access;
                         _db.AccessSwitch.Update(accessSwitch);
                         _db.SwitchPort.Update(switchPort);
                         _db.SaveChanges();
@@ -136,5 +136,7 @@ namespace NetAddressManager.Api.Models.Services
             });
             return result;
         }
+
+
     }
 }

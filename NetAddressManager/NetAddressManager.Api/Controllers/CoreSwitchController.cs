@@ -84,6 +84,18 @@ namespace NetAddressManager.Api.Controllers
         }
 
 
+        [HttpPatch("{id}/aggrswitch/remove")]
+        public IActionResult RemoveAggregationSwitchFromCoreSwitch(int id, [FromBody] List<int> aggrSwitchId)
+        {
+            if (aggrSwitchId != null)
+            {
+                bool result = _coreSwitchService.RemoveAggrSwitchFromCore(id, aggrSwitchId);
+                return result ? Ok() : BadRequest();
+            }
+            return BadRequest();
+        }
+
+
         [HttpPatch("{id}/address")]
         public IActionResult AddPostalAddressToCoreSwitch(int id, [FromBody]  int addressId)
         {
@@ -119,5 +131,7 @@ namespace NetAddressManager.Api.Controllers
             }
             return BadRequest();
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetAddressManager.Models;
 using System.Security.AccessControl;
 
 namespace NetAddressManager.Api.Models.Services.SearchServices
@@ -12,64 +13,73 @@ namespace NetAddressManager.Api.Models.Services.SearchServices
             _db = db;
         }
 
-        public async Task<SwitchData> SearchSwitchByIpAddressAsync(string ipAddress)
+        public async Task<SwitchDataModel> SearchSwitchByIpAddressAsync(string ipAddress)
         {
-            var coreSwitch = await SearchCoreSwitchByIpAddressAsync(ipAddress);
+
+            var switchDataModel = new SwitchDataModel();
+
+            
+            var coreSwitch = await _db.CoreSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
             if (coreSwitch != null)
             {
-                var equipmentManufacturer = await GetEquipmentManufacturerByIdAsync((int)coreSwitch.EquipmentManufacturerId);
-                var postalAddress = await GetPostalAddressByIdAsync((int)coreSwitch.PostalAddressId);
-                return new SwitchData
+                switchDataModel.CoreSwitchData.Add(coreSwitch.GetModel());
+                if(coreSwitch.EquipmentManufacturerId !=null)
                 {
-                    CoreSwitchData = new List<CoreSwitch> { coreSwitch },
-                    EquipmentManufacturers = new List<EquipmentManufacturer> { equipmentManufacturer },
-                    PostalAddresses = new List<PostalAddress> { postalAddress } 
-                };
+                    EquipmentManufacturer equipment = await GetEquipmentManufacturerByIdAsync((int)coreSwitch.EquipmentManufacturerId);
+                    switchDataModel.EquipmentManufacturers.Add(equipment.GetModel());
+
+                }
+                if (coreSwitch.PostalAddressId != null)
+                {
+                    PostalAddress postalAddress = await GetPostalAddressByIdAsync((int)coreSwitch.PostalAddressId);
+                    switchDataModel.PostalAddresses.Add(postalAddress.GetModel());
+                }
+          
+                return switchDataModel;
             }
-            var aggregationSwitch = await SearchAggregationSwitchByIpAddressAsync(ipAddress);
+
+            
+            var aggregationSwitch = await _db.AggregationSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
             if (aggregationSwitch != null)
             {
-                var equipmentManufacturer = await GetEquipmentManufacturerByIdAsync((int)aggregationSwitch.EquipmentManufacturerId);
-                var postalAddress = await GetPostalAddressByIdAsync((int)aggregationSwitch.PostalAddressId);
-                return new SwitchData
+                switchDataModel.AggregationSwitchData.Add(aggregationSwitch.GetModel());
+                if (aggregationSwitch.EquipmentManufacturerId != null)
                 {
-                    AggregationSwitchData = new List<AggregationSwitch> { aggregationSwitch },
-                    EquipmentManufacturers = new List<EquipmentManufacturer> { equipmentManufacturer },
-                    PostalAddresses = new List<PostalAddress> { postalAddress }
-                };
+                    EquipmentManufacturer equipment = await GetEquipmentManufacturerByIdAsync((int)aggregationSwitch.EquipmentManufacturerId);
+                    switchDataModel.EquipmentManufacturers.Add(equipment.GetModel());
+
+                }
+                if (aggregationSwitch.PostalAddressId != null)
+                {
+                    PostalAddress postalAddress = await GetPostalAddressByIdAsync((int)aggregationSwitch.PostalAddressId);
+                    switchDataModel.PostalAddresses.Add(postalAddress.GetModel());
+                }
+
+                return switchDataModel;
             }
 
-            var accessSwitch = await SearchAccessSwitchByIpAddressAsync(ipAddress);
+            
+            var accessSwitch = await _db.AccessSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
             if (accessSwitch != null)
             {
-                var equipmentManufacturer = await GetEquipmentManufacturerByIdAsync((int)accessSwitch.EquipmentManufacturerId);
-                var postalAddress = await GetPostalAddressByIdAsync((int)accessSwitch.PostalAddressId);
-
-                return new SwitchData
+                switchDataModel.AccessSwitchData.Add(accessSwitch.GetModel());
+                if (accessSwitch.EquipmentManufacturerId != null)
                 {
-                    AccessSwitchData = new List<AccessSwitch> { accessSwitch },
-                    EquipmentManufacturers = new List<EquipmentManufacturer> { equipmentManufacturer },
-                    PostalAddresses = new List<PostalAddress> { postalAddress }
-                };
+                    EquipmentManufacturer equipment = await GetEquipmentManufacturerByIdAsync((int)accessSwitch.EquipmentManufacturerId);
+                    switchDataModel.EquipmentManufacturers.Add(equipment.GetModel());
+
+                }
+                if (accessSwitch.PostalAddressId != null)
+                {
+                    PostalAddress postalAddress = await GetPostalAddressByIdAsync((int)accessSwitch.PostalAddressId);
+                    switchDataModel.PostalAddresses.Add(postalAddress.GetModel());
+                }
+
+                return switchDataModel;
             }
-            return null; 
-        }
 
-        private async Task<CoreSwitch> SearchCoreSwitchByIpAddressAsync(string ipAddress)
-        {
-            return await _db.CoreSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
+            return null;
         }
-
-        private async Task<AggregationSwitch> SearchAggregationSwitchByIpAddressAsync(string ipAddress)
-        {
-            return await _db.AggregationSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
-        }
-
-        private async Task<AccessSwitch> SearchAccessSwitchByIpAddressAsync(string ipAddress)
-        {
-            return await _db.AccessSwitch.FirstOrDefaultAsync(s => s.IPAddress == ipAddress);
-        }
-
         private async Task<EquipmentManufacturer> GetEquipmentManufacturerByIdAsync(int equipmentManufacturerId)
         {
             return await _db.EquipmentManufacturer.FirstOrDefaultAsync(m => m.Id == equipmentManufacturerId);

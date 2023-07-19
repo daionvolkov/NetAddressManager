@@ -112,6 +112,8 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
+
         [HttpPatch("{id}/accessswitch")]
         public IActionResult AddAccessSwitchToAggregationSwitch(int id, [FromBody] List<int> accessSwitchId)
         {
@@ -123,6 +125,19 @@ namespace NetAddressManager.Api.Controllers
             return BadRequest();
         }
 
+
+        [HttpPatch("{id}/accessswitch/remove")]
+        public IActionResult RemoveGatewayFromAggregationSwitch(int id, [FromBody] List<int> gatewayId)
+        {
+            if (gatewayId != null)
+            {
+                bool result = _aggregationSwitchService.RemoveGatewayFromAggregation(id, gatewayId);
+                return result ? Ok() : BadRequest();
+            }
+            return BadRequest();
+        }
+
+
         [HttpPatch("{id}/port")]
         public IActionResult AddSwitchPortAggresgationSwitch(int id, [FromBody] List<int> portIds)
         {
@@ -133,5 +148,6 @@ namespace NetAddressManager.Api.Controllers
             }
             return BadRequest();
         }
+
     }
 }

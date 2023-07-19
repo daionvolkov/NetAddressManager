@@ -1,4 +1,6 @@
-﻿namespace NetAddressManager.Api.Models
+﻿using NetAddressManager.Models;
+
+namespace NetAddressManager.Api.Models
 {
     public class SwitchData
     {
@@ -7,5 +9,8 @@
         public List<AccessSwitch> AccessSwitchData { get; set; } = new List<AccessSwitch>();
         public List<EquipmentManufacturer> EquipmentManufacturers { get; set; } = new List<EquipmentManufacturer>();
         public List<PostalAddress> PostalAddresses { get; set; } = new List<PostalAddress>();
+
+        
+      
     }
 }

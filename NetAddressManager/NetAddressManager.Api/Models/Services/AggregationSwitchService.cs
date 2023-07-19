@@ -117,6 +117,25 @@ namespace NetAddressManager.Api.Models.Services
             _db.SaveChanges();
         }
 
+        public bool RemoveGatewayFromAggregation(int id, List<int> accessSwitchIds)
+        {
+            AggregationSwitch aggregationSwitch = _db.AggregationSwitch.Include(cs => cs.AccessSwitches).FirstOrDefault(cs => cs.Id == id) ?? new AggregationSwitch();
+            bool result = DoAction(delegate ()
+            {
+                foreach (int accessSwitchId in accessSwitchIds)
+                {
+                    AccessSwitch accessSwitch = _db.AccessSwitch.FirstOrDefault(s => s.Id == accessSwitchId) ?? new AccessSwitch();
+                    if (aggregationSwitch.AccessSwitches.Contains(accessSwitch))
+                    {
+                        aggregationSwitch.AccessSwitches.Remove(accessSwitch);
+                        _db.SaveChanges();
+                    }
+                }
+            });
+            return result;
+        }
+
+
         public bool AddAccessSwitchToAggregation(int id, List<int> accessSwitchIds)
         {
             AggregationSwitch aggregationSwitch = _db.AggregationSwitch.FirstOrDefault(cs => cs.Id == id) ?? new AggregationSwitch();
@@ -148,7 +167,7 @@ namespace NetAddressManager.Api.Models.Services
                 {
                     SwitchPort switchPort = _db.SwitchPort.FirstOrDefault(p => p.Id == portId) ?? new SwitchPort();
 
-                    if (aggregationSwitch.SwitchPorts.Contains(switchPort) == false && switchPort.Type == SwitchType.Indeterminate)
+                    if (aggregationSwitch.SwitchPorts.Contains(switchPort) == false && (switchPort.Type == SwitchType.Indeterminate || switchPort.Type == SwitchType.Aggregation))
                     {
                         aggregationSwitch.SwitchPorts.Add(switchPort);
                         switchPort.Type = SwitchType.Aggregation;
@@ -160,5 +179,6 @@ namespace NetAddressManager.Api.Models.Services
             });
             return result;
         }
+
     }
 }

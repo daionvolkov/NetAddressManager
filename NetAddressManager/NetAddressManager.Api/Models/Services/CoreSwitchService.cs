@@ -129,6 +129,26 @@ namespace NetAddressManager.Api.Models.Services
             return result;
         }
 
+
+        public bool RemoveAggrSwitchFromCore(int id, List<int> aggregationSwitchIds)
+        {
+            CoreSwitch coreSwitch = _db.CoreSwitch.Include(cs=>cs.AggregationSwitches).FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
+            bool result = DoAction(delegate ()
+            {
+                foreach (int aggregationSwitchId in aggregationSwitchIds)
+                {
+                    AggregationSwitch aggr = _db.AggregationSwitch.FirstOrDefault(s => s.Id == aggregationSwitchId) ?? new AggregationSwitch();
+                    if (coreSwitch.AggregationSwitches.Contains(aggr))
+                    {
+                        coreSwitch.AggregationSwitches.Remove(aggr);
+                        _db.SaveChanges();
+                    }
+                }
+            });
+            return result;
+        }
+
+
         public bool AddPortToCore(int id, List<int> portIds)
         {
             CoreSwitch coreSwitch = _db.CoreSwitch.FirstOrDefault(cs => cs.Id == id) ?? new CoreSwitch();
@@ -137,10 +157,11 @@ namespace NetAddressManager.Api.Models.Services
                 foreach (int portId in portIds)
                 {
                     SwitchPort switchPort = _db.SwitchPort.FirstOrDefault(p => p.Id == portId) ?? new SwitchPort();
-                    if (coreSwitch.SwitchPorts.Contains(switchPort) == false && switchPort.Type == SwitchType.Indeterminate)
+                    if (coreSwitch.SwitchPorts.Contains(switchPort) == false && (switchPort.Type == SwitchType.Indeterminate || switchPort.Type == SwitchType.Core))
                     {
                         coreSwitch.SwitchPorts.Add(switchPort);
                         switchPort.Type = SwitchType.Core;
+              
                         _db.CoreSwitch.Update(coreSwitch);
                         _db.SwitchPort.Update(switchPort);
                     }
@@ -149,5 +170,7 @@ namespace NetAddressManager.Api.Models.Services
             });
             return result;
         }
+
+
     }
 }
