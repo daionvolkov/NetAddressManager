@@ -13,8 +13,9 @@ namespace NetAddressManager.Models
         public List<int> AccessSwitchIds { get; set; } = new List<int>();
         public AggregationSwitchModel() { }
 
-        public AggregationSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,
-           SwitchStatus status,  int coreSwitchId, List<int> switchPortIds = null, List<int> accessSwitchIds=null)
+
+
+        public AggregationSwitchModel(string iPAddress, string iPMask, string mACAddress, string description, SwitchStatus status)
         {
             IPAddress = iPAddress;
             IPMask = iPMask;
@@ -22,9 +23,6 @@ namespace NetAddressManager.Models
             Description = description;
             Status = status;
             CreateDate = DateTime.Now;
-            SwitchPortIds = switchPortIds;
-            CoreSwitchId = coreSwitchId;
-            AccessSwitchIds = accessSwitchIds;
         }
     }
 }
