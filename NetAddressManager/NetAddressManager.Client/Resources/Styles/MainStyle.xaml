@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Brush x:Key="commonLightGreyColor">#F1F1F1</Brush>
+    <Brush x:Key="commonMidGrayColor">#CECECE</Brush>
+    <Brush x:Key="commonGreenColor">#5A783B</Brush>
+    <FontStyle x:Key="commonFontStyle">Normal</FontStyle>
+
+    <Style TargetType="TextBox" x:Key="commonTBox">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
+        <Setter Property="Background" Value="{StaticResource commonMidGrayColor}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value=" 0, 3"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style TargetType="PasswordBox" x:Key="commonPBox">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
+        <Setter Property="Background" Value="{StaticResource commonMidGrayColor}"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>   
+        <Setter Property="Margin" Value=" 0, 3"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+        </Style.Resources>
+
+    </Style>
+    <Style TargetType="Button" x:Key="commonBtn">
+        <Setter Property="Background" Value="{StaticResource commonGreenColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource commonGreenColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource commonMidGrayColor}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="commonTBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+
+
+    </Style>
+        
+</ResourceDictionary>

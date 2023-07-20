@@ -18,10 +18,6 @@ namespace NetAddressManager.Client.Services
         
         private string _usersControllerUrl = HOST + "user";
 
-
-
-        
-
         public AuthToken GetToken(string userName, string password)
         {
             string url = HOST + "account/token";
@@ -50,6 +46,13 @@ namespace NetAddressManager.Client.Services
             string response = GetDataByUrl(HttpMethod.Get, _usersControllerUrl, token);
             List<UserModel> users = JsonConvert.DeserializeObject<List<UserModel>>(response) ?? new List<UserModel>();
             return users;
+        }
+
+        public UserModel GetCurrentUser(AuthToken token)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, HOST+"account/info", token);
+            UserModel user = JsonConvert.DeserializeObject<UserModel>(response) ?? new UserModel();
+            return user;
         }
 
         public HttpStatusCode DeleteUser(AuthToken token, int userId)
