@@ -9,6 +9,30 @@
       Title="SearchPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Row="0" Grid.Column="0"  
+                     Style="{StaticResource commonTBox}" Margin="45,0"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Search"
+                    Style="{StaticResource commonBtn}" Margin="75, 27"/>
+        </Grid>
+        <Grid Grid.Row="1">
+
+            <StackPanel x:Name="stackPanel" 
+                        Orientation="Horizontal" VerticalAlignment="Center" Margin="45, 0 ,0, 0">
+                <RadioButton GroupName="SearchType" Content="IP адрес" IsChecked="True"/>
+                <RadioButton GroupName="SearchType" Content="Почтовый адрес" Margin="10,0,0,0"/>
+                <RadioButton GroupName="SearchType" Content="Оборудование" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
