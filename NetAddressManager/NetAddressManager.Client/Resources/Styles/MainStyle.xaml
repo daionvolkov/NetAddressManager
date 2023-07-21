@@ -3,6 +3,8 @@
 
     <Brush x:Key="commonLightGreyColor">#F1F1F1</Brush>
     <Brush x:Key="commonMidGrayColor">#CECECE</Brush>
+    <Brush x:Key="commonGreyColor">#777777</Brush>
+    <Brush x:Key="commonMenuGreyColol">#DBDCDA</Brush>
     <Brush x:Key="commonGreenColor">#5A783B</Brush>
     <FontStyle x:Key="commonFontStyle">Normal</FontStyle>
 
@@ -23,6 +25,8 @@
         </Style.Resources>
     </Style>
 
+    
+    
     <Style TargetType="PasswordBox" x:Key="commonPBox">
         <Setter Property="Height" Value="20"/>
         <Setter Property="FontSize" Value="14"/>

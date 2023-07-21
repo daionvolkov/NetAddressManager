@@ -10,7 +10,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         WindowStartupLocation="CenterScreen"
-        Name="window">
+        Name="window" Background="#F1F1F1">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,7 +18,10 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch"
                     Width="200" VerticalAlignment="Center">
-            <TextBox Text="{Binding UserLogin}" Style="{StaticResource commonTBox}" />
+            <TextBox Text="{Binding UserLogin}" Style="{StaticResource commonTBox}" x:Name="userName"/>
+           
+            
+            
             <PasswordBox x:Name="UserPassword" Style="{StaticResource commonPBox}"/>
             <Button Content="OK" Width="100" Command="{Binding GetUserFromDBCommand}"
                     CommandParameter="{Binding ElementName=UserPassword}" 
