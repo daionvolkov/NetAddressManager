@@ -65,8 +65,9 @@
                                 <TextBlock Text="{Binding Description}" />
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
                                         Style="{StaticResource commonBtnLink}"
-                                        Command="{Binding DetailsSwitchCommand}"
-                                        />
+                                        Command="{Binding Path=DataContext.DetailsCoreSwitchCommand, 
+                                    RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding ElementName=CoreSwitchId, Path=Text}"/>
                             </StackPanel>
                             
                         </DataTemplate>

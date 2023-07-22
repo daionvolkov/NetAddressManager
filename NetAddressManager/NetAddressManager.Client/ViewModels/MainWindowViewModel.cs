@@ -1,6 +1,7 @@
 ﻿using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
+using NetAddressManager.Client.Views;
 using NetAddressManager.Client.Views.Pages;
 using NetAddressManager.Models;
 using Prism.Commands;
@@ -34,6 +35,7 @@ namespace NetAddressManager.Client.ViewModels
         {
             Token = token;
             CurrentUser = currentUser;
+            _currentWindow = currentWindow;
             _commonViewService = new CommonViewService();
 
             OpenSearchPageCommand = new DelegateCommand(OpenSearchPage);
@@ -75,6 +77,9 @@ namespace NetAddressManager.Client.ViewModels
         private readonly string _manageUsersBtnName = "Users";
 
         private readonly string _logoutBtnName = "Logout";
+
+
+        private Window _currentWindow;
 
 
 
@@ -137,6 +142,7 @@ namespace NetAddressManager.Client.ViewModels
 
         #region METHODS
 
+
         private void OpenSearchPage()
         {
             string pageName = "Страница поиска";
@@ -169,12 +175,20 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenUsersManagement()
         {
+            SelectedPageName = _manageUsersBtnName;
+            _commonViewService.ShowMessage(_manageUsersBtnName);
 
         }
 
         private void Logout()
         {
-            _commonViewService.ShowMessage("Logout");
+            var question = MessageBox.Show("Вы уверены?", "Logout", MessageBoxButton.YesNo);
+            if(question == MessageBoxResult.Yes && _currentUser != null) 
+            {
+                Login login = new Login();
+                login.Show();
+                _currentWindow.Close(); 
+            }
         }
 
 

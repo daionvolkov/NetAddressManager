@@ -1,5 +1,8 @@
-﻿using NetAddressManager.Client.Models;
+﻿using NetAddressManager.Api.Models.Enums;
+using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
+using NetAddressManager.Client.Views.Pages;
+using NetAddressManager.Client.Views.Windows;
 using NetAddressManager.ClientTests.Services;
 using NetAddressManager.Models;
 using Prism.Commands;
@@ -12,6 +15,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace NetAddressManager.Client.ViewModels
 {
@@ -21,10 +25,13 @@ namespace NetAddressManager.Client.ViewModels
         private NetAddressSearchRequestService _netAddressSearchRequestService;
         private AddressSearchRequestService _addressSearchRequestService;
         private EquipmentSearchRequestService _equipmentSearchRequestService;
+        private CoreSwitchRequestService _coreSwitchRequestService;
+
+        private string coreSwicthId;
 
         #region COMMANDS
         public DelegateCommand SearchCommand { get; private set; }
-        public DelegateCommand DetailsSwitchCommand { get; private set; }
+        public DelegateCommand<string> DetailsCoreSwitchCommand { get; private set; }
 
         #endregion
 
@@ -35,10 +42,10 @@ namespace NetAddressManager.Client.ViewModels
             _netAddressSearchRequestService = new NetAddressSearchRequestService();
             _addressSearchRequestService = new AddressSearchRequestService();
             _equipmentSearchRequestService = new EquipmentSearchRequestService();
-            
-            SearchCommand = new DelegateCommand(async () => await Search());
-            DetailsSwitchCommand = new DelegateCommand(DetailsSwitch);
+            _coreSwitchRequestService = new CoreSwitchRequestService();
 
+            SearchCommand = new DelegateCommand(async () => await Search());
+            DetailsCoreSwitchCommand = new DelegateCommand<string>(DetailsCoreSwitch);
         }
 
 
@@ -87,9 +94,30 @@ namespace NetAddressManager.Client.ViewModels
             get { return _switchData; }
             set { SetProperty(ref _switchData, value); }
         }
-
-
         #endregion
+        private CoreSwitchModel _selectedCoreSwitch;
+        private SwitchType _switchType;
+
+        public SwitchType SwitchType
+        {
+            get =>_switchType; 
+            set { 
+                _switchType = value;
+                RaisePropertyChanged(nameof(SwitchType));
+            }
+        }
+
+
+        public CoreSwitchModel SelectedCoreSwitch
+        {
+            get => _selectedCoreSwitch;
+            set
+            {
+                _selectedCoreSwitch = value;
+                RaisePropertyChanged(nameof(SelectedCoreSwitch));
+            }
+        }
+
 
         #region METHODS
 
@@ -109,9 +137,13 @@ namespace NetAddressManager.Client.ViewModels
             }
         }
 
-        private void DetailsSwitch()
+        private void DetailsCoreSwitch(string id)
         {
-            MessageBox.Show("sdfsdfsdf");
+            SelectedCoreSwitch = _coreSwitchRequestService.GetCoreSwitchById(Token, int.Parse(id));
+            var wnd = new DetailsSwitchWindow(SwitchType);
+            SwitchType = SwitchType.Core;
+            wnd.DataContext = this;
+            wnd.ShowDialog();
         }
 
         #endregion

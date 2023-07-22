@@ -155,7 +155,7 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenMainWIndow() {
             MainWindow window = new MainWindow();
-            window.DataContext = new MainWindowViewModel(AuthToken, CurrentUser);
+            window.DataContext = new MainWindowViewModel(AuthToken, CurrentUser, window);
             window.Show();
             _currentWnd.Close();
         }
