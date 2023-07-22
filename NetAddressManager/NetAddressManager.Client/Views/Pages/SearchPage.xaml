@@ -3,12 +3,20 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NetAddressManager.Client.Views.Pages"
+      xmlns:local="clr-namespace:NetAddressManager.Client.Views.Pages" 
+      xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
+
+      
+      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SearchPage">
+    
+
+
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="50"/>
@@ -21,18 +29,86 @@
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Row="0" Grid.Column="0"  
-                     Style="{StaticResource commonTBox}" Margin="45,0"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="Search"
-                    Style="{StaticResource commonBtn}" Margin="75, 27"/>
+                     Style="{StaticResource commonTBox}" Margin="45,0" Text="{Binding SearchResponse}"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Search" Command="{Binding SearchCommand}"
+                    Style="{StaticResource commonBtn}" Margin="75, 27" MaxWidth="150"/>
         </Grid>
         <Grid Grid.Row="1">
 
             <StackPanel x:Name="stackPanel" 
                         Orientation="Horizontal" VerticalAlignment="Center" Margin="45, 0 ,0, 0">
-                <RadioButton GroupName="SearchType" Content="IP адрес" IsChecked="True"/>
-                <RadioButton GroupName="SearchType" Content="Почтовый адрес" Margin="10,0,0,0"/>
-                <RadioButton GroupName="SearchType" Content="Оборудование" Margin="10,0,0,0"/>
+                <RadioButton GroupName="SearchType" Content="IP адрес" 
+                             IsChecked="{Binding RadioButtonIP}"/>
+                <RadioButton GroupName="SearchType" Content="Почтовый адрес" 
+                             IsChecked="{Binding RadioButtonAddress}" Margin="10,0,0,0"/>
+                <RadioButton GroupName="SearchType" Content="Оборудование" 
+                             IsChecked="{Binding RadioButtonEquipment}" Margin="10,0,0,0"/>
+            </StackPanel>
+            <Border BorderThickness="0,0,0,1" 
+                    Style="{StaticResource commonBorder}"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Margin="10 15, 0, 0">
+                <!-- Display CoreSwitchData -->
+                <ItemsControl ItemsSource="{Binding SwitchData.CoreSwitchData}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="CoreSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
+                                <TextBlock Text="Core Switch.  " FontWeight="Bold"/>
+                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="  Description: " />
+                                <TextBlock Text="{Binding Description}" />
+                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                        Style="{StaticResource commonBtnLink}"
+                                        Command="{Binding DetailsSwitchCommand}"
+                                        />
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <!-- Display AggregationSwitchData -->
+                <ItemsControl ItemsSource="{Binding SwitchData.AggregationSwitchData}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Aggregation Switch.  " FontWeight="Bold"/>
+                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="  Description: " />
+                                <TextBlock Text="{Binding Description}" />
+                                <Button Content="Details" Margin="20, 0, 0, 0" Style="{StaticResource commonBtnLink}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Display AccessSwitchData -->
+                <ItemsControl ItemsSource="{Binding SwitchData.AccessSwitchData}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Access Switch.  " FontWeight="Bold"/>
+                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="  Description: " />
+                                <TextBlock Text="{Binding Description}" />
+                                <Button Content="Details" Margin="20, 0, 0, 0" Style="{StaticResource commonBtnLink}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
         </Grid>
-    </Grid>
+    </Grid> 
 </Page>

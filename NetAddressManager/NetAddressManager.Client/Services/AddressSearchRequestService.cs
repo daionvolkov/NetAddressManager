@@ -17,8 +17,8 @@ namespace NetAddressManager.Client.Services
         public Task<SwitchDataModel> GetSwitchesByAddress(AuthToken token, string address)
         {
             string response = GetDataByUrl(HttpMethod.Get, _addressSearchControllerUrl + $"/{address}", token);
-            Task<SwitchDataModel> switchData = JsonConvert.DeserializeObject<Task<SwitchDataModel>> (response);
-            return switchData;
+            SwitchDataModel switchData = JsonConvert.DeserializeObject<SwitchDataModel> (response);
+            return Task.FromResult(switchData);
         }
     }
 }

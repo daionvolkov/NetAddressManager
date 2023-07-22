@@ -10,7 +10,7 @@
 
     <Style TargetType="TextBox" x:Key="commonTBox">
         <Setter Property="Height" Value="20"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
         <Setter Property="Background" Value="{StaticResource commonMidGrayColor}"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -25,8 +25,10 @@
         </Style.Resources>
     </Style>
 
-    
-    
+
+    <Style TargetType="Border" x:Key="commonBorder">
+        <Setter Property="BorderBrush" Value="{StaticResource commonMidGrayColor}"/>
+    </Style>
     <Style TargetType="PasswordBox" x:Key="commonPBox">
         <Setter Property="Height" Value="25"/>
         <Setter Property="FontSize" Value="14"/>
@@ -76,5 +78,18 @@
     
     <Style TargetType="RadioButton" x:Key="radioBtn">
         <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="commonBtnLink">
+        <Setter Property="Foreground" Value="{StaticResource commonGreenColor}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

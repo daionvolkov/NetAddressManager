@@ -16,29 +16,21 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="{StaticResource commonMenuGreyColol}">
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            
-            <Button Grid.Row="0" Content="Create" 
-                    Command="{Binding  OpenCreatePageCommand}"
-                    Style="{StaticResource commonBtn}" Margin="7, 30 , 7, 0"/>
-            <Button Grid.Row="1" Content="Search"
-                    Command="{Binding  OpenSearchPageCommand}"
-                    Style="{StaticResource commonBtn}" Margin="7, 10"/>
-            <Button Grid.Row="2" Content="UserInfo"
-                    Command="{Binding OpenUserInfoPageCommand}"
-                    Style="{StaticResource commonBtn}" Margin="7, 0, 7, 20"/>
-            <Button Grid.Row="4" Content="Logout"
-                    Command="{Binding  LogoutCommand}"
-                    Style="{StaticResource commonBtn}" Margin="7, 10"/>
 
+            <ItemsControl ItemsSource="{Binding NavButtons}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <Button Command="{Binding Value}"
+                            Style="{StaticResource commonBtn}">
+                            <TextBlock Text="{Binding Key}" 
+                                       Style="{StaticResource commonTBlock}"/>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
+        
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -47,10 +39,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
-
-
 
             <StackPanel Grid.Row="0" Background="{StaticResource commonMenuGreyColol}">
                 <TextBlock Grid.Column="0" Text="{Binding SelectedPageName}" 
@@ -66,10 +55,6 @@
             <Frame Grid.Row="1" Grid.ColumnSpan="2" NavigationUIVisibility="Hidden"
                    Content="{Binding SelectedPage}"/>
 
-            <TextBlock Grid.Row="1" Text="  (c) NetAddress Manager 2023"
-                       Background="{StaticResource commonMenuGreyColol}"
-                       Foreground="{StaticResource commonGreyColor}" Grid.ColumnSpan="2" 
-                       Margin="0,388,0,0" Grid.RowSpan="2"/>
         </Grid>
     </Grid>
 </Window>

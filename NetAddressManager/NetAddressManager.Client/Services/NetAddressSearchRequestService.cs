@@ -15,11 +15,11 @@ namespace NetAddressManager.ClientTests.Services
     {
         private string _netAddressSearchControllerUrl = HOST + "netaddresssearch";
 
-        public Task<SwitchDataModel> GetSwitchesByNetAddress(AuthToken token, string netAddress)
+        public  Task<SwitchDataModel> GetSwitchesByNetAddress(AuthToken token, string netAddress)
         {
             string response = GetDataByUrl(HttpMethod.Get, _netAddressSearchControllerUrl + $"/{netAddress}", token);
-            Task<SwitchDataModel> switchData = JsonConvert.DeserializeObject<Task<SwitchDataModel>>(response);
-            return switchData;
+            SwitchDataModel switchData = JsonConvert.DeserializeObject<SwitchDataModel>(response);
+            return Task.FromResult(switchData);
         }
     }
 }

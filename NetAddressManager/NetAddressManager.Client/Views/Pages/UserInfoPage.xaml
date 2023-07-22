@@ -10,15 +10,32 @@
 
     <Grid>
         <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Margin="20, 40">
+            <StackPanel Orientation="Horizontal" >
                 <TextBlock Text="First name: " 
                            Style="{StaticResource commonTBlock}" />
                 <TextBlock Text="{Binding CurrentUser.FirstName}" 
                            Style="{StaticResource commonTBlock}" />
             </StackPanel>
-
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Last name: " 
+                           Style="{StaticResource commonTBlock}" />
+                <TextBlock Text="{Binding CurrentUser.LastName}" 
+                           Style="{StaticResource commonTBlock}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Email: " 
+                           Style="{StaticResource commonTBlock}" />
+                <TextBlock Text="{Binding CurrentUser.Email}" 
+                           Style="{StaticResource commonTBlock}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Phone: " 
+                           Style="{StaticResource commonTBlock}" />
+                <TextBlock Text="{Binding CurrentUser.Phone}" 
+                           Style="{StaticResource commonTBlock}" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
