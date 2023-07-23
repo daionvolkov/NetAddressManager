@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding SelectedCoreSwitch.IPAddress}" 
+        <TextBlock Text="{Binding  SwitchData.IPAddress}" 
                    Style="{StaticResource headerTBlock}"/>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid Margin="10">
@@ -31,38 +31,49 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Net Mask: " Style="{StaticResource commonTBlock}" 
+               <TextBlock Grid.Row="0" Grid.Column="0" Text="Net Mask: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" 
-                           Text="{Binding SelectedCoreSwitch.IPMask}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchData.IPMask}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="IP Gateway: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" 
-                           Text="{Binding SelectedCoreSwitch.IPGateway}" Style="{StaticResource commonTBlock}" 
+                     <TextBlock Grid.Row="1" Grid.Column="1" 
+                           Text="{Binding IPGateway}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="MAC Address: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="2" Grid.Column="1" 
-                           Text="{Binding SelectedCoreSwitch.MACAddress}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchData.MACAddress}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Description: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" 
-                           Text="{Binding SelectedCoreSwitch.Description}" 
+                           Text="{Binding SwitchData.Description}" 
                            Style="{StaticResource multiLineTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Creation Date: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" 
-                           Text="{Binding SelectedCoreSwitch.CreateDate}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchData.CreateDate}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Switch Type: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="5" Grid.Column="1" 
                            Text="{Binding SwitchType}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
-                
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Address: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="6" Grid.Column="1" 
+                           Text="{Binding  PostalAddress}" Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Equipment: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="7" Grid.Column="1" 
+                           Text="{Binding  Equipment}" Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Right"/>
+
+
             </Grid>
         </ScrollViewer>
     </Grid>

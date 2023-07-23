@@ -5,18 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NetAddressManager.Client.Views.Pages" 
       xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
-
+      xmlns:models="clr-namespace:NetAddressManager.Client.Models"
+      xmlns:models1="clr-namespace:NetAddressManager.Models;assembly=NetAddressManager.Models"
       
       
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SearchPage">
-    
-
-
 
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="50"/>
@@ -64,10 +61,11 @@
                                 <TextBlock Text="  Description: " />
                                 <TextBlock Text="{Binding Description}" />
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
-                                        Style="{StaticResource commonBtnLink}"
-                                        Command="{Binding Path=DataContext.DetailsCoreSwitchCommand, 
-                                    RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                        CommandParameter="{Binding ElementName=CoreSwitchId, Path=Text}"/>
+                                     Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"
+/>
+
                             </StackPanel>
                             
                         </DataTemplate>
@@ -79,6 +77,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="AggregationSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Aggregation Switch.  " FontWeight="Bold"/>
                                 <TextBlock Text="IP Address: " />
                                 <TextBlock Text="{Binding IPAddress}" />
@@ -86,7 +85,10 @@
                                 <TextBlock Text="{Binding IPMask }" />
                                 <TextBlock Text="  Description: " />
                                 <TextBlock Text="{Binding Description}" />
-                                <Button Content="Details" Margin="20, 0, 0, 0" Style="{StaticResource commonBtnLink}"/>
+                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                    Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -97,6 +99,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="AccessSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Access Switch.  " FontWeight="Bold"/>
                                 <TextBlock Text="IP Address: " />
                                 <TextBlock Text="{Binding IPAddress}" />
@@ -104,7 +107,11 @@
                                 <TextBlock Text="{Binding IPMask }" />
                                 <TextBlock Text="  Description: " />
                                 <TextBlock Text="{Binding Description}" />
-                                <Button Content="Details" Margin="20, 0, 0, 0" Style="{StaticResource commonBtnLink}"/>
+                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                    Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
+                      
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

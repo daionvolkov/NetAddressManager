@@ -26,12 +26,20 @@ namespace NetAddressManager.Client.ViewModels
         private AddressSearchRequestService _addressSearchRequestService;
         private EquipmentSearchRequestService _equipmentSearchRequestService;
         private CoreSwitchRequestService _coreSwitchRequestService;
+        private AggregationSwitchRequestService _aggregationSwitchRequestService;
+        private AccessSwitchRequestService _accessSwitchRequestService;
+        private PostalAddressRequestService _postalAddressRequestService;
+        private EquipmentRequestService _equipmentRequestService;
+        
 
         private string coreSwicthId;
 
+      
+
+
         #region COMMANDS
         public DelegateCommand SearchCommand { get; private set; }
-        public DelegateCommand<string> DetailsCoreSwitchCommand { get; private set; }
+        public DelegateCommand<object> DetailsSwitchCommand { get; private set; }
 
         #endregion
 
@@ -43,14 +51,19 @@ namespace NetAddressManager.Client.ViewModels
             _addressSearchRequestService = new AddressSearchRequestService();
             _equipmentSearchRequestService = new EquipmentSearchRequestService();
             _coreSwitchRequestService = new CoreSwitchRequestService();
+            _aggregationSwitchRequestService = new AggregationSwitchRequestService();
+            _accessSwitchRequestService = new AccessSwitchRequestService();
+            _postalAddressRequestService = new PostalAddressRequestService();   
+            _equipmentRequestService = new EquipmentRequestService();
 
             SearchCommand = new DelegateCommand(async () => await Search());
-            DetailsCoreSwitchCommand = new DelegateCommand<string>(DetailsCoreSwitch);
+            DetailsSwitchCommand = new DelegateCommand<object>(OnDetailsSwitchClicked);
+
         }
 
 
-        #region PROPERTIES
-        private AuthToken _token;
+    #region PROPERTIES
+    private AuthToken _token;
         public AuthToken Token
         {
             get => _token;
@@ -94,8 +107,13 @@ namespace NetAddressManager.Client.ViewModels
             get { return _switchData; }
             set { SetProperty(ref _switchData, value); }
         }
-        #endregion
-        private CoreSwitchModel _selectedCoreSwitch;
+
+
+        public ObservableCollection<CoreSwitchModel> CoreSwitchData { get; set; }
+        public ObservableCollection<AggregationSwitchModel> AggregationSwitchData { get; set; }
+        public ObservableCollection<AccessSwitchModel> AccessSwitchData { get; set; }
+
+
         private SwitchType _switchType;
 
         public SwitchType SwitchType
@@ -106,19 +124,27 @@ namespace NetAddressManager.Client.ViewModels
                 RaisePropertyChanged(nameof(SwitchType));
             }
         }
-
-
-        public CoreSwitchModel SelectedCoreSwitch
+        private SwitchModel<CoreSwitchModel> _selectedCoreSwitch;
+        public SwitchModel<CoreSwitchModel> SelectedCoreSwitch
         {
-            get => _selectedCoreSwitch;
-            set
-            {
-                _selectedCoreSwitch = value;
-                RaisePropertyChanged(nameof(SelectedCoreSwitch));
-            }
+            get { return _selectedCoreSwitch; }
+            set { SetProperty(ref _selectedCoreSwitch, value); }
+        }
+        private SwitchModel<AggregationSwitchModel> _selectedAggregationSwitch;
+
+        public SwitchModel<AggregationSwitchModel> SelectedAggregationSwitch
+        {
+            get => _selectedAggregationSwitch; 
+            set { SetProperty(ref _selectedAggregationSwitch, value); }
+        }
+        private SwitchModel<AccessSwitchModel> _selectedAccessSwitch;
+        public SwitchModel<AccessSwitchModel> SelectedAccessSwitch
+        {
+            get => _selectedAccessSwitch;
+            set { SetProperty(ref _selectedAccessSwitch, value); }
         }
 
-
+        #endregion
         #region METHODS
 
         private async Task Search()
@@ -137,14 +163,146 @@ namespace NetAddressManager.Client.ViewModels
             }
         }
 
-        private void DetailsCoreSwitch(string id)
+
+
+
+        private void OnDetailsSwitchClicked(object switchData)
         {
-            SelectedCoreSwitch = _coreSwitchRequestService.GetCoreSwitchById(Token, int.Parse(id));
-            var wnd = new DetailsSwitchWindow(SwitchType);
-            SwitchType = SwitchType.Core;
-            wnd.DataContext = this;
-            wnd.ShowDialog();
+            if (switchData is CoreSwitchModel coreSwitch)
+            {
+                var switchDetailsModel = GetCoreSwitchClient(coreSwitch);
+
+                var detailsWindow = new DetailsSwitchWindow();
+                detailsWindow.DataContext = switchDetailsModel;
+                detailsWindow.ShowDialog();
+
+            }
+            else if (switchData is AggregationSwitchModel aggregationSwitch)
+            {
+                var switchDetailsModel = GetAggregationSwitchClient(aggregationSwitch);
+
+                var detailsWindow = new DetailsSwitchWindow();
+                detailsWindow.DataContext = switchDetailsModel; 
+                detailsWindow.ShowDialog();
+
+            }
+            else if (switchData is AccessSwitchModel accessSwitch)
+            {
+                var switchDetailsModel = GetAccessSwitchClient(accessSwitch);
+
+                var detailsWindow = new DetailsSwitchWindow();
+                detailsWindow.DataContext = switchDetailsModel; 
+                detailsWindow.ShowDialog();
+
+            }
         }
+
+
+        private SwitchDetailsModel<CoreSwitchModel> GetCoreSwitchClient(CoreSwitchModel coreSwitch)
+        {
+            int switchId = coreSwitch.Id;
+            var coreSwitchData = _coreSwitchRequestService.GetCoreSwitchById(Token, switchId);
+            
+            SwitchType SwitchType = SwitchType.Core;
+            string ipGatewayData = coreSwitch.IPGateway;
+
+            int equipmentId = Convert.ToInt32(coreSwitch.EquipmentManufacturerId);
+            int addressId = Convert.ToInt32(coreSwitch.PostalAddressId);
+
+            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
+            string addressStr = GetPostalAddressClient(addressId);
+
+            var switchDetailsModel = new SwitchDetailsModel<CoreSwitchModel>
+            {
+                SwitchData = coreSwitchData,
+                SwitchType = SwitchType,
+                IPGateway = ipGatewayData,
+                PostalAddress = addressStr,
+                Equipment = equipmentManufacturerStr
+            };
+
+            return switchDetailsModel;
+        }
+
+
+        private SwitchDetailsModel<AggregationSwitchModel> GetAggregationSwitchClient(AggregationSwitchModel aggregationSwitch)
+        {
+            int switchId = aggregationSwitch.Id;
+            
+            string ipGatewayData = string.Empty;
+            SwitchType SwitchType = SwitchType.Aggregation;
+            int equipmentId = Convert.ToInt32(aggregationSwitch.EquipmentManufacturerId);
+            int addressId = Convert.ToInt32(aggregationSwitch.PostalAddressId);
+
+            var aggregationSwitchData = _aggregationSwitchRequestService.GetAggregationSwitchById(Token, switchId);
+            string addressStr = GetPostalAddressClient(addressId);
+            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
+
+            if (aggregationSwitch.CoreSwitchId != null)
+                ipGatewayData = _coreSwitchRequestService.GetCoreSwitchById(Token, (int)aggregationSwitch.CoreSwitchId).IPAddress;
+            
+            var switchDetailsModel = new SwitchDetailsModel<AggregationSwitchModel>
+            {
+                SwitchData = aggregationSwitchData,
+                IPGateway = ipGatewayData,
+                SwitchType = SwitchType,
+                PostalAddress = addressStr,
+                Equipment = equipmentManufacturerStr
+            };
+            return switchDetailsModel;
+        }
+
+        private SwitchDetailsModel<AccessSwitchModel> GetAccessSwitchClient(AccessSwitchModel accessSwitch)
+        {
+            int switchId = accessSwitch.Id;
+            
+            string ipGatewayData = string.Empty;
+            int addressId = Convert.ToInt32(accessSwitch.PostalAddressId);
+            int equipmentId = Convert.ToInt32(accessSwitch.EquipmentManufacturerId);
+            SwitchType SwitchType = SwitchType.Access;
+
+            var accessSwitchData = _accessSwitchRequestService.GetAccessSwitchById(Token, switchId);
+            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
+            string addressStr = GetPostalAddressClient(addressId);
+
+            if (accessSwitch.AggregationSwitchId != null)
+                ipGatewayData = _aggregationSwitchRequestService.GetAggregationSwitchById(Token, (int)accessSwitch.AggregationSwitchId).IPAddress;
+
+            var switchDetailsModel = new SwitchDetailsModel<AccessSwitchModel>
+            {
+                SwitchData = accessSwitchData,
+                IPGateway = ipGatewayData,
+                SwitchType = SwitchType,
+                PostalAddress = addressStr,
+                Equipment = equipmentManufacturerStr
+            };
+            return switchDetailsModel;
+        }
+
+
+        private string GetPostalAddressClient(int addressId)
+        {
+            string addressStr = string.Empty;
+            if (addressId != 0)
+            {
+                PostalAddressModel address = _postalAddressRequestService.GetPostalAddressById(Token, addressId);
+                addressStr = $"{address.City}, {address.Street}, {address.Building}";
+            }
+            return addressStr;
+        }
+
+        private string GetEquipmentClient(int equipmentId)
+        {
+            string equipmentManufacturerStr = string.Empty;
+            if (equipmentId != 0)
+            {
+                EquipmentManufacturerModel equipmentManufacturer = _equipmentRequestService.GetEquipmentById(Token, equipmentId);
+                equipmentManufacturerStr = $"{equipmentManufacturer.Manufacturer}, {equipmentManufacturer.Model}";
+            }
+            return equipmentManufacturerStr;
+        }
+
+
 
         #endregion
     }

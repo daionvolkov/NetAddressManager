@@ -20,11 +20,11 @@ namespace NetAddressManager.Client.Views.Windows
     /// </summary>
     public partial class DetailsSwitchWindow : Window
     {
-        public SwitchType SwitchType { get; set; }
-        public DetailsSwitchWindow(SwitchType switchType)
+        
+        public DetailsSwitchWindow()
         {
             InitializeComponent();
-            SwitchType = switchType;
+        
         }
     }
 }
