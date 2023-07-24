@@ -51,27 +51,28 @@
                 <ItemsControl ItemsSource="{Binding SwitchData.CoreSwitchData}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" >
                                 <TextBlock x:Name="CoreSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Core Switch.  " FontWeight="Bold"/>
                                 <TextBlock Text="IP Address: " />
-                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Net Mask: " />
-                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Description: " />
-                                <TextBlock Text="{Binding Description}" />
+                                <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100" >
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding Description}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
                                      Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                    CommandParameter="{Binding}"
-/>
-
+                                    CommandParameter="{Binding}"/>
                             </StackPanel>
-                            
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+  
                 <!-- Display AggregationSwitchData -->
                 <ItemsControl ItemsSource="{Binding SwitchData.AggregationSwitchData}">
                     <ItemsControl.ItemTemplate>
@@ -80,11 +81,15 @@
                                 <TextBlock x:Name="AggregationSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Aggregation Switch.  " FontWeight="Bold"/>
                                 <TextBlock Text="IP Address: " />
-                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Net Mask: " />
-                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Description: " />
-                                <TextBlock Text="{Binding Description}" />
+                                <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding Description}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
@@ -93,7 +98,6 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
                 <!-- Display AccessSwitchData -->
                 <ItemsControl ItemsSource="{Binding SwitchData.AccessSwitchData}">
                     <ItemsControl.ItemTemplate>
@@ -102,16 +106,20 @@
                                 <TextBlock x:Name="AccessSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Access Switch.  " FontWeight="Bold"/>
                                 <TextBlock Text="IP Address: " />
-                                <TextBlock Text="{Binding IPAddress}" />
+                                <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Net Mask: " />
-                                <TextBlock Text="{Binding IPMask }" />
+                                <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
                                 <TextBlock Text="  Description: " />
-                                <TextBlock Text="{Binding Description}" />
+                                <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip Content="{Binding Description}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
-                      
+
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
