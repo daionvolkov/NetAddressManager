@@ -7,8 +7,6 @@
       xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
       xmlns:models="clr-namespace:NetAddressManager.Client.Models"
       xmlns:models1="clr-namespace:NetAddressManager.Models;assembly=NetAddressManager.Models"
-      
-      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SearchPage">
@@ -21,6 +19,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.6*"/>
                 <ColumnDefinition Width="0.4*"/>
@@ -66,7 +65,8 @@
                                 </TextBlock>
                                 <Button Content="Details" Margin="10, 0, 0, 0" 
                                      Style="{StaticResource commonBtnLink}"
-                                    Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    Command="{Binding Path=DataContext.DetailsSwitchCommand, 
+                                    RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>

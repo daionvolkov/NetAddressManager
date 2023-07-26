@@ -33,14 +33,20 @@ namespace NetAddressManager.Client.Services
             {
                 request.Headers.Add("Authorization", "Bearer " + token.access_token);
             }
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+            try
             {
-                string responseStr = reader.ReadToEnd();
-                result = responseStr;
-            }
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                {
+                    string responseStr = reader.ReadToEnd();
+                    result = responseStr;
+                }
 
-            return result;
+                return result;
+            }
+            catch (Exception ) {
+                return string.Empty;
+            }
         }
 
         protected HttpStatusCode SendDataByUrl(HttpMethod method, string url, AuthToken token, string data)

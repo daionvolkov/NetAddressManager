@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace NetAddressManager.Client.Services
 {
-    class CommonViewService
+    public class CommonViewService
     {
         public Window CurrentOpenedWindow { get; private set; }
 

@@ -16,5 +16,6 @@ namespace NetAddressManager.Client.Models
         public SwitchType SwitchType { get; set; }
         public string? PostalAddress { get; set; }
         public string? Equipment { get; set;}
+        public List<SwitchPortModel>? Port { get; set; }
     }
 }

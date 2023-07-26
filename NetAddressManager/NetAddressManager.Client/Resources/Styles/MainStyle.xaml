@@ -9,7 +9,7 @@
     <FontStyle x:Key="commonFontStyle">Normal</FontStyle>
 
     <Style TargetType="TextBox" x:Key="commonTBox">
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="Height" Value="24"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
         <Setter Property="Background" Value="{StaticResource commonMidGrayColor}"/>

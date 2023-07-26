@@ -3,6 +3,7 @@ using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
 using NetAddressManager.Client.Views;
 using NetAddressManager.Client.Views.Pages;
+using NetAddressManager.Client.Views.Pages.AddPages;
 using NetAddressManager.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -158,13 +159,15 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenCreateAddressPage()
         {
-            SelectedPageName = "Добавить адрес";
-            _commonViewService.ShowMessage("CreatePage");
+            string pageName = "Добавить почтовый адрес";
+            var page = new CreatePostalAddressPage();
+            OpenPage(page, pageName, new CreatePostalAddressPageViewModel(Token));
         }
         private void OpenCreateEquipmentPage()
         {
-            SelectedPageName = "Добавить оборудование";
-            _commonViewService.ShowMessage("CreatePage");
+            string pageName = "Добавить оборудование";
+            var page = new CreateEquipmentManufacturerPage();
+            OpenPage(page, pageName, new CreateEquipmentManufacturerPageViewModel(Token));
         }
         private void OpenUserInfoPage() 
         {

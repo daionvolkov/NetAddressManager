@@ -15,8 +15,9 @@
             <ColumnDefinition Width="200" MinWidth="50" MaxWidth="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+ 
         <Grid Grid.Column="0" Background="{StaticResource commonMenuGreyColol}">
-
+       
             <ItemsControl ItemsSource="{Binding NavButtons}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -41,13 +42,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Background="{StaticResource commonMenuGreyColol}">
+            <StackPanel Grid.Row="0" Grid.Column="0"  Background="{StaticResource commonMenuGreyColol}">
                 <TextBlock Grid.Column="0" Text="{Binding SelectedPageName}" 
                        Background="{StaticResource commonMenuGreyColol}" 
                        Style="{StaticResource headerTBlock}"/>
             </StackPanel>
             
-            <StackPanel Grid.Row="0" Grid.Column="1"  Background="{StaticResource commonMenuGreyColol}">
+            <StackPanel Grid.Row="0" Grid.Column="1"  
+                        Background="{StaticResource commonMenuGreyColol}">
                 <TextBlock  Text="{Binding CurrentUser.FirstName}" 
                        Background="{StaticResource commonMenuGreyColol}" 
                        Style="{StaticResource headerTBlock}"/>
