@@ -28,7 +28,10 @@ namespace NetAddressManager.Client.Views
         public DetailsSwitchWindow()
         {
             InitializeComponent();
-            //this.DataContext = new DetailsSwitchWindowViewModel(authToken);
+          
+     
+
+
 
         }
 

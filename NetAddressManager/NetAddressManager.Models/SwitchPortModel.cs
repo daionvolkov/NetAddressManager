@@ -18,7 +18,7 @@ namespace NetAddressManager.Models
 
         public SwitchPortModel() { }
 
-        public SwitchPortModel(int portNumber, string? description, PortStatus status=PortStatus.Free, SwitchType type=SwitchType.Indeterminate)
+        public SwitchPortModel(int portNumber, string description, PortStatus status, SwitchType type=SwitchType.Indeterminate)
         {
             PortNumber = portNumber;
             Description = description;

@@ -16,6 +16,13 @@ namespace NetAddressManager.Client.Services
         private string _switchPortControllerUrl = HOST + "switchport";
 
 
+        public List<SwitchPortModel> GetAllSwitchPorts(AuthToken token)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _switchPortControllerUrl, token);
+            List<SwitchPortModel> switchPorts = JsonConvert.DeserializeObject<List<SwitchPortModel>>(response) ?? new List<SwitchPortModel>();
+            return switchPorts;
+        }
+
         public SwitchPortModel GetSwitchPortById(AuthToken token, int switchPortId)
         {
             var response = GetDataByUrl(HttpMethod.Get, _switchPortControllerUrl + $"/{switchPortId}", token);

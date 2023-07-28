@@ -21,8 +21,8 @@ namespace NetAddressManager.Client.ViewModels
         private PostalAddressRequestService _postalAddressRequestService;
         private CommonViewService _commonViewService;
 
-        #region COMMANDS
 
+        #region COMMANDS
         public DelegateCommand SavePostalAddressCommand { get; private set; }
         public DelegateCommand ClearPostalAddressCommand { get; private set; }
         
@@ -46,7 +46,6 @@ namespace NetAddressManager.Client.ViewModels
         #region PROPERTIES
 
         private PostalAddressModel _postalAddressModel;
-
         public PostalAddressModel PostalAddressModel
         {
             get =>_postalAddressModel; 

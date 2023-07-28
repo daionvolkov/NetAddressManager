@@ -1,7 +1,9 @@
 ﻿using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
+using NetAddressManager.Client.Services.HandlerServices;
 using NetAddressManager.Client.Views;
+using NetAddressManager.Client.Views.AddWindows;
 using NetAddressManager.ClientTests.Services;
 using NetAddressManager.Models;
 using Prism.Commands;
@@ -9,15 +11,15 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace NetAddressManager.Client.ViewModels
 {
     public class SearchPageViewModel : BindableBase
     {
+        private AuthToken _token;
         private CommonViewService _commonViewService;
         private NetAddressSearchRequestService _netAddressSearchRequestService;
         private AddressSearchRequestService _addressSearchRequestService;
@@ -29,26 +31,29 @@ namespace NetAddressManager.Client.ViewModels
         private EquipmentRequestService _equipmentRequestService;
         private SwitchPortRequestService _switchPortRequestService;
 
-        private MainWindowViewModel _mainWindowVM;
-        private AuthToken _token;
+        private EquipmentHandlerService _equipmentHandlerService;
+        private SwitchPortHandlerService _switchPortHandlerService; 
+        private PostalAddressHandlerService _postalAddressHandlerService;
+        private CoreSwitchHandlerService _coreSwitchHandlerService;  
+        private AggregationSwitchHandlerService _aggregationSwitchHandlerService;
+        private AccessSwitchHandlerService _accessSwitchHandlerService;
+            
+        
+        private DetailsSwitchWindowViewModel _detailsSwitchWindowViewModel;
+
+       
 
         #region COMMANDS
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand<object> DetailsSwitchCommand { get; private set; }
-
-
         public DelegateCommand<object> OpenUpdatePortCommand { get; }
         public DelegateCommand OpenCreatePortCommand { get; }
-        public DelegateCommand CancelCommand { get; }
-
-
+        public DelegateCommand SavePortCommand { get; private set; }
         #endregion
 
         public SearchPageViewModel(AuthToken token)
         {
             _token = token;
-            //_mainWindowVM = mainWindowVM;
-
             _commonViewService = new CommonViewService();
             _netAddressSearchRequestService = new NetAddressSearchRequestService();
             _addressSearchRequestService = new AddressSearchRequestService();
@@ -59,25 +64,26 @@ namespace NetAddressManager.Client.ViewModels
             _postalAddressRequestService = new PostalAddressRequestService();   
             _equipmentRequestService = new EquipmentRequestService();
             _switchPortRequestService = new SwitchPortRequestService();
+            _equipmentHandlerService = new EquipmentHandlerService(_token);
+            _switchPortHandlerService = new SwitchPortHandlerService(_token);
+            _postalAddressHandlerService = new PostalAddressHandlerService(_token);
+            _coreSwitchHandlerService = new CoreSwitchHandlerService(_token);
+            _aggregationSwitchHandlerService = new AggregationSwitchHandlerService(_token);
+            _accessSwitchHandlerService = new AccessSwitchHandlerService(_token);
 
             PortDetails = new List<SwitchPortModel>();
             SearchCommand = new DelegateCommand(async () => await Search());
             DetailsSwitchCommand = new DelegateCommand<object>(OnDetailsSwitchClicked);
+            SavePortCommand = new DelegateCommand(SavePort);
 
+            _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
 
             OpenCreatePortCommand = new DelegateCommand(OpenCreatePort);
-
             OpenUpdatePortCommand = new DelegateCommand<object>(OpenUpdatePort);
-
-            CancelCommand = new DelegateCommand(Cancel);
-
-
         }
 
+        #region PROPERTIES
 
-    #region PROPERTIES
-   
-      
         private string _searchResponse;
         public string SearchResponse
         {
@@ -113,7 +119,6 @@ namespace NetAddressManager.Client.ViewModels
             set { SetProperty(ref _switchData, value); }
         }
 
-
         public ObservableCollection<CoreSwitchModel> CoreSwitchData { get; set; }
         public ObservableCollection<AggregationSwitchModel> AggregationSwitchData { get; set; }
         public ObservableCollection<AccessSwitchModel> AccessSwitchData { get; set; }
@@ -139,47 +144,74 @@ namespace NetAddressManager.Client.ViewModels
                 RaisePropertyChanged(nameof(SwitchType));
             }
         }
-        private SwitchModel<CoreSwitchModel> _selectedCoreSwitch;
-        public SwitchModel<CoreSwitchModel> SelectedCoreSwitch
-        {
-            get { return _selectedCoreSwitch; }
-            set { SetProperty(ref _selectedCoreSwitch, value); }
-        }
-        private SwitchModel<AggregationSwitchModel> _selectedAggregationSwitch;
 
-        public SwitchModel<AggregationSwitchModel> SelectedAggregationSwitch
+
+        private SwitchDetailsModel _switchDetailsModel;
+        public SwitchDetailsModel SwitchDetailsModel
         {
-            get => _selectedAggregationSwitch; 
-            set { SetProperty(ref _selectedAggregationSwitch, value); }
-        }
-        private SwitchModel<AccessSwitchModel> _selectedAccessSwitch;
-        public SwitchModel<AccessSwitchModel> SelectedAccessSwitch
-        {
-            get => _selectedAccessSwitch;
-            set { SetProperty(ref _selectedAccessSwitch, value); }
+            get { return _switchDetailsModel; }
+            set { _switchDetailsModel = value; }
         }
 
+        private SwitchPortModel _selectedPort;
+        public SwitchPortModel SelectedPort
+        {
+            get =>_selectedPort; 
+            set { 
+                _selectedPort = value;
+                RaisePropertyChanged(nameof(SwitchPortModel));
+            }
+        }
+
+        private SwitchPortAction _portAction;
+        public SwitchPortAction PortAction
+        {
+            get =>_portAction; 
+            set { _portAction = value; }
+        }
+
+        private bool isPortReadOnly;
+        public bool IsPortReadOnly
+        {
+            get { return isPortReadOnly; }
+            set
+            {
+                isPortReadOnly = value;
+            }
+        }
         #endregion
-        #region METHODS
 
+        #region METHODS
         private void OpenCreatePort()
         {
-            _commonViewService.ShowMessage(nameof(OpenCreatePort));
+            SelectedPort = new SwitchPortModel();
+            PortAction = SwitchPortAction.Create;
+            IsPortReadOnly = false;
+            var portWindow = new CreateOrUpdatePort();
+            _commonViewService.OpenWindow(portWindow, this);
         }
 
 
-        private void OpenUpdatePort(object parameter)
+        private void OpenUpdatePort(object portId)
         {
-            //var switchPortModel = parameter as SwitchPortModel;
-            //SwitchPortModel = switchPortModel;
-            _commonViewService.ShowMessage(nameof(OpenUpdatePort));
+            int id = (int)portId;
+            PortAction = SwitchPortAction.Update;
+            IsPortReadOnly = true;
+            SelectedPort = _switchPortRequestService.GetSwitchPortById(_token, id);
+            var portWindow = new CreateOrUpdatePort();
+            _commonViewService.OpenWindow(portWindow, this);
         }
 
-
-
-        private void Cancel()
+       private void SavePort()
         {
-            _commonViewService.ShowMessage(nameof(Cancel));
+            if (PortAction == SwitchPortAction.Update)
+            {
+                _switchPortHandlerService.UpdatePortClient(SelectedPort);       
+            }
+            if(PortAction == SwitchPortAction.Create)
+            {
+                _switchPortHandlerService.CreatePortClient(SelectedPort, SwitchDetailsModel);
+            }
         }
 
 
@@ -203,175 +235,23 @@ namespace NetAddressManager.Client.ViewModels
         {
             if (switchData is CoreSwitchModel coreSwitch)
             {
-                var switchDetailsModel = GetCoreSwitchClient(coreSwitch);
-
+                SwitchDetailsModel = _coreSwitchHandlerService.GetCoreSwitchClient(coreSwitch);
                 var detailsWindow = new DetailsSwitchWindow();
-                //detailsWindow.DataContext = switchDetailsModel;
-                _commonViewService.OpenWindow(detailsWindow, switchDetailsModel);
-                //detailsWindow.ShowDialog();
+                _commonViewService.OpenWindow(detailsWindow, this);
             }
             else if (switchData is AggregationSwitchModel aggregationSwitch)
             {
-                var switchDetailsModel = GetAggregationSwitchClient(aggregationSwitch);
-
+                SwitchDetailsModel = _aggregationSwitchHandlerService.GetAggregationSwitchClient(aggregationSwitch);  
                 var detailsWindow = new DetailsSwitchWindow();
-                detailsWindow.DataContext = switchDetailsModel;
-                //_commonViewService.OpenWindow(detailsWindow, this);
-                detailsWindow.ShowDialog();
+                _commonViewService.OpenWindow(detailsWindow, this);
             }
             else if (switchData is AccessSwitchModel accessSwitch)
             {
-                var switchDetailsModel = GetAccessSwitchClient(accessSwitch);
-
+                SwitchDetailsModel = _accessSwitchHandlerService.GetAccessSwitchClient(accessSwitch);
                 var detailsWindow = new DetailsSwitchWindow();
-                detailsWindow.DataContext = switchDetailsModel;
-                //_commonViewService.OpenWindow(detailsWindow, this);
-                detailsWindow.ShowDialog();
+                _commonViewService.OpenWindow(detailsWindow, this);
             }
         }
-
-
-        private SwitchDetailsBindable<CoreSwitchModel> GetCoreSwitchClient(CoreSwitchModel coreSwitch)
-        {
-            int switchId = coreSwitch.Id;
-            var coreSwitchData = _coreSwitchRequestService.GetCoreSwitchById(_token, switchId);
-            
-            SwitchType SwitchType = SwitchType.Core;
-            string ipGatewayData = coreSwitch.IPGateway;
-
-            int equipmentId = Convert.ToInt32(coreSwitch.EquipmentManufacturerId);
-            int addressId = Convert.ToInt32(coreSwitch.PostalAddressId);
-            List<int>? portIds = coreSwitchData.SwitchPortIds;
-
-            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
-            string addressStr = GetPostalAddressClient(addressId);
-            if (portIds != null)
-            {
-                List<SwitchPortModel> PortDetails = LoadPortDetails(portIds);
-            }
-
-            var switchDetailsModel = new SwitchDetailsBindable<CoreSwitchModel>
-            {
-                SwitchData = coreSwitchData,
-                SwitchType = SwitchType,
-                IPGateway = ipGatewayData,
-                PostalAddress = addressStr,
-                Equipment = equipmentManufacturerStr,
-                Port = PortDetails,
-            };
-
-            return switchDetailsModel;
-        }
-
-        private SwitchDetailsModel<AggregationSwitchModel> GetAggregationSwitchClient(AggregationSwitchModel aggregationSwitch)
-        {
-            int switchId = aggregationSwitch.Id;
-            
-            string ipGatewayData = string.Empty;
-            SwitchType SwitchType = SwitchType.Aggregation;
-            int equipmentId = Convert.ToInt32(aggregationSwitch.EquipmentManufacturerId);
-            int addressId = Convert.ToInt32(aggregationSwitch.PostalAddressId);
-
-            var aggregationSwitchData = _aggregationSwitchRequestService.GetAggregationSwitchById(_token, switchId);
-            List<int>? portIds = aggregationSwitchData.SwitchPortIds;
-            
-            string addressStr = GetPostalAddressClient(addressId);
-            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
-            if(portIds != null)
-            {
-                List<SwitchPortModel> PortDetails = LoadPortDetails(portIds);
-            }
-
-
-            if (aggregationSwitch.CoreSwitchId != null)
-                ipGatewayData = _coreSwitchRequestService.GetCoreSwitchById(_token, (int)aggregationSwitch.CoreSwitchId).IPAddress;
-
-            var switchDetailsModel = new SwitchDetailsModel<AggregationSwitchModel>
-            {
-                SwitchData = aggregationSwitchData,
-                IPGateway = ipGatewayData,
-                SwitchType = SwitchType,
-                PostalAddress = addressStr,
-                Equipment = equipmentManufacturerStr,
-                Port = PortDetails,
-                
-            };
-            return switchDetailsModel;
-        }
-
-        private SwitchDetailsModel<AccessSwitchModel> GetAccessSwitchClient(AccessSwitchModel accessSwitch)
-        {
-            int switchId = accessSwitch.Id;
-            
-            string ipGatewayData = string.Empty;
-            int addressId = Convert.ToInt32(accessSwitch.PostalAddressId);
-            int equipmentId = Convert.ToInt32(accessSwitch.EquipmentManufacturerId);
-            SwitchType SwitchType = SwitchType.Access;
-
-            var accessSwitchData = _accessSwitchRequestService.GetAccessSwitchById(_token, switchId);
-            string equipmentManufacturerStr = GetEquipmentClient(equipmentId);
-            string addressStr = GetPostalAddressClient(addressId);
-            List<int>? portIds = accessSwitchData.SwitchPortIds;
-
-            if (portIds != null)
-            {
-                List<SwitchPortModel> PortDetails = LoadPortDetails(portIds);
-            }
-            if (accessSwitch.AggregationSwitchId != null)
-                ipGatewayData = _aggregationSwitchRequestService.GetAggregationSwitchById(_token, (int)accessSwitch.AggregationSwitchId).IPAddress;
-
-            var switchDetailsModel = new SwitchDetailsModel<AccessSwitchModel>
-            {
-                SwitchData = accessSwitchData,
-                IPGateway = ipGatewayData,
-                SwitchType = SwitchType,
-                PostalAddress = addressStr,
-                Equipment = equipmentManufacturerStr,
-                Port = PortDetails,
-            };
-            return switchDetailsModel;
-        }
-
-        private string GetPostalAddressClient(int addressId)
-        {
-            string addressStr = string.Empty;
-            if (addressId != 0)
-            {
-                PostalAddressModel address = _postalAddressRequestService.GetPostalAddressById(_token, addressId);
-                addressStr = $"{address.City}, {address.Street}, {address.Building}";
-            }
-            return addressStr;
-        }
-
-        private string GetEquipmentClient(int equipmentId)
-        {
-            string equipmentManufacturerStr = string.Empty;
-            if (equipmentId != 0)
-            {
-                EquipmentManufacturerModel equipmentManufacturer = _equipmentRequestService.GetEquipmentById(_token, equipmentId);
-                equipmentManufacturerStr = $"{equipmentManufacturer.Manufacturer}, {equipmentManufacturer.Model}";
-            }
-            return equipmentManufacturerStr;
-        }
-
-      
-        public List<SwitchPortModel> LoadPortDetails(List<int> portIds)
-        {
-            PortDetails.Clear();
-            List<SwitchPortModel> switchPortModels = new List<SwitchPortModel>();
-            foreach (int portId in portIds)
-            {
-                SwitchPortModel switchPortModel = _switchPortRequestService.GetSwitchPortById(_token, portId);
-
-                if (switchPortModel != null)
-                {
-                    PortDetails.Add(switchPortModel);
-                }
-            }
-            return PortDetails;
-        }
-
-
         #endregion
     }
 }

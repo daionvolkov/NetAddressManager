@@ -8,6 +8,22 @@
     <Brush x:Key="commonGreenColor">#5A783B</Brush>
     <FontStyle x:Key="commonFontStyle">Normal</FontStyle>
 
+    <Style TargetType="TextBox" x:Key="commonTextBox">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontStyle" Value="{StaticResource commonFontStyle}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,3"/>
+        <Setter Property="BorderThickness" Value="1"/>
+
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+
     <Style TargetType="TextBox" x:Key="commonTBox">
         <Setter Property="Height" Value="24"/>
         <Setter Property="FontSize" Value="14"/>
@@ -23,6 +39,12 @@
                 <Setter Property="CornerRadius" Value="3"/>
             </Style>
         </Style.Resources>
+    </Style>
+    <Style TargetType="TextBox" x:Key="multiLineTBox" BasedOn="{StaticResource commonTextBox}">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Background" Value="{StaticResource commonMidGrayColor}"/>
+        <Setter Property="MinHeight" Value="60"/>
     </Style>
 
 

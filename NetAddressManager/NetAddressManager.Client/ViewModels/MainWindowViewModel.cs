@@ -17,6 +17,7 @@ namespace NetAddressManager.Client.ViewModels
     {
 
         private CommonViewService _commonViewService;
+        private Window _currentWindow;
 
         #region COMMANDS
 
@@ -73,15 +74,9 @@ namespace NetAddressManager.Client.ViewModels
         private readonly string _createAddressBtnName = "Create Address";
         private readonly string _createEquipmentBtnName = "Create Equipment";
         private readonly string _userInfoBtnName = "User Info";
-        
         private readonly string _usersBtnName = "Create Equipment";
         private readonly string _manageUsersBtnName = "Users";
-
         private readonly string _logoutBtnName = "Logout";
-
-
-        private Window _currentWindow;
-
 
 
         private AuthToken _token;
@@ -119,7 +114,6 @@ namespace NetAddressManager.Client.ViewModels
 
 
         private Page _selectedPage;
-
         public Page SelectedPage
         {
             get =>_selectedPage; 
@@ -129,7 +123,6 @@ namespace NetAddressManager.Client.ViewModels
             }
         }
         private string _selectedPageName;
-
         public string SelectedPageName
         {
             get => _selectedPageName; 
@@ -138,11 +131,9 @@ namespace NetAddressManager.Client.ViewModels
                 RaisePropertyChanged(nameof(SelectedPageName));
             }
         }
-
         #endregion
 
         #region METHODS
-
 
         private void OpenSearchPage()
         {
@@ -193,8 +184,6 @@ namespace NetAddressManager.Client.ViewModels
                 _currentWindow.Close(); 
             }
         }
-
-
 
 
         public void OpenPage(Page page, string pageName, BindableBase viewModel)

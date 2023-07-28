@@ -3,16 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NetAddressManager.Client.Views" xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DetailsSwitchWindowViewModel}"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:NetAddressManager.Client.Views" 
+        xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
+        
         Title="DetailsSwitchWindow" Height="550" Width="350">
+    <Window.DataContext>
+        <viewmodels:DetailsSwitchWindowViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding SwitchData.IPAddress}" 
+        <TextBlock Text="{Binding SwitchDetailsModel.SwitchData.IPAddress}" 
                    Style="{StaticResource headerTBlock}"/> 
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -35,46 +39,46 @@
                <TextBlock Grid.Row="0" Grid.Column="0" Text="Net Mask: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" 
-                           Text="{Binding SwitchData.IPMask}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding  SwitchDetailsModel.SwitchData.IPMask}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="IP Gateway: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" 
-                           Text="{Binding IPGateway}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchDetailsModel.IPGateway}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="MAC Address: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="2" Grid.Column="1" 
-                           Text="{Binding SwitchData.MACAddress}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchDetailsModel.SwitchData.MACAddress}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Description: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" 
-                           Text="{Binding SwitchData.Description}" 
+                           Text="{Binding  SwitchDetailsModel.SwitchData.Description}" 
                            Style="{StaticResource multiLineTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Creation Date: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" 
-                           Text="{Binding SwitchData.CreateDate}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchDetailsModel.SwitchData.CreateDate}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Switch Type: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="5" Grid.Column="1" 
-                           Text="{Binding SwitchType}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding SwitchDetailsModel.SwitchType}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="6" Grid.Column="0" Text="Address: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" 
-                           Text="{Binding  PostalAddress}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding  SwitchDetailsModel.PostalAddress}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="7" Grid.Column="0" Text="Equipment: " Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="7" Grid.Column="1" 
-                           Text="{Binding  Equipment}" Style="{StaticResource commonTBlock}" 
+                           Text="{Binding  SwitchDetailsModel.Equipment}" Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
-         
-                <ListView Grid.Row="8" Grid.ColumnSpan="2" ItemsSource="{Binding Port}" Margin="0, 10, 0, 0">
+
+                <ListView Grid.Row="8" Grid.ColumnSpan="2" ItemsSource="{Binding SwitchDetailsModel.Port}" Margin="0, 10, 0, 0">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Port Number" DisplayMemberBinding="{Binding PortNumber}" />
@@ -84,9 +88,10 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Update" 
-                                               Command="{Binding Path=DataContext. OpenUpdatePortCommand, 
+                                               Command="{Binding Path=DataContext.OpenUpdatePortCommand, 
                                             RelativeSource={RelativeSource AncestorType=ListView}}"
-                                CommandParameter="{Binding}" Style="{StaticResource commonBtnLink}"/>
+                                            Style="{StaticResource commonBtnLink}" 
+                                                CommandParameter="{Binding Id}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -102,7 +107,7 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Add port" Command="{Binding OpenCreatePortCommand}"
                     Style="{StaticResource commonBtn}" />
-            <Button Grid.Column="1" Content="Cancel" Command="{Binding CancelCommand}" 
+            <Button Grid.Column="1" Content="Cancel" IsCancel="True" 
                     Style="{StaticResource commonBtn}"/>
         </Grid> 
     </Grid>
