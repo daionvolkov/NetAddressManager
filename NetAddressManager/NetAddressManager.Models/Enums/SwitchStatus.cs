@@ -4,6 +4,7 @@
     {
         InOperation,
         Inaccessible,
-        Dismounted
+        Dismounted,
+        Scheduled
     }
 }

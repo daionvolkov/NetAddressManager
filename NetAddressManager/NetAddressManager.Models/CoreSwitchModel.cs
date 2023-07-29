@@ -16,7 +16,7 @@ namespace NetAddressManager.Models
 
 
         public CoreSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,
-           SwitchStatus status, string iPGateway, List<int> switchPortIds=null, List<int> aggregationSwitchIds = null)
+           string iPGateway, SwitchStatus status = SwitchStatus.Scheduled,  List<int> switchPortIds=null, List<int> aggregationSwitchIds = null)
         {
             IPAddress = iPAddress;
             IPMask = iPMask;

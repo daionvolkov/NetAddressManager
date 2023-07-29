@@ -97,25 +97,25 @@ namespace NetAddressManager.Client.ViewModels
         private bool _radioButtonIP;
         public bool RadioButtonIP
         {
-            get { return _radioButtonIP; }
+            get => _radioButtonIP;
             set { SetProperty(ref _radioButtonIP, value); }
         }
         private bool _radioButtonAddress;
         public bool RadioButtonAddress
         {
-            get { return _radioButtonAddress; }
+            get => _radioButtonAddress;
             set { SetProperty(ref _radioButtonAddress, value); }
         }
         private bool _radioButtonEquipment;
         public bool RadioButtonEquipment
         {
-            get { return _radioButtonEquipment; }
+            get => _radioButtonEquipment;
             set { SetProperty(ref _radioButtonEquipment, value); }
         }
         private SwitchDataModel _switchData;
         public SwitchDataModel SwitchData
         {
-            get { return _switchData; }
+            get => _switchData;
             set { SetProperty(ref _switchData, value); }
         }
 

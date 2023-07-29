@@ -144,8 +144,9 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenCreateSwitchPage()
         {
-            SelectedPageName = "Добавить коммутатор";
-            _commonViewService.ShowMessage("CreatePage");
+            string pageName = "Добавить коммутатор";
+            var page = new CreateSwitchPage();
+            OpenPage(page, pageName, new CreateSwitchPageViewModel(Token));
         }
 
         private void OpenCreateAddressPage()

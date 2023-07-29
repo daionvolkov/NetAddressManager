@@ -15,7 +15,7 @@ namespace NetAddressManager.Models
 
 
 
-        public AggregationSwitchModel(string iPAddress, string iPMask, string mACAddress, string description, SwitchStatus status)
+        public AggregationSwitchModel(string iPAddress, string iPMask, string mACAddress, string description, SwitchStatus status = SwitchStatus.Scheduled)
         {
             IPAddress = iPAddress;
             IPMask = iPMask;

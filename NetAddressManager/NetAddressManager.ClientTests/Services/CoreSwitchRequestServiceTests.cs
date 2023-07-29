@@ -44,7 +44,7 @@ namespace NetAddressManager.Client.Services.Tests
         [TestMethod()]
         public void CreateCoreSwitchTest()
         {
-            CoreSwitchModel model = new CoreSwitchModel("10.10.1.12", "255.255.255.0", "A1:A2:A3:A4:A5:A6", "New test CoreSwitch", SwitchStatus.Inaccessible, "1.1.1.1");
+            CoreSwitchModel model = new CoreSwitchModel("10.10.1.12", "255.255.255.0", "A1:A2:A3:A4:A5:A6", "New test CoreSwitch", "1.1.1.1", SwitchStatus.Inaccessible);
 
             var result = _service.CreateCoreSwitch(_token, model);
             Assert.AreEqual(HttpStatusCode.OK, result);
@@ -53,7 +53,7 @@ namespace NetAddressManager.Client.Services.Tests
         [TestMethod()]
         public void UpdateCoreSwitchTest()
         {
-            CoreSwitchModel model = new CoreSwitchModel("10.10.1.12", "255.255.255.0", "A1:A2:A3:A4:A5:A6", "Update New test CoreSwitch", SwitchStatus.Inaccessible, "1.1.1.1");
+            CoreSwitchModel model = new CoreSwitchModel("10.10.1.12", "255.255.255.0", "A1:A2:A3:A4:A5:A6", "Update New test CoreSwitch", "1.1.1.1", SwitchStatus.Inaccessible);
             model.Id = 37;
             var result = _service.UpdateCoreSwitch(_token, model);
             Assert.AreEqual(HttpStatusCode.OK, result);

@@ -14,7 +14,7 @@ namespace NetAddressManager.Models
         public AccessSwitchModel() { }
 
         public AccessSwitchModel(string iPAddress, string iPMask, string mACAddress, string description,
-           SwitchStatus status,  List<int> switchPortIds = null)
+           SwitchStatus status = SwitchStatus.Scheduled,  List<int> switchPortIds = null)
         {
             IPAddress = iPAddress;
             IPMask = iPMask;
