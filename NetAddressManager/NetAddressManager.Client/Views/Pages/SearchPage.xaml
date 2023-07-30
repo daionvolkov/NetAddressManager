@@ -68,6 +68,10 @@
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, 
                                     RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
+                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                    Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -94,6 +98,10 @@
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
+                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                    Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -119,7 +127,10 @@
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
-
+                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                    Style="{StaticResource commonBtnLink}"
+                                    Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

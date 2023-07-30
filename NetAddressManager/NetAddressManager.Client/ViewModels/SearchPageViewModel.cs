@@ -46,7 +46,13 @@ namespace NetAddressManager.Client.ViewModels
         #region COMMANDS
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand<object> DetailsSwitchCommand { get; private set; }
+        public DelegateCommand<object> OpenUpdateSwitchCommand { get; private set; }
+
+
         public DelegateCommand<object> OpenUpdatePortCommand { get; }
+
+
+
         public DelegateCommand OpenCreatePortCommand { get; }
         public DelegateCommand SavePortCommand { get; private set; }
         #endregion
@@ -74,6 +80,7 @@ namespace NetAddressManager.Client.ViewModels
             PortDetails = new List<SwitchPortModel>();
             SearchCommand = new DelegateCommand(async () => await Search());
             DetailsSwitchCommand = new DelegateCommand<object>(OnDetailsSwitchClicked);
+            OpenUpdateSwitchCommand = new DelegateCommand<object>(OpenUpdateSwitch);
             SavePortCommand = new DelegateCommand(SavePort);
 
             _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
@@ -249,6 +256,29 @@ namespace NetAddressManager.Client.ViewModels
             {
                 SwitchDetailsModel = _accessSwitchHandlerService.GetAccessSwitchClient(accessSwitch);
                 var detailsWindow = new DetailsSwitchWindow();
+                _commonViewService.OpenWindow(detailsWindow, this);
+            }
+        }
+
+        private void OpenUpdateSwitch(object switchData)
+        {
+            if (switchData is CoreSwitchModel coreSwitch)
+            {
+                SwitchDetailsModel = _coreSwitchHandlerService.GetCoreSwitchClient(coreSwitch);
+                var detailsWindow = new UpdateSwitchWindow();
+                _commonViewService.OpenWindow(detailsWindow, this);
+            }
+
+            if (switchData is AggregationSwitchModel aggregationSwitch)
+            {
+                SwitchDetailsModel = _aggregationSwitchHandlerService.GetAggregationSwitchClient(aggregationSwitch);
+                var detailsWindow = new UpdateSwitchWindow();
+                _commonViewService.OpenWindow(detailsWindow, this);
+            }
+            if (switchData is AccessSwitchModel accessSwitch)
+            {
+                SwitchDetailsModel = _accessSwitchHandlerService.GetAccessSwitchClient(accessSwitch);
+                var detailsWindow = new UpdateSwitchWindow();
                 _commonViewService.OpenWindow(detailsWindow, this);
             }
         }
