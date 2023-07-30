@@ -1,4 +1,5 @@
-﻿using NetAddressManager.Api.Models.Enums;
+﻿using GalaSoft.MvvmLight.Command;
+using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
 using NetAddressManager.Client.Services.HandlerServices;
@@ -11,9 +12,11 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NetAddressManager.Client.ViewModels
 {
@@ -83,13 +86,63 @@ namespace NetAddressManager.Client.ViewModels
             OpenUpdateSwitchCommand = new DelegateCommand<object>(OpenUpdateSwitch);
             SavePortCommand = new DelegateCommand(SavePort);
 
-            _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
+           _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
 
             OpenCreatePortCommand = new DelegateCommand(OpenCreatePort);
             OpenUpdatePortCommand = new DelegateCommand<object>(OpenUpdatePort);
         }
 
         #region PROPERTIES
+
+        private RelayCommand _openUpdateGatewayCommand;
+        public ICommand OpenUpdateGatewayCommand
+        {
+            get
+            {
+                if (_openUpdateGatewayCommand == null)
+                {
+                    _openUpdateGatewayCommand = new RelayCommand(OpenUpdateGateway);
+                }
+                return _openUpdateGatewayCommand;
+            }
+        }
+        private RelayCommand _openUpdateAddressCommand;
+        public ICommand OpenUpdateAddressCommand
+        {
+            get
+            {
+                if (_openUpdateAddressCommand == null)
+                {
+                    _openUpdateAddressCommand = new RelayCommand(OpenUpdateAddress);
+                }
+                return _openUpdateAddressCommand;
+            }
+        }
+       /* private RelayCommand _openCreatePortCommand;
+        public ICommand OpenCreatePortCommand
+        {
+            get
+            {
+                if (_openCreatePortCommand == null)
+                {
+                    _openCreatePortCommand = new RelayCommand(OpenCreatePort);
+                }
+                return _openCreatePortCommand;
+            }
+        }*/
+
+        private RelayCommand _openUpdateEquipmentCommand;
+        public ICommand OpenUpdateEquipmentCommand
+        {
+            get
+            {
+                if (_openUpdateEquipmentCommand == null)
+                {
+                    _openUpdateEquipmentCommand = new RelayCommand(OpenUpdateEquipment);
+                }
+                return _openUpdateEquipmentCommand;
+            }
+        }
 
         private string _searchResponse;
         public string SearchResponse
@@ -173,7 +226,7 @@ namespace NetAddressManager.Client.ViewModels
         private SwitchPortAction _portAction;
         public SwitchPortAction PortAction
         {
-            get =>_portAction; 
+            get => _portAction;
             set { _portAction = value; }
         }
 
@@ -191,6 +244,8 @@ namespace NetAddressManager.Client.ViewModels
         #region METHODS
         private void OpenCreatePort()
         {
+
+            
             SelectedPort = new SwitchPortModel();
             PortAction = SwitchPortAction.Create;
             IsPortReadOnly = false;
@@ -213,9 +268,9 @@ namespace NetAddressManager.Client.ViewModels
         {
             if (PortAction == SwitchPortAction.Update)
             {
-                _switchPortHandlerService.UpdatePortClient(SelectedPort);       
+                _switchPortHandlerService.UpdatePortClient(SelectedPort);
             }
-            if(PortAction == SwitchPortAction.Create)
+            if (PortAction == SwitchPortAction.Create)
             {
                 _switchPortHandlerService.CreatePortClient(SelectedPort, SwitchDetailsModel);
             }
@@ -281,6 +336,24 @@ namespace NetAddressManager.Client.ViewModels
                 var detailsWindow = new UpdateSwitchWindow();
                 _commonViewService.OpenWindow(detailsWindow, this);
             }
+        }
+
+        private void OpenUpdateGateway()
+        {
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
+            updateSwitchWindowViewModel.OpenUpdateGateway();
+        }
+
+        private void OpenUpdateAddress()
+        {
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
+            updateSwitchWindowViewModel.OpenUpdateAddress();
+        }
+
+        private void OpenUpdateEquipment()
+        {
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
+            updateSwitchWindowViewModel.OpenUpdateEquipment();
         }
         #endregion
     }

@@ -50,28 +50,67 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-   
+
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="IP Mask:" 
                        Style="{StaticResource commonTBlock}"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SwitchDetailsModel.SwitchData.IPMask}" Margin="5, 7, 5, 7"/>
+            <TextBox Grid.Row="0" Grid.Column="1" 
+                     Text="{Binding SwitchDetailsModel.SwitchData.IPMask}" Margin="5, 8, 5, 8"/>
 
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" 
                        Style="{StaticResource commonTBlock}"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SwitchDetailsModel.SwitchData.Description}" Margin="5, 7, 5, 7"/>
-            
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                     Text="{Binding SwitchDetailsModel.SwitchData.Description}" 
+                     Margin="5, 8, 5, 8"/>
+
             <TextBlock Grid.Row="2" Grid.Column="0" Text="MAC Address:" 
                        Style="{StaticResource commonTBlock}"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SwitchDetailsModel.SwitchData.MACAddress}" Margin="5, 7, 5, 7"/>
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                     Text="{Binding SwitchDetailsModel.SwitchData.MACAddress}" 
+                     Margin="5, 8, 5, 8"/>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Text="IP Gateway:" 
                        Style="{StaticResource commonTBlock}"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SwitchDetailsModel.IPGateway}" 
-                       Style="{StaticResource commonTBlock}"/>
+            <ContentControl Grid.Row="3" Grid.Column="1">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <TextBlock Text="{Binding SwitchDetailsModel.IPGateway}" 
+                                       Style="{StaticResource commonTBlock}" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SwitchDetailsModel.SwitchType}" 
+                                         Value="Core">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <TextBox Text="{Binding SwitchDetailsModel.IPGateway}"
+                                            Margin="5, 8, 5, 8"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
+            
             <Button Grid.Row="3" Grid.Column="2" Content="Update" 
-                    Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Command="{Binding OpenUpdateGatewayCommand}">
+                <Button.Style >
+                    <Style TargetType="Button" BasedOn="{StaticResource commonBtnLink}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SwitchDetailsModel.SwitchType}" 
+                                         Value="Core">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Address:" 
                        Style="{StaticResource commonTBlock}"/>
@@ -79,7 +118,8 @@
                        Style="{StaticResource commonTBlock}"/>
             <Button Grid.Row="4" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
+                    VerticalAlignment="Center"
+                    Command="{Binding OpenUpdateAddressCommand}"/>
 
             <TextBlock Grid.Row="5" Grid.Column="0" Text="Equipment:" 
                        Style="{StaticResource commonTBlock}"/>
@@ -87,13 +127,14 @@
                        Style="{StaticResource commonTBlock}"/>
             <Button Grid.Row="5" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"/>
+                    VerticalAlignment="Center"
+                    Command="{Binding OpenUpdateEquipmentCommand}"/>
 
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:" 
                        Style="{StaticResource commonTBlock}"/>
             <ComboBox Grid.Row="6" Grid.Column="1" 
                           ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
-                          SelectedItem="{Binding SwitchStatus.Status}" Margin="5, 7, 5, 7"/>
+                          SelectedItem="{Binding SwitchStatus.Status}" Margin="5, 8, 5, 8"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
