@@ -50,19 +50,16 @@ namespace NetAddressManager.Client.ViewModels
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand<object> DetailsSwitchCommand { get; private set; }
         public DelegateCommand<object> OpenUpdateSwitchCommand { get; private set; }
-
-
         public DelegateCommand<object> OpenUpdatePortCommand { get; }
-
-
-
         public DelegateCommand OpenCreatePortCommand { get; }
         public DelegateCommand SavePortCommand { get; private set; }
+
         #endregion
 
         public SearchPageViewModel(AuthToken token)
         {
             _token = token;
+
             _commonViewService = new CommonViewService();
             _netAddressSearchRequestService = new NetAddressSearchRequestService();
             _addressSearchRequestService = new AddressSearchRequestService();
@@ -86,16 +83,21 @@ namespace NetAddressManager.Client.ViewModels
             OpenUpdateSwitchCommand = new DelegateCommand<object>(OpenUpdateSwitch);
             SavePortCommand = new DelegateCommand(SavePort);
 
-           _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
-
             OpenCreatePortCommand = new DelegateCommand(OpenCreatePort);
             OpenUpdatePortCommand = new DelegateCommand<object>(OpenUpdatePort);
+
+
+
+            _detailsSwitchWindowViewModel = new DetailsSwitchWindowViewModel();
+
+
+
         }
 
         #region PROPERTIES
 
         private RelayCommand _openUpdateGatewayCommand;
-        public ICommand OpenUpdateGatewayCommand
+        public RelayCommand OpenUpdateGatewayCommand
         {
             get
             {
@@ -118,31 +120,36 @@ namespace NetAddressManager.Client.ViewModels
                 return _openUpdateAddressCommand;
             }
         }
-       /* private RelayCommand _openCreatePortCommand;
-        public ICommand OpenCreatePortCommand
-        {
-            get
-            {
-                if (_openCreatePortCommand == null)
-                {
-                    _openCreatePortCommand = new RelayCommand(OpenCreatePort);
-                }
-                return _openCreatePortCommand;
-            }
-        }*/
 
-        private RelayCommand _openUpdateEquipmentCommand;
+
+        private RelayCommand<object> _openUpdateEquipmentCommand;
         public ICommand OpenUpdateEquipmentCommand
         {
             get
             {
                 if (_openUpdateEquipmentCommand == null)
                 {
-                    _openUpdateEquipmentCommand = new RelayCommand(OpenUpdateEquipment);
+                    _openUpdateEquipmentCommand = new RelayCommand<object>(OpenUpdateEquipment);
                 }
                 return _openUpdateEquipmentCommand;
             }
         }
+
+
+        private RelayCommand<object> _saveUpdateSwitchCommand;
+        public ICommand SaveUpdateSwitchCommand
+        {
+            get
+            {
+                if (_saveUpdateSwitchCommand == null)
+                {
+                    _saveUpdateSwitchCommand = new RelayCommand<object>(SaveUpdateSwitch);
+                }
+                return _saveUpdateSwitchCommand;
+            }
+        }
+
+
 
         private string _searchResponse;
         public string SearchResponse
@@ -242,10 +249,12 @@ namespace NetAddressManager.Client.ViewModels
         #endregion
 
         #region METHODS
+
+
+        
+
         private void OpenCreatePort()
         {
-
-            
             SelectedPort = new SwitchPortModel();
             PortAction = SwitchPortAction.Create;
             IsPortReadOnly = false;
@@ -340,20 +349,26 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenUpdateGateway()
         {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
             updateSwitchWindowViewModel.OpenUpdateGateway();
         }
 
         private void OpenUpdateAddress()
         {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
             updateSwitchWindowViewModel.OpenUpdateAddress();
         }
 
-        private void OpenUpdateEquipment()
+        private void OpenUpdateEquipment(object switchDetailsModel)
         {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel();
-            updateSwitchWindowViewModel.OpenUpdateEquipment();
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
+            updateSwitchWindowViewModel.OpenUpdateEquipment(switchDetailsModel);
+        }
+
+        private void SaveUpdateSwitch(object switchDetailsModel)
+        {
+            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
+            updateSwitchWindowViewModel.SaveUpdateSwitch(switchDetailsModel);
         }
         #endregion
     }

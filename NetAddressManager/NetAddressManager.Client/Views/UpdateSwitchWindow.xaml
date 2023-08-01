@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetAddressManager.Client.Views"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models"
+        xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models" xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
+        
         mc:Ignorable="d"
         Title="UpdateSwitchWindow" Height="550" Width="450">
 
@@ -99,7 +100,8 @@
             <Button Grid.Row="3" Grid.Column="2" Content="Update" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
-                Command="{Binding OpenUpdateGatewayCommand}">
+                Command="{Binding OpenUpdateGatewayCommand}" 
+                    CommandParameter="{Binding SwitchDetailsModel}">
                 <Button.Style >
                     <Style TargetType="Button" BasedOn="{StaticResource commonBtnLink}">
                         <Style.Triggers>
@@ -119,7 +121,7 @@
             <Button Grid.Row="4" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Command="{Binding OpenUpdateAddressCommand}"/>
+                    Command="{Binding OpenUpdateAddressCommand}" CommandParameter="{Binding SwitchDetailsModel}"/>
 
             <TextBlock Grid.Row="5" Grid.Column="0" Text="Equipment:" 
                        Style="{StaticResource commonTBlock}"/>
@@ -128,7 +130,7 @@
             <Button Grid.Row="5" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Command="{Binding OpenUpdateEquipmentCommand}"/>
+                    Command="{Binding OpenUpdateEquipmentCommand}" CommandParameter="{Binding SwitchDetailsModel}"/>
 
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:" 
                        Style="{StaticResource commonTBlock}"/>
@@ -141,7 +143,8 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" Command="{Binding SaveUpdateSwitchCommand}" Style="{StaticResource commonBtn}"/>
+            <Button Grid.Column="0" Content="Save" Command="{Binding SaveUpdateSwitchCommand}" 
+                    Style="{StaticResource commonBtn}" CommandParameter="{Binding SwitchDetailsModel}"/>
             <Button Grid.Column="1" Content="Cancel" IsCancel="True" Style="{StaticResource commonBtn}"/>
 
         </Grid>
