@@ -35,7 +35,7 @@ namespace NetAddressManager.Client.Services
         {
             CurrentOpenedWindow = wnd;
             wnd.DataContext = viewModel;
-            wnd.ShowDialog();
+            wnd.Show();
         }
 
 

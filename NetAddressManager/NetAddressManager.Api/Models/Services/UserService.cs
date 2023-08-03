@@ -97,6 +97,12 @@ namespace NetAddressManager.Api.Models.Services
             return user.GetModel();
         }
 
+        public UserModel GetUserByEmail(string email)
+        {
+            User user = _db.User.FirstOrDefault(u => u.Email == email) ?? new User();
+            return user.GetModel();
+        }
+
         public bool Update(int id, UserModel model)
         {
             User user = _db.User.FirstOrDefault(u => u.Id == id) ?? new User();

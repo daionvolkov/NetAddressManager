@@ -1,9 +1,12 @@
 ﻿using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
+using NetAddressManager.Client.Views;
 using NetAddressManager.Models;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace NetAddressManager.Client.ViewModels
@@ -11,13 +14,14 @@ namespace NetAddressManager.Client.ViewModels
     public class UpdateSwitchWindowViewModel : BindableBase
     {
         private AuthToken _token;
-
-
-        #region COMMANDS
         private CommonViewService _commonViewService;
         private CoreSwitchRequestService _coreSwitchRequestService;
         private AggregationSwitchRequestService _aggregationSwitchRequestService;
         private AccessSwitchRequestService _accessSwitchRequestService;
+
+
+        #region COMMANDS
+        //public DelegateCommand<string> SearchEquipmentCommand { get; private set; }
         #endregion
 
         public UpdateSwitchWindowViewModel(AuthToken token)
@@ -27,13 +31,11 @@ namespace NetAddressManager.Client.ViewModels
             _coreSwitchRequestService = new CoreSwitchRequestService();
             _aggregationSwitchRequestService = new AggregationSwitchRequestService();
             _accessSwitchRequestService = new AccessSwitchRequestService();
+            //SearchEquipmentCommand = new DelegateCommand<string>(SearchEquipment);
         }
-       
-
-
 
         #region PROPERTIES
-             
+
         private SwitchDetailsModel _switchDetailsModel;
         public SwitchDetailsModel SwitchDetailsModel
         {
@@ -43,7 +45,6 @@ namespace NetAddressManager.Client.ViewModels
                RaisePropertyChanged(nameof(SwitchDetailsModel));
             }
         }
-    
 
         #endregion
 
@@ -62,8 +63,12 @@ namespace NetAddressManager.Client.ViewModels
         public void OpenUpdateEquipment(object switchDetailsModel)
         {
             var updateSwitch = switchDetailsModel as SwitchDetailsModel;
-            MessageBox.Show(nameof(OpenUpdateEquipment));
+            var updateEquipmentWindow = new UpdateEquipmentWindow();
+            updateEquipmentWindow.DataContext = updateSwitch;
+            updateEquipmentWindow.Show();
         }
+
+
 
         public void SaveUpdateSwitch(object switchDetailsModel)
         {
@@ -114,6 +119,33 @@ namespace NetAddressManager.Client.ViewModels
             var resultAction = _accessSwitchRequestService.UpdateAccessSwitch(_token, accessSwitch);
             _commonViewService.ShowActionRelust(resultAction, "Данные обновлены");
         }
+
+
+
+
+
+        private ObservableCollection<EquipmentManufacturerModel> equipmentManufacturer = new ObservableCollection<EquipmentManufacturerModel>();
+
+        public ObservableCollection<EquipmentManufacturerModel> EquipmentManufacturer
+        {
+            get { return equipmentManufacturer; }
+            set { SetProperty(ref equipmentManufacturer, value); }
+        }
+
+        public DelegateCommand SearchEquipmentCommand { get; private set; }
+
+        public UpdateSwitchWindowViewModel()
+        {
+            SearchEquipmentCommand = new DelegateCommand(SearchEquipment);
+        }
+
+        public void SearchEquipment()
+        {
+            _commonViewService.ShowMessage(nameof(SearchEquipment));
+        }
+
+
+
         #endregion
 
     }

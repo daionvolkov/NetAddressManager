@@ -41,7 +41,7 @@ namespace NetAddressManager.Client.Services.Tests
         {
             var service = new UserRequestService();
             var token = service.GetToken("admin", "123");
-            
+
             var result = service.GetAllUsers(token);
             Console.WriteLine(result.Count);
             Assert.AreNotEqual(Array.Empty<UserModel>(), result.ToArray());
@@ -54,7 +54,7 @@ namespace NetAddressManager.Client.Services.Tests
             var token = service.GetToken("admin", "123");
 
             var result = service.DeleteUser(token, 6);
-            
+
             Assert.AreEqual(HttpStatusCode.OK, result);
         }
 
@@ -67,6 +67,17 @@ namespace NetAddressManager.Client.Services.Tests
             user.Id = 6;
             var result = service.UpdateUser(token, user);
             Assert.AreEqual(HttpStatusCode.OK, result);
+        }
+
+        [TestMethod()]
+        public void GetUserByEmailTest()
+        {
+            var service = new UserRequestService();
+            var token = service.GetToken("admin", "123");
+            string email = "testtest@mail.com";
+            var result = service.GetUserByEmail(token, email);
+            Console.WriteLine(result);
+            Assert.AreNotEqual(null, result);
         }
     }
 }

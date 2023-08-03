@@ -36,6 +36,12 @@ namespace NetAddressManager.Api.Controllers
             return user == null ? NotFound() : Ok(user);
         }
 
+        [HttpGet("{email}/login")]
+        public ActionResult<UserModel> GetUserByEmail(string email)
+        {
+            var user = _userService.GetUserByEmail(email);
+            return user == null ? NotFound() : Ok(user);
+        }
 
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserModel userModel)

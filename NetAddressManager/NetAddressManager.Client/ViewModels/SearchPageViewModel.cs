@@ -148,9 +148,7 @@ namespace NetAddressManager.Client.ViewModels
                 return _saveUpdateSwitchCommand;
             }
         }
-
-
-
+       
         private string _searchResponse;
         public string SearchResponse
         {
@@ -179,6 +177,8 @@ namespace NetAddressManager.Client.ViewModels
             get => _radioButtonEquipment;
             set { SetProperty(ref _radioButtonEquipment, value); }
         }
+
+
         private SwitchDataModel _switchData;
         public SwitchDataModel SwitchData
         {
@@ -370,6 +370,10 @@ namespace NetAddressManager.Client.ViewModels
             var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
             updateSwitchWindowViewModel.SaveUpdateSwitch(switchDetailsModel);
         }
+
+
+
+       
         #endregion
     }
 }

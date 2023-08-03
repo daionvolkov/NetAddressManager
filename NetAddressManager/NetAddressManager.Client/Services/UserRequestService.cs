@@ -55,6 +55,21 @@ namespace NetAddressManager.Client.Services
             return user;
         }
 
+        public UserModel GetUserByEmail(AuthToken token, string email)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _usersControllerUrl + $"/{email}/login", token);
+            UserModel user = JsonConvert.DeserializeObject<UserModel>(response) ?? new UserModel();
+            return user;
+        }
+
+        public UserModel GetUserById(AuthToken token, int id)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _usersControllerUrl + $"/{id}", token);
+            UserModel user = JsonConvert.DeserializeObject<UserModel>(response) ?? new UserModel();
+            return user;
+        }
+
+
         public HttpStatusCode DeleteUser(AuthToken token, int userId)
         {
             var result = DeleteDataByUrl(_usersControllerUrl + $"/{userId}", token);

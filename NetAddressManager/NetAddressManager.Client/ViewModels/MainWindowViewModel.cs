@@ -170,8 +170,9 @@ namespace NetAddressManager.Client.ViewModels
 
         private void OpenUsersManagement()
         {
-            SelectedPageName = _manageUsersBtnName;
-            _commonViewService.ShowMessage(_manageUsersBtnName);
+            string pageName = "Поиск пользователей";
+            var page = new UsersPage();
+            OpenPage(page, pageName, new UsersPageViewModel(Token));
 
         }
 
