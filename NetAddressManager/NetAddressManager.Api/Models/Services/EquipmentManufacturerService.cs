@@ -18,6 +18,10 @@ namespace NetAddressManager.Api.Models.Services
             return equipment.GetModel();
         }
 
+
+
+
+
         public bool Create(EquipmentManufacturerModel model)
         {
             bool result = DoAction(delegate ()

@@ -15,6 +15,8 @@ namespace NetAddressManager.Client.Services
 
 
         public const string HOST = "https://localhost:7033/api/";
+        //public const string HOST = "http://addressmanagerapi.somee.com/api/";
+
 
         protected string GetDataByUrl(HttpMethod method, string url, AuthToken token, string userName = null, string password = null)
         {

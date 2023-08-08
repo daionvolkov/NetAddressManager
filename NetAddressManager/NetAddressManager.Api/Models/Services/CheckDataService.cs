@@ -1,4 +1,6 @@
-﻿namespace NetAddressManager.Api.Models.Services
+﻿using NetAddressManager.Models;
+
+namespace NetAddressManager.Api.Models.Services
 {
     public class CheckDataService
     {
@@ -25,6 +27,13 @@
             bool isPostalAddressExists = false;
             isPostalAddressExists = _db.PostalAddress.Any(pa => (pa.City == city) && (pa.Street == street) && (pa.Building == building));
             return isPostalAddressExists;
+        }
+
+        public PostalAddressModel GetPostalAddressId(string city, string street, string building)
+        {
+            PostalAddressModel postalAddress = _db.PostalAddress.
+                FirstOrDefault(pa => (pa.City == city) && (pa.Street == street) && (pa.Building == building)).GetModel();
+            return postalAddress;
         }
 
         public bool CheckEquipment(string manufacturer, string model) 

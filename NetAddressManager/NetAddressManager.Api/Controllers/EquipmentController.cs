@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetAddressManager.Api.Models;
 using NetAddressManager.Api.Models.Services;
+using NetAddressManager.Api.Models.Services.SearchServices;
 using NetAddressManager.Models;
 
 namespace NetAddressManager.Api.Controllers
@@ -15,12 +16,14 @@ namespace NetAddressManager.Api.Controllers
     {
         private readonly ApplicationContext _db;
         private readonly EquipmentManufacturerService _equipmentManufacturerService;
+        private readonly EquipmentSearchService _equipmentSearchService;
         private readonly CheckDataService _checkDataService;
         
         public EquipmentController(ApplicationContext db)
         {
             _db = db;
             _equipmentManufacturerService = new EquipmentManufacturerService(db);
+            _equipmentSearchService = new EquipmentSearchService(db);
             _checkDataService = new CheckDataService(db);
         }
         
@@ -36,6 +39,17 @@ namespace NetAddressManager.Api.Controllers
         {
             var equipment = _equipmentManufacturerService.Get(id);
             return equipment == null ? NotFound() : Ok(equipment);
+        }
+
+        [HttpGet("{name}/equipment")]
+        public async Task<ActionResult<IEnumerable<EquipmentManufacturerModel>>> GetEquipmentByName(string name) 
+        {
+            var matchingEquipment = await _db.EquipmentManufacturer
+                .Where(e => e.Manufacturer.Contains(name) || e.Model.Contains(name))
+                .Select(e => e.GetModel())
+                .ToListAsync();
+
+            return matchingEquipment == null ? NotFound() : Ok(matchingEquipment);
         }
 
 

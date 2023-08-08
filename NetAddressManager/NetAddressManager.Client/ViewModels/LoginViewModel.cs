@@ -1,4 +1,4 @@
-﻿using NetAddressManager.Client.Models;
+﻿    using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
 using NetAddressManager.Client.Views;
 using NetAddressManager.Models;

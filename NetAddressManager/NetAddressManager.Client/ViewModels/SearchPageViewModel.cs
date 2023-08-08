@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NetAddressManager.Client.ViewModels
@@ -43,6 +44,8 @@ namespace NetAddressManager.Client.ViewModels
             
         
         private DetailsSwitchWindowViewModel _detailsSwitchWindowViewModel;
+
+
 
        
 
@@ -148,7 +151,10 @@ namespace NetAddressManager.Client.ViewModels
                 return _saveUpdateSwitchCommand;
             }
         }
-       
+
+        
+
+
         private string _searchResponse;
         public string SearchResponse
         {
@@ -372,8 +378,6 @@ namespace NetAddressManager.Client.ViewModels
         }
 
 
-
-       
         #endregion
     }
 }

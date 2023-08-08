@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetAddressManager.Client.Views"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models" xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
-        
+        xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models" xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:UpdateSwitchWindowViewModel}"
         mc:Ignorable="d"
         Title="UpdateSwitchWindow" Height="550" Width="450">
 
@@ -116,22 +115,28 @@
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Address:" 
                        Style="{StaticResource commonTBlock}"/>
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding SwitchDetailsModel.PostalAddress}" 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SwitchDetailsModel.PostalAddress}" 
+                      Margin="5, 8, 5, 8"/>
             <Button Grid.Row="4" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    Command="{Binding OpenUpdateAddressCommand}" CommandParameter="{Binding SwitchDetailsModel}"/>
+                    Command="{Binding UpdateAddressCommand}" 
+                    CommandParameter="{Binding SwitchDetailsModel}"/>
+
 
             <TextBlock Grid.Row="5" Grid.Column="0" Text="Equipment:" 
                        Style="{StaticResource commonTBlock}"/>
+
             <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SwitchDetailsModel.Equipment}" 
-                       Style="{StaticResource commonTBlock}"/>
+                          Style="{StaticResource commonTBlock}"/>
+                
+       
             <Button Grid.Row="5" Grid.Column="2" Content="Update" 
                     Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     Command="{Binding OpenUpdateEquipmentCommand}" CommandParameter="{Binding SwitchDetailsModel}"/>
 
+            
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:" 
                        Style="{StaticResource commonTBlock}"/>
             <ComboBox Grid.Row="6" Grid.Column="1" 

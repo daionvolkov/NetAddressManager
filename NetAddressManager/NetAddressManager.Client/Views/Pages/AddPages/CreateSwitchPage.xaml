@@ -52,7 +52,8 @@
             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"
                        Text="IP address" Style="{StaticResource commonTBlock}"/>
             <TextBox Grid.Row="0" Grid.Column="1" Margin="7, 0, 7, 0" 
-                     Text="{Binding CommonModel.IPAddress}" Style="{StaticResource commonTBox}"/>
+                     Text="{Binding CommonModel.IPAddress}" 
+                     Style="{StaticResource commonTBox}"/>
             <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"
                        Text="IP Mask" Style="{StaticResource commonTBlock}"/>
             <TextBox Grid.Row="1" Grid.Column="1" Margin="7, 0, 7, 0" 

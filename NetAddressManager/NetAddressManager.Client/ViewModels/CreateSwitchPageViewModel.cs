@@ -47,6 +47,7 @@ namespace NetAddressManager.Client.ViewModels
         #region PROPERTIES
 
         public CommonSwitch CommonModel { get; set; } = new CommonSwitch();
+
         public CoreSwitchModel CoreSwitchModel { get; set; } = new CoreSwitchModel();
 
         private bool _isIPGatewayVisible;
@@ -91,8 +92,7 @@ namespace NetAddressManager.Client.ViewModels
         {
             get => _radioButtonAccess;
             set { _radioButtonAccess = value; }
-        }
-
+        }   
         #endregion
 
 

@@ -9,7 +9,7 @@ namespace NetAddressManager.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AccessSwitchController : ControllerBase
     {
         private readonly ApplicationContext _db;

@@ -14,13 +14,16 @@ namespace NetAddressManager.Client.ViewModels
         private AuthToken _token;
         private CommonViewService _commonViewService;
         private UserRequestService _userRequestService;
+
+
+        #region COMMANDS
         public DelegateCommand SearchCommand { get; private set; }
         public DelegateCommand OpenAddNewUserCommand { get; private set; }
         public DelegateCommand<object> OpenUpdateUserCommand { get; private set; }
-
         public DelegateCommand<object> DeleteUserCommand { get; private set; }
         public DelegateCommand SaveUserCommand { get; private set; }
-        
+        #endregion
+
 
 
         public UsersPageViewModel(AuthToken token)
@@ -35,14 +38,8 @@ namespace NetAddressManager.Client.ViewModels
             OpenUpdateUserCommand = new DelegateCommand<object>(OpenUpdateUser);
             DeleteUserCommand = new DelegateCommand<object>(DeleteUser);
             SaveUserCommand = new DelegateCommand(SaveUser);
-
-
         }
 
-
-        #region COMMANDS
-
-        #endregion
 
 
         #region PROPERTIES
@@ -147,7 +144,6 @@ namespace NetAddressManager.Client.ViewModels
                 var resultAction = _userRequestService.DeleteUser(_token, id);
                 _commonViewService.ShowActionRelust(resultAction, "Пользовтель удален");
             }
-
         } 
 
         #endregion

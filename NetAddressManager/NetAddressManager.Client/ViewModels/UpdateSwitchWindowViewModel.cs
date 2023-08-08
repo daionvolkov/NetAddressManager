@@ -1,4 +1,5 @@
-﻿using NetAddressManager.Api.Models.Enums;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using NetAddressManager.Api.Models.Enums;
 using NetAddressManager.Client.Models;
 using NetAddressManager.Client.Services;
 using NetAddressManager.Client.Views;
@@ -6,8 +7,13 @@ using NetAddressManager.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net.NetworkInformation;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace NetAddressManager.Client.ViewModels
 {
@@ -18,10 +24,15 @@ namespace NetAddressManager.Client.ViewModels
         private CoreSwitchRequestService _coreSwitchRequestService;
         private AggregationSwitchRequestService _aggregationSwitchRequestService;
         private AccessSwitchRequestService _accessSwitchRequestService;
+        private PostalAddressRequestService _postalAddressRequestService;
+        private CheckDataRequestService _checkDataRequestService;
+
 
 
         #region COMMANDS
-        //public DelegateCommand<string> SearchEquipmentCommand { get; private set; }
+
+
+
         #endregion
 
         public UpdateSwitchWindowViewModel(AuthToken token)
@@ -31,7 +42,8 @@ namespace NetAddressManager.Client.ViewModels
             _coreSwitchRequestService = new CoreSwitchRequestService();
             _aggregationSwitchRequestService = new AggregationSwitchRequestService();
             _accessSwitchRequestService = new AccessSwitchRequestService();
-            //SearchEquipmentCommand = new DelegateCommand<string>(SearchEquipment);
+            _postalAddressRequestService = new PostalAddressRequestService();
+            _checkDataRequestService = new CheckDataRequestService();
         }
 
         #region PROPERTIES
@@ -62,10 +74,11 @@ namespace NetAddressManager.Client.ViewModels
 
         public void OpenUpdateEquipment(object switchDetailsModel)
         {
-            var updateSwitch = switchDetailsModel as SwitchDetailsModel;
-            var updateEquipmentWindow = new UpdateEquipmentWindow();
+            MessageBox.Show(nameof(OpenUpdateEquipment));
+/*            var updateSwitch = switchDetailsModel as SwitchDetailsModel;
+            var updateEquipmentWindow = new SearchEquipmentWindow();
             updateEquipmentWindow.DataContext = updateSwitch;
-            updateEquipmentWindow.Show();
+            updateEquipmentWindow.Show();*/
         }
 
 
@@ -83,11 +96,15 @@ namespace NetAddressManager.Client.ViewModels
                 else if(updateSwitch.SwitchType == SwitchType.Aggregation)
                 {
                     AggregationSwitchUpdateClient(updateSwitch);
+                    int addressId = GetPostalAddressId(updateSwitch);
+                    int switchId = updateSwitch.SwitchData.Id;
+                    AddPostalAddressToAggregationSwitchClient(switchId, addressId);
                 }
 
 
                 else if (updateSwitch.SwitchType == SwitchType.Access)
                 {
+
                     AccessSwitchUpdateClient(updateSwitch);
                 }
             }   
@@ -121,29 +138,41 @@ namespace NetAddressManager.Client.ViewModels
         }
 
 
-
-
-
-        private ObservableCollection<EquipmentManufacturerModel> equipmentManufacturer = new ObservableCollection<EquipmentManufacturerModel>();
-
-        public ObservableCollection<EquipmentManufacturerModel> EquipmentManufacturer
+        private int GetPostalAddressId(SwitchDetailsModel updateSwitch)
         {
-            get { return equipmentManufacturer; }
-            set { SetProperty(ref equipmentManufacturer, value); }
+            string?  address = updateSwitch.PostalAddress;
+            if (address != null)
+            {
+                PostalAddressModel postalAddressModel = _checkDataRequestService.IsPostalAddressExists(_token, address);
+
+                if (postalAddressModel != null)
+                {
+                    return postalAddressModel.Id;
+
+                }
+                else
+                {
+                    var addrList = address.Split(',');  
+                    if(addrList.Length == 3)
+                    {
+                        PostalAddressModel newAddress = new PostalAddressModel(addrList[0].Trim(), addrList[1].Trim(), addrList[2].Trim());
+                        _postalAddressRequestService.CreatePostalAddress(_token, newAddress);
+                        int id = _postalAddressRequestService.GetAllPostalAddresses(_token).Max(i => i.Id);
+                        return id;
+                    }
+                    
+                }
+            }
+                return 0;
         }
 
-        public DelegateCommand SearchEquipmentCommand { get; private set; }
-
-        public UpdateSwitchWindowViewModel()
+        private void AddPostalAddressToAggregationSwitchClient(int switchId, int addressId)
         {
-            SearchEquipmentCommand = new DelegateCommand(SearchEquipment);
+            if(addressId != 0)
+            {
+                _aggregationSwitchRequestService.AddPostalAddressToAggregationSwitch(_token, switchId, addressId);
+            }
         }
-
-        public void SearchEquipment()
-        {
-            _commonViewService.ShowMessage(nameof(SearchEquipment));
-        }
-
 
 
         #endregion

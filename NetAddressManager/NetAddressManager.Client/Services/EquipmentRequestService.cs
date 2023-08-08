@@ -29,6 +29,13 @@ namespace NetAddressManager.Client.Services
             return equipment;
         }
 
+        public List<EquipmentManufacturerModel> GetEquipmentsByName(AuthToken token, string name)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _equipmtntControllerUrl +$"/{name}/equipment", token);
+            List<EquipmentManufacturerModel> equipments = JsonConvert.DeserializeObject<List<EquipmentManufacturerModel>>(response) ?? new List<EquipmentManufacturerModel>();
+            return equipments;
+        }
+
         public HttpStatusCode CreateEquipment(AuthToken token, EquipmentManufacturerModel equipment)
         {
             string equipmentJson = JsonConvert.SerializeObject(equipment);

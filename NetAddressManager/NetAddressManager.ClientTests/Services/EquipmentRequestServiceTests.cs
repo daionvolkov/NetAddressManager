@@ -62,5 +62,13 @@ namespace NetAddressManager.Client.Services.Tests
             var result = _service.DeleteEquipment(_token, 19);
             Assert.AreEqual(HttpStatusCode.OK, result);
         }
+
+        [TestMethod()]
+        public void GetAllEquipmentsByNameTest()
+        {
+            var result = _service.GetEquipmentsByName(_token, "huawei");
+            Console.WriteLine(result.Count);
+            Assert.AreNotEqual(null, result);
+        }
     }
 }
