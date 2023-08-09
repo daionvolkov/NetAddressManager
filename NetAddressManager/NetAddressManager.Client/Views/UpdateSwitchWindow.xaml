@@ -77,8 +77,8 @@
                     <Style TargetType="ContentControl">
                         <Setter Property="Content">
                             <Setter.Value>
-                                <TextBlock Text="{Binding SwitchDetailsModel.IPGateway}" 
-                                       Style="{StaticResource commonTBlock}" />
+                                <TextBox Text="{Binding SwitchDetailsModel.IPGateway}" 
+                                      Margin="5, 8, 5, 8" />
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
@@ -96,47 +96,16 @@
                 </ContentControl.Style>
             </ContentControl>
             
-            <Button Grid.Row="3" Grid.Column="2" Content="Update" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
-                Command="{Binding OpenUpdateGatewayCommand}" 
-                    CommandParameter="{Binding SwitchDetailsModel}">
-                <Button.Style >
-                    <Style TargetType="Button" BasedOn="{StaticResource commonBtnLink}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SwitchDetailsModel.SwitchType}" 
-                                         Value="Core">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Address:" 
                        Style="{StaticResource commonTBlock}"/>
             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SwitchDetailsModel.PostalAddress}" 
                       Margin="5, 8, 5, 8"/>
-            <Button Grid.Row="4" Grid.Column="2" Content="Update" 
-                    Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Command="{Binding UpdateAddressCommand}" 
-                    CommandParameter="{Binding SwitchDetailsModel}"/>
-
 
             <TextBlock Grid.Row="5" Grid.Column="0" Text="Equipment:" 
                        Style="{StaticResource commonTBlock}"/>
-
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding SwitchDetailsModel.Equipment}" 
-                          Style="{StaticResource commonTBlock}"/>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SwitchDetailsModel.Equipment}" 
+                          Margin="5, 8, 5, 8"/>
                 
-       
-            <Button Grid.Row="5" Grid.Column="2" Content="Update" 
-                    Style="{StaticResource commonBtnLink}" HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    Command="{Binding OpenUpdateEquipmentCommand}" CommandParameter="{Binding SwitchDetailsModel}"/>
-
-            
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Status:" 
                        Style="{StaticResource commonTBlock}"/>
             <ComboBox Grid.Row="6" Grid.Column="1" 

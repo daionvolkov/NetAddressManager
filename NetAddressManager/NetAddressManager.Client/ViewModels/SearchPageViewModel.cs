@@ -99,44 +99,6 @@ namespace NetAddressManager.Client.ViewModels
 
         #region PROPERTIES
 
-        private RelayCommand _openUpdateGatewayCommand;
-        public RelayCommand OpenUpdateGatewayCommand
-        {
-            get
-            {
-                if (_openUpdateGatewayCommand == null)
-                {
-                    _openUpdateGatewayCommand = new RelayCommand(OpenUpdateGateway);
-                }
-                return _openUpdateGatewayCommand;
-            }
-        }
-        private RelayCommand _openUpdateAddressCommand;
-        public ICommand OpenUpdateAddressCommand
-        {
-            get
-            {
-                if (_openUpdateAddressCommand == null)
-                {
-                    _openUpdateAddressCommand = new RelayCommand(OpenUpdateAddress);
-                }
-                return _openUpdateAddressCommand;
-            }
-        }
-
-
-        private RelayCommand<object> _openUpdateEquipmentCommand;
-        public ICommand OpenUpdateEquipmentCommand
-        {
-            get
-            {
-                if (_openUpdateEquipmentCommand == null)
-                {
-                    _openUpdateEquipmentCommand = new RelayCommand<object>(OpenUpdateEquipment);
-                }
-                return _openUpdateEquipmentCommand;
-            }
-        }
 
 
         private RelayCommand<object> _saveUpdateSwitchCommand;
@@ -353,23 +315,7 @@ namespace NetAddressManager.Client.ViewModels
             }
         }
 
-        private void OpenUpdateGateway()
-        {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
-            updateSwitchWindowViewModel.OpenUpdateGateway();
-        }
-
-        private void OpenUpdateAddress()
-        {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
-            updateSwitchWindowViewModel.OpenUpdateAddress();
-        }
-
-        private void OpenUpdateEquipment(object switchDetailsModel)
-        {
-            var updateSwitchWindowViewModel = new UpdateSwitchWindowViewModel(_token);
-            updateSwitchWindowViewModel.OpenUpdateEquipment(switchDetailsModel);
-        }
+        
 
         private void SaveUpdateSwitch(object switchDetailsModel)
         {

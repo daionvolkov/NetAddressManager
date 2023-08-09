@@ -24,27 +24,44 @@ namespace NetAddressManager.Api.Controllers
         public ActionResult<PostalAddressModel> IsPostalAddressExists(string address)
         {
             var postalAddress = address.Split(',');
-            var result = _checkDataService.GetPostalAddressId(postalAddress[0].Trim(), postalAddress[1].Trim(), postalAddress[2].Trim());
+            var result = _checkDataService.GetPostalAddressModel(postalAddress[0].Trim(), postalAddress[1].Trim(), postalAddress[2].Trim());
             
             return result == null ? NotFound() : Ok(result);
 
         }
 
         [HttpGet("{equipment}/equipment")]
-        public IActionResult IsEquipmentExists(string equipment)
+        public ActionResult<EquipmentManufacturerModel> IsEquipmentExists(string equipment)
         {
             var equipmentManufacturer = equipment.Split(',');
-            bool isExists = _checkDataService.CheckEquipment(equipmentManufacturer[0].Trim(), equipmentManufacturer[1].Trim());
+            var result = _checkDataService.GetEquipmentModel(equipmentManufacturer[0].Trim(), equipmentManufacturer[1].Trim());
 
-            return isExists ? Ok(isExists) : BadRequest(!isExists);
+            return result == null ? NotFound() : Ok(result);
         }
 
-        [HttpGet("{netAddress}/netAddress")]
-        public IActionResult IsIpAddressExists(string ipAddress)
+        [HttpGet("{ipAddress}/core")]
+        public ActionResult<CoreSwitchModel> IsCoreSwitchIpAddressExists(string ipAddress)
         {
-            bool isExists = _checkDataService.CheckIpAddress(ipAddress);
+            var result = _checkDataService.GetCoreSwitchByIPAddress(ipAddress);
 
-            return isExists ? Ok(isExists) : BadRequest(!isExists);
+            return result == null ? NotFound() : Ok(result);
+        }
+
+
+        [HttpGet("{ipAddress}/aggregation")]
+        public ActionResult<AggregationSwitchModel> IsAggregationSwitchIpAddressExists(string ipAddress)
+        {
+            var result = _checkDataService.GetAggregationSwitchByIPAddress(ipAddress);
+
+            return result == null ? NotFound() : Ok(result);
+        }
+
+        [HttpGet("{ipAddress}/access")]
+        public ActionResult<AccessSwitchModel> IsAccessSwitchIpAddressExists(string ipAddress)
+        {
+            var result = _checkDataService.GetAccessSwitchByIPAddress(ipAddress);
+
+            return result == null ? NotFound() : Ok(result);
         }
     }
 }

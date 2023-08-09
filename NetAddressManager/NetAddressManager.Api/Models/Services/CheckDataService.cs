@@ -29,7 +29,23 @@ namespace NetAddressManager.Api.Models.Services
             return isPostalAddressExists;
         }
 
-        public PostalAddressModel GetPostalAddressId(string city, string street, string building)
+        public CoreSwitchModel GetCoreSwitchByIPAddress(string ipAddress) 
+        {
+            return _db.CoreSwitch.FirstOrDefault(s => s.IPAddress == ipAddress).GetModel();
+        }
+
+        public AggregationSwitchModel GetAggregationSwitchByIPAddress(string ipAddress)
+        {
+            return _db.AggregationSwitch.FirstOrDefault(s => s.IPAddress == ipAddress).GetModel();
+        }
+
+        public AccessSwitchModel GetAccessSwitchByIPAddress(string ipAddress)
+        {
+            return _db.AccessSwitch.FirstOrDefault(s => s.IPAddress == ipAddress).GetModel();
+        }
+
+
+        public PostalAddressModel GetPostalAddressModel(string city, string street, string building)
         {
             PostalAddressModel postalAddress = _db.PostalAddress.
                 FirstOrDefault(pa => (pa.City == city) && (pa.Street == street) && (pa.Building == building)).GetModel();
@@ -41,6 +57,13 @@ namespace NetAddressManager.Api.Models.Services
             bool isEquipmentExists = false;
             isEquipmentExists = _db.EquipmentManufacturer.Any(e=>(e.Manufacturer == manufacturer) && (e.Model == model));
             return isEquipmentExists;
+        }
+
+        public EquipmentManufacturerModel GetEquipmentModel(string manufacturer, string model)
+        {
+            EquipmentManufacturerModel equipmentManufacturerModel = _db.EquipmentManufacturer.
+                FirstOrDefault(pa => (pa.Manufacturer == manufacturer) && (pa.Model == model)).GetModel();
+            return equipmentManufacturerModel;
         }
     }
 }

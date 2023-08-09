@@ -25,14 +25,35 @@ namespace NetAddressManager.Client.Services
         {
             string response = GetDataByUrl(HttpMethod.Get, _checkDataControllerUrl + $"/{address}/address", token);
             PostalAddressModel? postalAddressModel = JsonConvert.DeserializeObject<PostalAddressModel>(response);
-            return postalAddressModel;
-        }
+            return postalAddressModel ?? new PostalAddressModel();
+        } 
 
-        public bool IsEquipmentExists(AuthToken token, string equipment)
+        public EquipmentManufacturerModel IsEquipmentExists(AuthToken token, string equipment)
         {
             string response = GetDataByUrl(HttpMethod.Get, _checkDataControllerUrl + $"/{equipment}/equipment", token);
-            bool isExists = JsonConvert.DeserializeObject<bool>(response);
-            return isExists;
+            EquipmentManufacturerModel? equipmentManufacturerModel = JsonConvert.DeserializeObject<EquipmentManufacturerModel>(response);
+            return equipmentManufacturerModel ?? new EquipmentManufacturerModel();
+        }
+
+        public CoreSwitchModel IsCoreSwitchExistst(AuthToken token, string ipAddress)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _checkDataControllerUrl + $"/{ipAddress}/core", token);
+            CoreSwitchModel? coreSwitchModel = JsonConvert.DeserializeObject<CoreSwitchModel>(response);
+            return coreSwitchModel ?? new CoreSwitchModel();
+        }
+
+        public AggregationSwitchModel IsAggegationSwitchExists(AuthToken token, string ipAddress)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _checkDataControllerUrl + $"/{ipAddress}/aggregation", token);
+            AggregationSwitchModel? aggregationSwitchModel = JsonConvert.DeserializeObject<AggregationSwitchModel>(response);
+            return aggregationSwitchModel ?? new AggregationSwitchModel();
+        }
+
+        public AccessSwitchModel IsAccessSwitchExists(AuthToken token, string ipAddress)
+        {
+            string response = GetDataByUrl(HttpMethod.Get, _checkDataControllerUrl + $"/{ipAddress}/access", token);
+            AccessSwitchModel? accessSwitchModel = JsonConvert.DeserializeObject<AccessSwitchModel>(response);
+            return accessSwitchModel ?? new AccessSwitchModel();
         }
     }
 }
