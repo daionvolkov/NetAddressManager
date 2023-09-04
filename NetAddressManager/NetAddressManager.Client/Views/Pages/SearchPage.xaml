@@ -26,7 +26,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Grid.Row="0" Grid.Column="0"  
                      Style="{StaticResource commonTBox}" Margin="45,0" Text="{Binding SearchResponse}"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="Search" Command="{Binding SearchCommand}"
+            <Button Grid.Row="0" Grid.Column="1" Content="Поиск" Command="{Binding SearchCommand}"
                     Style="{StaticResource commonBtn}" Margin="75, 27" MaxWidth="150"/>
         </Grid>
         <Grid Grid.Row="1">
@@ -53,22 +53,22 @@
                             <StackPanel Orientation="Horizontal" >
                                 <TextBlock x:Name="CoreSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Core Switch.  " FontWeight="Bold"/>
-                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="IP адрес: " />
                                 <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="  IP маска: " />
                                 <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Description: " />
+                                <TextBlock Text=" Описание: " />
                                 <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100" >
                                     <TextBlock.ToolTip>
                                         <ToolTip Content="{Binding Description}" />
                                     </TextBlock.ToolTip>
                                 </TextBlock>
-                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                <Button Content="Подробнее" Margin="10, 0, 0, 0" 
                                      Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, 
                                     RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
-                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                <Button Content="Изменить" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
@@ -84,21 +84,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock x:Name="AggregationSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Aggregation Switch.  " FontWeight="Bold"/>
-                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="IP адрес: " />
                                 <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="  IP маска: " />
                                 <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Description: " />
+                                <TextBlock Text="  Описание: " />
                                 <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100">
                                     <TextBlock.ToolTip>
                                         <ToolTip Content="{Binding Description}" />
                                     </TextBlock.ToolTip>
                                 </TextBlock>
-                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                <Button Content="Подробнее" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
-                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                <Button Content="Изменить" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
@@ -113,21 +113,21 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock x:Name="AccessSwitchId" Text="{Binding Id}" Visibility="Hidden"/>
                                 <TextBlock Text="Access Switch.  " FontWeight="Bold"/>
-                                <TextBlock Text="IP Address: " />
+                                <TextBlock Text="IP адрес: " />
                                 <TextBlock Text="{Binding IPAddress}" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Net Mask: " />
+                                <TextBlock Text="  IP маска: " />
                                 <TextBlock Text="{Binding IPMask }" TextTrimming="CharacterEllipsis" MaxWidth="100"/>
-                                <TextBlock Text="  Description: " />
+                                <TextBlock Text="  Описание: " />
                                 <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" MaxWidth="100">
                                     <TextBlock.ToolTip>
                                         <ToolTip Content="{Binding Description}" />
                                     </TextBlock.ToolTip>
                                 </TextBlock>
-                                <Button Content="Details" Margin="10, 0, 0, 0" 
+                                <Button Content="Подробнее" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.DetailsSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>
-                                <Button Content="Update" Margin="10, 0, 0, 0" 
+                                <Button Content="Изменить" Margin="10, 0, 0, 0" 
                                     Style="{StaticResource commonBtnLink}"
                                     Command="{Binding Path=DataContext.OpenUpdateSwitchCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                     CommandParameter="{Binding}"/>

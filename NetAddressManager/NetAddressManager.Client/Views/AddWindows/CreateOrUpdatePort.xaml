@@ -7,7 +7,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models"
         mc:Ignorable="d"
-        Title="CreateOrUpdatePort" Height="300" Width="250">
+        Title="Порт" Height="300" Width="250">
     <Window.Resources>
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type system:Enum}">
@@ -24,7 +24,18 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Порт" Style="{StaticResource headerTBlock}"/>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип:" Style="{StaticResource headerTBlock}"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" 
+                       Text="{Binding SwitchDetailsModel.SwitchType}" Style="{StaticResource headerTBlock}" />
+        </Grid>
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
@@ -36,9 +47,10 @@
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding SwitchDetailsModel.SwitchType}" 
-                       VerticalAlignment="Center"/>
 
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Номер порта:" 
+                       VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SelectedPort.PortNumber}"
                       Margin="7, 5">
                 <TextBox.Style>
@@ -53,12 +65,12 @@
                 </TextBox.Style>
             </TextBox>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Description:" 
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Описание:" 
                        VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SelectedPort.Description}"
                      Style="{StaticResource multiLineTBox}" TextWrapping="Wrap" Margin="7, 5"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Status:" 
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Статус:" 
                        VerticalAlignment="Center" />
             <ComboBox Grid.Row="2" Grid.Column="1" 
                           ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
@@ -75,8 +87,8 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" Command="{Binding SavePortCommand}" Style="{StaticResource commonBtn}"/>
-            <Button Grid.Column="1" Content="Cancel" IsCancel="True" Style="{StaticResource commonBtn}"/>
+            <Button Grid.Column="0" Content="Сохранить" Command="{Binding SavePortCommand}" Style="{StaticResource commonBtn}"/>
+            <Button Grid.Column="1" Content="Отмена" IsCancel="True" Style="{StaticResource commonBtn}"/>
 
         </Grid>
     </Grid>

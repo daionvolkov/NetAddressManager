@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NetAddressManager.Client.Views" 
         xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
         
-        Title="DetailsSwitchWindow" Height="550" Width="350">
+        Title="Подробная информация" Height="550" Width="350">
     <Window.DataContext>
         <viewmodels:DetailsSwitchWindowViewModel />
     </Window.DataContext>
@@ -22,7 +22,7 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -32,62 +32,62 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-               <TextBlock Grid.Row="0" Grid.Column="0" Text="Net Mask: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+               <TextBlock Grid.Row="0" Grid.Column="0" Text="IP маска: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" 
                            Text="{Binding  SwitchDetailsModel.SwitchData.IPMask}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="IP Gateway: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="IP шлюз: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="1" Grid.Column="1" 
                            Text="{Binding SwitchDetailsModel.IPGateway}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="MAC Address: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                          HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="MAC адрес: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="2" Grid.Column="1" 
                            Text="{Binding SwitchDetailsModel.SwitchData.MACAddress}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Description: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Описание: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0" VerticalAlignment="Top"/>
                 <TextBlock Grid.Row="3" Grid.Column="1" 
                            Text="{Binding  SwitchDetailsModel.SwitchData.Description}" 
                            Style="{StaticResource multiLineTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Creation Date: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Дата создания: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="4" Grid.Column="1" 
                            Text="{Binding SwitchDetailsModel.SwitchData.CreateDate}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="5" Grid.Column="0" Text="Switch Type: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                          HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Тип: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="5" Grid.Column="1" 
                            Text="{Binding SwitchDetailsModel.SwitchType}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="6" Grid.Column="0" Text="Address: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Адрес: " Style="{StaticResource commonTBlock}" 
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="6" Grid.Column="1" 
                            Text="{Binding  SwitchDetailsModel.PostalAddress}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
-                <TextBlock Grid.Row="7" Grid.Column="0" Text="Equipment: " Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Оборудование: " Style="{StaticResource commonTBlock}" 
+                          HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
                 <TextBlock Grid.Row="7" Grid.Column="1" 
                            Text="{Binding  SwitchDetailsModel.Equipment}" Style="{StaticResource commonTBlock}" 
-                           HorizontalAlignment="Right"/>
+                           HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
 
                 <ListView Grid.Row="8" Grid.ColumnSpan="2" ItemsSource="{Binding SwitchDetailsModel.Port}" Margin="0, 10, 0, 0">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Port Number" DisplayMemberBinding="{Binding PortNumber}" />
-                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
-                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
+                            <GridViewColumn Header="Номер порта" DisplayMemberBinding="{Binding PortNumber}" />
+                            <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" />
+                            <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" />
                             <GridViewColumn Header=" ">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="Update" 
+                                        <Button Content="Изменить" 
                                                Command="{Binding Path=DataContext.OpenUpdatePortCommand, 
                                             RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Style="{StaticResource commonBtnLink}" 
@@ -105,9 +105,9 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Add port" Command="{Binding OpenCreatePortCommand}"
+            <Button Grid.Column="0" Content="Добавить порт" Command="{Binding OpenCreatePortCommand}"
                     Style="{StaticResource commonBtn}" />
-            <Button Grid.Column="1" Content="Cancel" IsCancel="True" 
+            <Button Grid.Column="1" Content="Отмена" IsCancel="True" 
                     Style="{StaticResource commonBtn}"/>
         </Grid> 
     </Grid>

@@ -69,14 +69,14 @@ namespace NetAddressManager.Client.ViewModels
 
         #region PROPERTIES
 
-        private readonly string _serchBtnName = "Search";
-        private readonly string _createSwitchBtnName = "Create Switch";
-        private readonly string _createAddressBtnName = "Create Address";
-        private readonly string _createEquipmentBtnName = "Create Equipment";
-        private readonly string _userInfoBtnName = "User Info";
-        private readonly string _usersBtnName = "Create Equipment";
-        private readonly string _manageUsersBtnName = "Users";
-        private readonly string _logoutBtnName = "Logout";
+        private readonly string _serchBtnName = "Поиск";
+        private readonly string _createSwitchBtnName = "Добавить коммутатор";
+        private readonly string _createAddressBtnName = "Добавить адрес";
+        private readonly string _createEquipmentBtnName = "Добавить оборудование";
+        private readonly string _userInfoBtnName = "Личный кабинет";
+        private readonly string _usersBtnName = "Добавить оборудование";
+        private readonly string _manageUsersBtnName = "Пользователи";
+        private readonly string _logoutBtnName = "Выйти";
 
 
         private AuthToken _token;

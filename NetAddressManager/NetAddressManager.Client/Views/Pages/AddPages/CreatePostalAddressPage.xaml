@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:NetAddressManager.Client.Views.Pages.AddPages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="CreatePostalAddressPage">
+      Title="Добавить почтовый адрес">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -28,17 +28,17 @@
             </Grid.RowDefinitions>
 
         
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="City: " 
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Город: " 
                    Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
         <TextBox Grid.Column="2" Grid.Row="0"  Style="{StaticResource commonTBox}" 
                  Margin="10, 0, 10, 0" Text="{Binding PostalAddressModel.City}"/>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Street: " 
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Улица: " 
                    Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
         <TextBox Grid.Column="1" Grid.Row="1"  Style="{StaticResource commonTBox}" 
                  Margin="10, 0, 10, 0" Text="{Binding PostalAddressModel.Street}"/>
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Building: " 
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Здание: " 
                    Style="{StaticResource commonTBlock}" 
                            HorizontalAlignment="Right"/>
         <TextBox Grid.Column="1" Grid.Row="2"  Style="{StaticResource commonTBox}" 
@@ -52,9 +52,9 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" Command="{Binding SavePostalAddressCommand}"
+            <Button Grid.Column="0" Content="Сохранить" Command="{Binding SavePostalAddressCommand}"
                     Style="{StaticResource commonBtn}"/>
-            <Button Grid.Column="1" Content="Clear" Command="{Binding ClearPostalAddressCommand}" 
+            <Button Grid.Column="1" Content="Очистить" Command="{Binding ClearPostalAddressCommand}" 
                     Style="{StaticResource commonBtn}"/>
         </Grid>
     </Grid>

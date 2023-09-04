@@ -13,13 +13,13 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" Margin="20, 40">
             <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="First name: " 
+                <TextBlock Text="Имя: " 
                            Style="{StaticResource commonTBlock}" />
                 <TextBlock Text="{Binding CurrentUser.FirstName}" 
                            Style="{StaticResource commonTBlock}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Last name: " 
+                <TextBlock Text="Фамилия: " 
                            Style="{StaticResource commonTBlock}" />
                 <TextBlock Text="{Binding CurrentUser.LastName}" 
                            Style="{StaticResource commonTBlock}" />
@@ -31,7 +31,7 @@
                            Style="{StaticResource commonTBlock}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" >
-                <TextBlock Text="Phone: " 
+                <TextBlock Text="Телефон: " 
                            Style="{StaticResource commonTBlock}" />
                 <TextBlock Text="{Binding CurrentUser.Phone}" 
                            Style="{StaticResource commonTBlock}" />

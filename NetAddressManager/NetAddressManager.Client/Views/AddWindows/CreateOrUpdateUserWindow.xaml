@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:NetAddressManager.Client.ViewModels" 
         xmlns:commomModels="clr-namespace:NetAddressManager.Api.Models.Enums;assembly=NetAddressManager.Models" d:DataContext="{d:DesignInstance Type=viewmodels:UsersPageViewModel}"
         mc:Ignorable="d"
-        Title="CreateOrUpdateUserWindow" Height="550" Width="450">
+        Title="Обновить данные пользователя" Height="550" Width="450">
 
     <Window.Resources>
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
@@ -25,7 +25,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" 
-                   Text="Обновить пользователя" Style="{StaticResource headerTBlock}"/>
+                   Text="Обновить данные пользователя" Style="{StaticResource headerTBlock}"/>
         <Grid Grid.Row="1" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.4*"/>
@@ -40,33 +40,33 @@
                 <RowDefinition Height="40"/>
 
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="First Name: " 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Имя: " 
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding CurrentUser.FirstName}" 
                      Style="{StaticResource commonTBox}" Margin="10,0"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" Text="Last Name: " 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия: " 
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding  CurrentUser.LastName}" 
                      Style="{StaticResource commonTBox}" Margin="10,0"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="Password: " 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Пароль: " 
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding  CurrentUser.Password}" 
                      Style="{StaticResource commonTBox}" Margin="10,0"/>
 
-            <TextBlock Grid.Column="0" Grid.Row="3" Text="Phone: " 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Телефон: " 
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding  CurrentUser.Phone}" 
                      Style="{StaticResource commonTBox}" Margin="10,0"/>
 
             <TextBlock Grid.Column="0" Grid.Row="4" Text="Email: " 
-                       Style="{StaticResource commonTBlock}"/>
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding  CurrentUser.Email}" 
                      Style="{StaticResource commonTBox}" Margin="10,0"/>
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Status:" 
-                       Style="{StaticResource commonTBlock}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Статус:" 
+                       Style="{StaticResource commonTBlock}" HorizontalAlignment="Left" Padding="10, 0, 0, 0"/>
             <ComboBox Grid.Row="5" Grid.Column="1" 
                           ItemsSource="{Binding Source={StaticResource dataFromEnum}}"
                           SelectedItem="{Binding CurrentUser.Status}" Margin="10, 7"/>
@@ -77,8 +77,8 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Save" Command="{Binding SaveUserCommand}" Style="{StaticResource commonBtn}"/>
-            <Button Grid.Column="1" Content="Cancel" IsCancel="True" Style="{StaticResource commonBtn}"/>
+            <Button Grid.Column="0" Content="Сохранить" Command="{Binding SaveUserCommand}" Style="{StaticResource commonBtn}"/>
+            <Button Grid.Column="1" Content="Отмена" IsCancel="True" Style="{StaticResource commonBtn}"/>
 
         </Grid>
     </Grid>
